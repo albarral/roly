@@ -11,6 +11,7 @@
 #include "roly/bodycore/BodyBus.h"
 #include "roly/bodycore/BodyTalk.h"
 #include "roly/body/BodyManager.h"
+#include "roly/bodycoms/BodyComs.h"
 
 namespace roly
 {
@@ -23,7 +24,7 @@ class BodyControl
         BodyBus oBodyBus;                            
         BodyTalk oBodyTalk;                             
         BodyManager oBodyManager;
-        //BodyComs oBodyComs;
+        BodyComs oBodyComs;
 
     public:
         BodyControl();

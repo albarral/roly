@@ -45,21 +45,21 @@ void BodyTest::testArmMover(int test)
             int movement = MoveFactory::eMOV_LINE;
             bool bgo = true;
             pBodyBus->getCO_MOVER_TYPE().request(movement);
-            pBodyBus->getCO_MOVER_ACTION().request(bgo);            
+            //pBodyBus->getCO_MOVER_ACTION().request(bgo);            
         }
             break;
             
         case 1:
         {
             bool bwider = true;
-            pBodyBus->getCO_MOVER_WIDER().request(bwider);
+            //pBodyBus->getCO_MOVER_WIDER().request(bwider);
         }
             break;
             
         case 2:
         {
             bool bgo = false;
-            pBodyBus->getCO_MOVER_ACTION().request(bgo);            
+            //pBodyBus->getCO_MOVER_ACTION().request(bgo);            
         }
             break;            
     }

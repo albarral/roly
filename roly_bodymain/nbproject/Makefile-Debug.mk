@@ -54,7 +54,7 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=-Wl,-rpath,../roly_body/dist/Debug/GNU-Linux -L../roly_body/dist/Debug/GNU-Linux -lroly_body -Wl,-rpath,../roly_bodycore/dist/Debug/GNU-Linux -L../roly_bodycore/dist/Debug/GNU-Linux -lroly_bodycore -Wl,-rpath,../../tron/tuly/dist/Debug/GNU-Linux -L../../tron/tuly/dist/Debug/GNU-Linux -ltron_tuly -Wl,-rpath,../../tron/talky/dist/Debug/GNU-Linux -L../../tron/talky/dist/Debug/GNU-Linux -ltron_talky -Wl,-rpath,../../tron/comy/dist/Debug/GNU-Linux -L../../tron/comy/dist/Debug/GNU-Linux -ltron_comy -Wl,-rpath,../../tron/maty/dist/Debug/GNU-Linux -L../../tron/maty/dist/Debug/GNU-Linux -ltron_maty -llog4cxx
+LDLIBSOPTIONS=-Wl,-rpath,../roly_body/dist/Debug/GNU-Linux -L../roly_body/dist/Debug/GNU-Linux -lroly_body -Wl,-rpath,../roly_bodycore/dist/Debug/GNU-Linux -L../roly_bodycore/dist/Debug/GNU-Linux -lroly_bodycore -Wl,-rpath,../roly_bodycoms/dist/Debug/GNU-Linux -L../roly_bodycoms/dist/Debug/GNU-Linux -lroly_bodycoms -Wl,-rpath,../../tron/tuly/dist/Debug/GNU-Linux -L../../tron/tuly/dist/Debug/GNU-Linux -ltron_tuly -Wl,-rpath,../../tron/talky/dist/Debug/GNU-Linux -L../../tron/talky/dist/Debug/GNU-Linux -ltron_talky -Wl,-rpath,../../tron/comy/dist/Debug/GNU-Linux -L../../tron/comy/dist/Debug/GNU-Linux -ltron_comy -Wl,-rpath,../../tron/maty/dist/Debug/GNU-Linux -L../../tron/maty/dist/Debug/GNU-Linux -ltron_maty -llog4cxx
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
@@ -63,6 +63,8 @@ LDLIBSOPTIONS=-Wl,-rpath,../roly_body/dist/Debug/GNU-Linux -L../roly_body/dist/D
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/rolybody: ../roly_body/dist/Debug/GNU-Linux/libroly_body.so
 
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/rolybody: ../roly_bodycore/dist/Debug/GNU-Linux/libroly_bodycore.so
+
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/rolybody: ../roly_bodycoms/dist/Debug/GNU-Linux/libroly_bodycoms.so
 
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/rolybody: ../../tron/tuly/dist/Debug/GNU-Linux/libtron_tuly.so
 
@@ -79,22 +81,23 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/rolybody: ${OBJECTFILES}
 ${OBJECTDIR}/src/roly/bodymain/BodyControl.o: src/roly/bodymain/BodyControl.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/roly/bodymain
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Isrc -I../roly_body/src -I../roly_bodycore/src -I../../tron/tuly/src -I../../tron/talky/src -I../../tron/comy/src -I../../tron/maty/src -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodymain/BodyControl.o src/roly/bodymain/BodyControl.cpp
+	$(COMPILE.cc) -g -Isrc -I../roly_body/src -I../roly_bodycore/src -I../roly_bodycoms/src -I../../tron/tuly/src -I../../tron/talky/src -I../../tron/comy/src -I../../tron/maty/src -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodymain/BodyControl.o src/roly/bodymain/BodyControl.cpp
 
 ${OBJECTDIR}/src/roly/bodymain/BodyTest.o: src/roly/bodymain/BodyTest.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/roly/bodymain
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Isrc -I../roly_body/src -I../roly_bodycore/src -I../../tron/tuly/src -I../../tron/talky/src -I../../tron/comy/src -I../../tron/maty/src -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodymain/BodyTest.o src/roly/bodymain/BodyTest.cpp
+	$(COMPILE.cc) -g -Isrc -I../roly_body/src -I../roly_bodycore/src -I../roly_bodycoms/src -I../../tron/tuly/src -I../../tron/talky/src -I../../tron/comy/src -I../../tron/maty/src -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodymain/BodyTest.o src/roly/bodymain/BodyTest.cpp
 
 ${OBJECTDIR}/src/roly/bodymain/main.o: src/roly/bodymain/main.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/roly/bodymain
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Isrc -I../roly_body/src -I../roly_bodycore/src -I../../tron/tuly/src -I../../tron/talky/src -I../../tron/comy/src -I../../tron/maty/src -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodymain/main.o src/roly/bodymain/main.cpp
+	$(COMPILE.cc) -g -Isrc -I../roly_body/src -I../roly_bodycore/src -I../roly_bodycoms/src -I../../tron/tuly/src -I../../tron/talky/src -I../../tron/comy/src -I../../tron/maty/src -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodymain/main.o src/roly/bodymain/main.cpp
 
 # Subprojects
 .build-subprojects:
 	cd ../roly_body && ${MAKE}  -f Makefile CONF=Debug
 	cd ../roly_bodycore && ${MAKE}  -f Makefile CONF=Debug
+	cd ../roly_bodycoms && ${MAKE}  -f Makefile CONF=Debug
 	cd ../../tron/tuly && ${MAKE}  -f Makefile CONF=Debug
 	cd ../../tron/talky && ${MAKE}  -f Makefile CONF=Debug
 	cd ../../tron/comy && ${MAKE}  -f Makefile CONF=Debug
@@ -109,6 +112,7 @@ ${OBJECTDIR}/src/roly/bodymain/main.o: src/roly/bodymain/main.cpp
 .clean-subprojects:
 	cd ../roly_body && ${MAKE}  -f Makefile CONF=Debug clean
 	cd ../roly_bodycore && ${MAKE}  -f Makefile CONF=Debug clean
+	cd ../roly_bodycoms && ${MAKE}  -f Makefile CONF=Debug clean
 	cd ../../tron/tuly && ${MAKE}  -f Makefile CONF=Debug clean
 	cd ../../tron/talky && ${MAKE}  -f Makefile CONF=Debug clean
 	cd ../../tron/comy && ${MAKE}  -f Makefile CONF=Debug clean

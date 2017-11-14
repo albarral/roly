@@ -56,13 +56,13 @@ void runBody()
             sleep(1);
             
             seconds++;            
-            if (seconds == 10)
+            if (seconds == 7)
                 bEnd = true;
             else if (seconds == 1)
                 oBodyTest.testArmMover(0);
-            else if (seconds == 4)
+            else if (seconds == 3)
                 oBodyTest.testArmMover(1);
-            else if (seconds == 7)
+            else if (seconds == 5) 
                 oBodyTest.testArmMover(2);                
         }    
 

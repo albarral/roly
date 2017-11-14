@@ -35,9 +35,9 @@ bool BodyControl::launch()
     // launch body manager
     bok = oBodyManager.launch(oBodyBus, oBodyTalk);
 
-//    if (bok)
-//        // launch coms
-//        oBodyComs.launch(oBodyBus, oBodyTalk);        
+    if (bok)
+        // launch coms
+        oBodyComs.launch(oBodyBus, oBodyTalk);        
 
     return bok;
 }
@@ -48,12 +48,12 @@ bool BodyControl::end()
     oBodyManager.end();
 
     // end coms
-    //oBodyComs.end();
+    oBodyComs.end();
 }
 
 bool BodyControl::checkEndRequested()
 {
-    return false; //oBodyComs.checkEndRequested();
+    return oBodyComs.checkEndRequested();
 }
 
 }
