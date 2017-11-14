@@ -12,6 +12,7 @@
                 <make-dep-project>../../tron/comy</make-dep-project>
                 <make-dep-project>../../tron/tuly</make-dep-project>
                 <make-dep-project>../roly_bodycore</make-dep-project>
+                <make-dep-project>../../tron/maty</make-dep-project>
                 <make-dep-project>../roly_body</make-dep-project>
                 <make-dep-project>../../tron/talky</make-dep-project>
             </make-dep-projects>

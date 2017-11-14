@@ -4,7 +4,7 @@
  ***************************************************************************/
 
 #include "roly/body/moves/CyclicMove.h"
-//#include "amy/math/Angle.h"
+#include "maty/math/Angle.h"
 
 namespace roly
 {
@@ -55,8 +55,8 @@ void CyclicMove::makeTurn(float degrees)
     angle1 += degrees;
     angle2 += degrees;
     // keep angles inside limits [0, 360)
-//    angle1 = amy::Angle::inLimits(angle1);
-//    angle2 = amy::Angle::inLimits(angle2);    
+    angle1 = maty::Angle::inLimits(angle1);
+    angle2 = maty::Angle::inLimits(angle2);    
 }
 
 }
