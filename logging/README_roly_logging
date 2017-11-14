@@ -1,0 +1,13 @@
+
+LOGGING CONFIGURATION
+
+log4cxx configuration files must be located in a .roly folder in user's HOME directory.
+
+Steps to follow:
+- create a .roly folder in the home directory
+- copy all xml files from this logging directory to that folder.
+
+> 
+cd 
+mkdir .roly
+cp /path_to_roly/logging/*.xml .roly
