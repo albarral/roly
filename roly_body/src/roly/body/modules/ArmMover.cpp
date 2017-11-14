@@ -73,8 +73,8 @@ void ArmMover::senseBus()
         oCyclicMove = oMoveFactory.computeMove(pBodyBus->getCO_MOVER_TYPE().getValue());
         // and give it an elasticity to change
         oCyclicMove.setElasticity(0.1);
-        // prepare to send a trigger message
-        message = eMSG_TRIGGER;
+        // prepare to send an update message
+        message = eMSG_UPDATE;
         setState(eSTATE_TALK);                       
     }
     
@@ -153,24 +153,21 @@ void ArmMover::talk2Cyclers()
 
 void ArmMover::triggerMove()
 {    
-     LOG4CXX_WARN(logger, modName << " triggerMove");          
-
-     // modulates cyclic movement
-    updateMove();
+     //LOG4CXX_INFO(logger, modName << " triggerMove");          
     // starts cycler move
     pBodyTalk->getTalk2ArmCycler().addCommand(talky::ArmTopic::eCYCLIC_FRONT_START);
 }
 
 void ArmMover::stopMove()
 {    
-     LOG4CXX_WARN(logger, modName << " stopMove");          
+     //LOG4CXX_INFO(logger, modName << " stopMove");          
     // stops cycler move
     pBodyTalk->getTalk2ArmCycler().addCommand(talky::ArmTopic::eCYCLIC_FRONT_STOP);
 }
 
 void ArmMover::updateMove()
 {        
-     LOG4CXX_WARN(logger, modName << " updateMove");          
+     //LOG4CXX_INFO(logger, modName << " updateMove");          
      
      talky::Talk2Target& oTalk2ArmCycler = pBodyTalk->getTalk2ArmCycler();
     // modulates move of both cycler components
