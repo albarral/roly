@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="97">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <logicalFolder name="HeaderFiles"
+                   displayName="Header Files"
+                   projectFiles="true">
+    </logicalFolder>
+    <logicalFolder name="ResourceFiles"
+                   displayName="Resource Files"
+                   projectFiles="true">
+    </logicalFolder>
+    <logicalFolder name="SourceFiles"
+                   displayName="Source Files"
+                   projectFiles="true">
+      <logicalFolder name="bodycoms" displayName="bodycoms" projectFiles="true">
+        <logicalFolder name="modules" displayName="modules" projectFiles="true">
+          <itemPath>src/roly/bodycoms/modules/BodyCommander.cpp</itemPath>
+          <itemPath>src/roly/bodycoms/modules/BodyCommander.h</itemPath>
+        </logicalFolder>
+        <logicalFolder name="out" displayName="out" projectFiles="true">
+          <itemPath>src/roly/bodycoms/out/Body2Arm.cpp</itemPath>
+          <itemPath>src/roly/bodycoms/out/Body2Arm.h</itemPath>
+        </logicalFolder>
+        <itemPath>src/roly/bodycoms/BodyComs.cpp</itemPath>
+        <itemPath>src/roly/bodycoms/BodyComs.h</itemPath>
+      </logicalFolder>
+    </logicalFolder>
+    <logicalFolder name="TestFiles"
+                   displayName="Test Files"
+                   projectFiles="false"
+                   kind="TEST_LOGICAL_FOLDER">
+    </logicalFolder>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>Makefile</itemPath>
+    </logicalFolder>
+    <logicalFolder name="TestFiles"
+                   displayName="Test Files"
+                   projectFiles="false"
+                   kind="TEST_LOGICAL_FOLDER">
+    </logicalFolder>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>Makefile</itemPath>
+    </logicalFolder>
+  </logicalFolder>
+  <sourceRootList>
+    <Elem>src/amy/coms</Elem>
+    <Elem>src/roly/bodycoms</Elem>
+  </sourceRootList>
+  <projectmakefile>Makefile</projectmakefile>
+  <confs>
+    <conf name="Debug" type="2">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <ccTool>
+          <standard>8</standard>
+          <incDir>
+            <pElem>src</pElem>
+            <pElem>../roly_bodycore/src</pElem>
+            <pElem>../../tron/tuly/src</pElem>
+            <pElem>../../tron/talky/src</pElem>
+            <pElem>../../tron/comy/src</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libroly_bodycoms.${CND_DLIB_EXT}</output>
+          <linkerLibItems>
+            <linkerLibProjectItem>
+              <makeArtifact PL="../roly_bodycore"
+                            CT="2"
+                            CN="Debug"
+                            AC="true"
+                            BL="true"
+                            WD="../roly_bodycore"
+                            BC="${MAKE}  -f Makefile CONF=Debug"
+                            CC="${MAKE}  -f Makefile CONF=Debug clean"
+                            OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libroly_bodycore.${CND_DLIB_EXT}">
+              </makeArtifact>
+            </linkerLibProjectItem>
+            <linkerLibProjectItem>
+              <makeArtifact PL="../../tron/tuly"
+                            CT="2"
+                            CN="Debug"
+                            AC="true"
+                            BL="true"
+                            WD="../../tron/tuly"
+                            BC="${MAKE}  -f Makefile CONF=Debug"
+                            CC="${MAKE}  -f Makefile CONF=Debug clean"
+                            OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libtron_tuly.${CND_DLIB_EXT}">
+              </makeArtifact>
+            </linkerLibProjectItem>
+            <linkerLibProjectItem>
+              <makeArtifact PL="../../tron/talky"
+                            CT="2"
+                            CN="Debug"
+                            AC="true"
+                            BL="true"
+                            WD="../../tron/talky"
+                            BC="${MAKE}  -f Makefile CONF=Debug"
+                            CC="${MAKE}  -f Makefile CONF=Debug clean"
+                            OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libtron_talky.${CND_DLIB_EXT}">
+              </makeArtifact>
+            </linkerLibProjectItem>
+            <linkerLibProjectItem>
+              <makeArtifact PL="../../tron/comy"
+                            CT="2"
+                            CN="Debug"
+                            AC="true"
+                            BL="true"
+                            WD="../../tron/comy"
+                            BC="${MAKE}  -f Makefile CONF=Debug"
+                            CC="${MAKE}  -f Makefile CONF=Debug clean"
+                            OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libtron_comy.${CND_DLIB_EXT}">
+              </makeArtifact>
+            </linkerLibProjectItem>
+          </linkerLibItems>
+        </linkerTool>
+      </compileType>
+      <item path="src/roly/bodycoms/BodyComs.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/roly/bodycoms/BodyComs.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/roly/bodycoms/modules/BodyCommander.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/roly/bodycoms/modules/BodyCommander.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/roly/bodycoms/out/Body2Arm.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/roly/bodycoms/out/Body2Arm.h" ex="false" tool="3" flavor2="0">
+      </item>
+    </conf>
+    <conf name="Release" type="2">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <cTool>
+          <developmentMode>5</developmentMode>
+        </cTool>
+        <ccTool>
+          <developmentMode>5</developmentMode>
+        </ccTool>
+        <fortranCompilerTool>
+          <developmentMode>5</developmentMode>
+        </fortranCompilerTool>
+        <asmTool>
+          <developmentMode>5</developmentMode>
+        </asmTool>
+      </compileType>
+      <item path="src/roly/bodycoms/BodyComs.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/roly/bodycoms/BodyComs.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/roly/bodycoms/modules/BodyCommander.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/roly/bodycoms/modules/BodyCommander.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/roly/bodycoms/out/Body2Arm.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/roly/bodycoms/out/Body2Arm.h" ex="false" tool="3" flavor2="0">
+      </item>
+    </conf>
+  </confs>
+</configurationDescriptor>
