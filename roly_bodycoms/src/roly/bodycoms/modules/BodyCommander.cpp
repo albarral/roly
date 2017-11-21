@@ -55,6 +55,16 @@ void BodyCommander::loop()
             oBody2Arm.sendMessage(oTalk2ArmCycler.getRawMessage(), talky::ArmTopic::eCAT_ARM_CYCLIC);
         }
     }
+    // send commands for arm axis category
+    talky::Talk2Target& oTalk2ArmAxes = pBodyTalk->getTalk2ArmAxes();
+    while (oTalk2ArmAxes.isArmed())
+    {
+        if (oTalk2ArmAxes.processCommand())
+        {
+            oBody2Arm.sendMessage(oTalk2ArmAxes.getRawMessage(), talky::ArmTopic::eCAT_ARM_AXIS);
+        }
+    }
+    
 }
 
 }

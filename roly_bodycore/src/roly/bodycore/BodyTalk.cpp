@@ -19,11 +19,12 @@ void BodyTalk::init()
 {
     // init arm talkers
     int armTopic = talky::Topics::eTOPIC_ARM;
-    int cyclicCategory = talky::ArmTopic::eCAT_ARM_CYCLIC;
-    oTalk2ArmCycler.init(armTopic, cyclicCategory);
+    // cycler category
+    oTalk2ArmCycler.init(armTopic, talky::ArmTopic::eCAT_ARM_CYCLIC);
+    oTalk2ArmAxes.init(armTopic, talky::ArmTopic::eCAT_ARM_AXIS);
     
     // enabled if all talkers initialized
-    benabled = oTalk2ArmCycler.isEnabled();
+    benabled = oTalk2ArmCycler.isEnabled() && oTalk2ArmAxes.isEnabled();
 }
 
 

@@ -21,10 +21,13 @@ Body2Arm::Body2Arm()
 void Body2Arm::init()
 {
     talky::ArmLanguage oArmLanguage;
-    // prepare communication clients    
+    // prepare communication clients for arm topic
+    // cycler category
     oClient2ArmCycler.connect(talky::Topics::ARM_TOPIC, oArmLanguage.CAT_ARM_CYCLIC);
+    // axes category
+    oClient2ArmAxes.connect(talky::Topics::ARM_TOPIC, oArmLanguage.CAT_ARM_AXIS);
 
-    benabled = oClient2ArmCycler.isConnected();
+    benabled = oClient2ArmCycler.isConnected() && oClient2ArmAxes.isConnected();
 }
     
 bool Body2Arm::sendMessage(std::string message, int category)
@@ -42,6 +45,10 @@ bool Body2Arm::sendMessage(std::string message, int category)
     {
         case talky::ArmTopic::eCAT_ARM_CYCLIC:
             bsent = sendMessage2Channel(oClient2ArmCycler, message);
+            break;
+
+        case talky::ArmTopic::eCAT_ARM_AXIS:
+            bsent = sendMessage2Channel(oClient2ArmAxes, message);
             break;
 
         default:

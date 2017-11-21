@@ -38,6 +38,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/roly/body/BodyManager.o \
 	${OBJECTDIR}/src/roly/body/modules/ArmMover.o \
 	${OBJECTDIR}/src/roly/body/modules/BodyModule.o \
+	${OBJECTDIR}/src/roly/body/modules/Comfortable.o \
 	${OBJECTDIR}/src/roly/body/moves/CyclicMove.o \
 	${OBJECTDIR}/src/roly/body/moves/MoveFactory.o
 
@@ -88,6 +89,11 @@ ${OBJECTDIR}/src/roly/body/modules/BodyModule.o: src/roly/body/modules/BodyModul
 	${MKDIR} -p ${OBJECTDIR}/src/roly/body/modules
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -Isrc -I../roly_bodycore/src -I../../tron/tuly/src -I../../tron/talky/src -I../../tron/maty/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/body/modules/BodyModule.o src/roly/body/modules/BodyModule.cpp
+
+${OBJECTDIR}/src/roly/body/modules/Comfortable.o: src/roly/body/modules/Comfortable.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/roly/body/modules
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -Isrc -I../roly_bodycore/src -I../../tron/tuly/src -I../../tron/talky/src -I../../tron/maty/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/body/modules/Comfortable.o src/roly/body/modules/Comfortable.cpp
 
 ${OBJECTDIR}/src/roly/body/moves/CyclicMove.o: src/roly/body/moves/CyclicMove.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/roly/body/moves

@@ -9,6 +9,7 @@
 #include <string>
 
 #include "tuly/control/brooks/controlT.h"
+#include "tuly/control/brooks/inhibition.h"
 
 namespace roly
 {
@@ -16,6 +17,9 @@ class BodyBus
 {
     private:        
         bool benabled;
+
+        // Comfortable module
+        tuly::Inhibition CO_INHIBIT_COMFORTABLE;    // inhibit comfortable module
         
         // ArmMover
         tuly::ControlT<int> CO_MOVER_TYPE;       // set movement type
@@ -33,6 +37,9 @@ class BodyBus
         bool isEnabled() {return benabled;};
         
         // CONTROLS
+        // Comfortable module
+        tuly::Inhibition& getCO_INHIBIT_COMFORTABLE() {return CO_INHIBIT_COMFORTABLE;};
+        
         // ArmMover
         tuly::ControlT<int>& getCO_MOVER_TYPE() {return CO_MOVER_TYPE;};
         tuly::ControlT<bool>& getCO_MOVER_ACTION() {return CO_MOVER_ACTION;};

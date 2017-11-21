@@ -81,6 +81,9 @@ void BodyManager::initArchitecture()
     // arm mover
     oArmMover.setLevel(nivel);
     listModules.push_back(&oArmMover);
+    // arm mover
+    oComfortable.setLevel(nivel);
+    listModules.push_back(&oComfortable);
 }
 
 void BodyManager::showArchitecture()

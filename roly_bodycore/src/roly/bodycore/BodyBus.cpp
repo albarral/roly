@@ -20,7 +20,9 @@ void BodyBus::init()
 
 std::string BodyBus::toString()
 {
-    std::string text = "BodyBus:[CO_MOVER_TYPE: " + std::to_string(CO_MOVER_TYPE.getValue()) + "\n" +
+    std::string text = "BodyBus:[CO_INHIBIT_COMFORTABLE: " + std::to_string(CO_INHIBIT_COMFORTABLE.getLoops()) + "\n" + 
+        "CO_MOVER_TYPE: " + std::to_string(CO_MOVER_TYPE.getValue()) + "\n" +
+        "CO_MOVER_TYPE: " + std::to_string(CO_MOVER_TYPE.getValue()) + "\n" +
         "CO_MOVER_ACTION: " + std::to_string(CO_MOVER_ACTION.getValue()) + "\n" +
         "CO_MOVER_TURN: " + std::to_string(CO_MOVER_TURN.getValue()) + "\n" +
         "CO_MOVER_WIDER: " + std::to_string(CO_MOVER_WIDER.getValue()) + "\n" +

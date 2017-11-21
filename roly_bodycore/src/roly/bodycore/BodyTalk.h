@@ -14,8 +14,9 @@ class BodyTalk
 {
     private:        
         bool benabled;
-        // talkers
-        talky::Talk2Target oTalk2ArmCycler; // talker to arm cycler category
+        // arm talkers
+        talky::Talk2Target oTalk2ArmCycler; // arm cycler category
+        talky::Talk2Target oTalk2ArmAxes; // arm axes category
         
     public:
         BodyTalk();
@@ -25,6 +26,7 @@ class BodyTalk
         bool isEnabled() {return benabled;};
         
         talky::Talk2Target& getTalk2ArmCycler() {return oTalk2ArmCycler;};
+        talky::Talk2Target& getTalk2ArmAxes() {return oTalk2ArmAxes;};
 };
 
 }    

@@ -32,12 +32,12 @@ bool BodyControl::launch()
     oBodyBus.init();
     oBodyTalk.init();
 
-    // launch body manager
-    bok = oBodyManager.launch(oBodyBus, oBodyTalk);
+    // launch body coms
+    bok = oBodyComs.launch(oBodyBus, oBodyTalk);        
 
     if (bok)
-        // launch coms
-        oBodyComs.launch(oBodyBus, oBodyTalk);        
+        // launch body manager
+        bok = oBodyManager.launch(oBodyBus, oBodyTalk);        
 
     return bok;
 }

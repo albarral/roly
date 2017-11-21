@@ -28,7 +28,9 @@ BodyComs::~BodyComs()
     oBodyCommander.setFrequency(freq);
     if (oBodyCommander.isEnabled())
         oBodyCommander.on();
-  }
+    
+    return true;
+}
 
 bool BodyComs::end()
 {

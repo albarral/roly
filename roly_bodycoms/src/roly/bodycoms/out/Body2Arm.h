@@ -21,6 +21,7 @@ private:
     static log4cxx::LoggerPtr logger;      
     bool benabled;        // connected to amy control interfaces
     comy::ComyFileClient oClient2ArmCycler;   // communications client for arm cyclic category
+    comy::ComyFileClient oClient2ArmAxes;   // communications client for arm axes category
         
 public:
     Body2Arm();
