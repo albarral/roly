@@ -74,28 +74,17 @@ void ArmMover::senseBus()
         // and give it an elasticity to change
         oCyclicMove.setElasticity(0.1);
         // prepare to send an update message
-        message = eMSG_UPDATE;
+        oCommandsQueue.add(ArmMover::eCMD_UPDATE);
         setState(eSTATE_TALK);                       
     }
-    
-    // check action requests
-    if (pBodyBus->getCO_MOVER_ACTION().checkRequested())
-    {                
-        // prepare to send a trigger or stop message
-        if (pBodyBus->getCO_MOVER_ACTION().getValue())
-            message = eMSG_TRIGGER;
-        else
-            message = eMSG_STOP;
-        setState(eSTATE_TALK);                       
-    }
-    
+        
     // check turn requests
     if (pBodyBus->getCO_MOVER_TURN().checkRequested())
     {                
         // update movement orientation
         oCyclicMove.makeTurn(pBodyBus->getCO_MOVER_TURN().getValue());
         // prepare to send an update message
-        message = eMSG_UPDATE;
+        oCommandsQueue.add(ArmMover::eCMD_UPDATE);
         setState(eSTATE_TALK);                       
     }
         
@@ -105,7 +94,7 @@ void ArmMover::senseBus()
         // make move wider or narrower
         oCyclicMove.makeWider(pBodyBus->getCO_MOVER_WIDER().getValue());
         // prepare to send an update message
-        message = eMSG_UPDATE;
+        oCommandsQueue.add(ArmMover::eCMD_UPDATE);
         setState(eSTATE_TALK);                       
     }
         
@@ -115,7 +104,7 @@ void ArmMover::senseBus()
         // make move taller or shorter
         oCyclicMove.makeTaller(pBodyBus->getCO_MOVER_TALLER().getValue());
         // prepare to send an update message
-        message = eMSG_UPDATE;
+        oCommandsQueue.add(ArmMover::eCMD_UPDATE);
         setState(eSTATE_TALK);                       
     }
            
@@ -125,29 +114,48 @@ void ArmMover::senseBus()
         // make move faster or slower
         oCyclicMove.makeFaster(pBodyBus->getCO_MOVER_FASTER().getValue());
         // prepare to send an update message
-        message = eMSG_UPDATE;
+        oCommandsQueue.add(ArmMover::eCMD_UPDATE);
         setState(eSTATE_TALK);                       
     }
+
+    // check action requests
+    if (pBodyBus->getCO_MOVER_ACTION().checkRequested())
+    {                
+        // prepare to send a trigger or stop message
+        if (pBodyBus->getCO_MOVER_ACTION().getValue())
+            oCommandsQueue.add(ArmMover::eCMD_TRIGGER);
+        else
+            oCommandsQueue.add(ArmMover::eCMD_STOP);
+        setState(eSTATE_TALK);                       
+    }    
 }
 
 void ArmMover::talk2Cyclers()
 {
-    switch (message)
+    int cmd; 
+    // send all commands in the queue
+    while (oCommandsQueue.isFilled())
     {
-        case eMSG_TRIGGER:
-            // triggers the cyclic movement
-            triggerMove();
-            break;
-            
-        case eMSG_STOP:
-            // stops the cyclic movement
-            stopMove();
-            break;
-            
-        case eMSG_UPDATE:            
-            // changes the cyclic movement           
-            updateMove();
-            break;
+        if (oCommandsQueue.fetch(cmd))
+        {
+            switch (cmd)
+            {
+                case ArmMover::eCMD_TRIGGER:
+                    // triggers the cyclic movement
+                    triggerMove();
+                    break;
+
+                case ArmMover::eCMD_STOP:
+                    // stops the cyclic movement
+                    stopMove();
+                    break;
+
+                case ArmMover::eCMD_UPDATE:            
+                    // changes the cyclic movement           
+                    updateMove();
+                    break;
+            }            
+        }        
     }
 }
 

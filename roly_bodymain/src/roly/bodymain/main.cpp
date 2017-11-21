@@ -45,25 +45,17 @@ void runBody()
     BodyTest oBodyTest;
     oBodyTest.connect2Bus(oBodyControl.getBodyBus4Test());
 
-    bool bEnd = false;
     int seconds = 0;
     // launch body control & wait for it to end        
     if (oBodyControl.launch())
     {    
         //while (!oBodyControl.checkEndRequested()) 
-        while (!bEnd) 
+        while (!oBodyTest.isTestFinished()) 
         {
-            sleep(1);
-            
+            oBodyTest.testArmMover();
+
+            sleep(1);            
             seconds++;            
-            if (seconds == 7)
-                bEnd = true;
-            else if (seconds == 1)
-                oBodyTest.testArmMover(0);
-            else if (seconds == 3)
-                oBodyTest.testArmMover(1);
-            else if (seconds == 5) 
-                oBodyTest.testArmMover(2);                
         }    
 
         LOG4CXX_INFO(logger, "\nbody end requested ...\n");

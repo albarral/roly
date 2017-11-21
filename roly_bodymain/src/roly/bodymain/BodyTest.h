@@ -18,6 +18,8 @@ class BodyTest
  private:
      static log4cxx::LoggerPtr logger;
      BodyBus* pBodyBus;   // bus access
+     int step;
+     bool bfinished;        // flag indicating test is finished
 
 public:
     BodyTest();
@@ -26,7 +28,10 @@ public:
     void connect2Bus(BodyBus& oBodyBus);
     bool isConnected() {return pBodyBus != 0;};
     
-    void testArmMover(int test);
+    void resetStep() {step = 0;}
+    bool isTestFinished() {return bfinished;};
+
+    void testArmMover();    
 };
 
 }    

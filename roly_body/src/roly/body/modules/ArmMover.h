@@ -12,6 +12,7 @@
 #include "roly/body/modules/BodyModule.h"
 #include "roly/body/moves/CyclicMove.h"
 #include "roly/body/moves/MoveFactory.h"
+#include "tuly/utils/IntegerQueue.h"
 
 namespace roly
 {
@@ -32,19 +33,19 @@ public:
          eSTATE_TALK           // send commands to cycler
     };
 private:    
-    // types of message
-    enum eMsg
+    // types of command
+    enum eCmd
     {
-         eMSG_TRIGGER,       // starts a cyclic movement   
-         eMSG_STOP,           // ends a cyclic movement   
-         eMSG_UPDATE       // modifies a cyclic movement
+         eCMD_TRIGGER,       // starts a cyclic movement   
+         eCMD_STOP,           // ends a cyclic movement   
+         eCMD_UPDATE       // modifies a cyclic movement
     };
 
     static log4cxx::LoggerPtr logger;
     // logic
     MoveFactory oMoveFactory;    
     CyclicMove oCyclicMove;    
-    int message;        // type of message to be sent
+    tuly::IntegerQueue oCommandsQueue;
 
 public:
         ArmMover();

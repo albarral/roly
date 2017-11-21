@@ -20,6 +20,7 @@ LoggerPtr BodyTest::logger(Logger::getLogger("roly.body"));
 BodyTest::BodyTest()
 {
     pBodyBus = 0;
+    step = 0;
 }
 
 void BodyTest::connect2Bus(BodyBus& oBodyBus)
@@ -28,41 +29,49 @@ void BodyTest::connect2Bus(BodyBus& oBodyBus)
 }
 
 
-void BodyTest::testArmMover(int test)
+void BodyTest::testArmMover()
 {
-    LOG4CXX_INFO(logger, "testArmMover " + std::to_string(test));    
+    LOG4CXX_INFO(logger, "testArmMover - step " + std::to_string(step));    
     
     if (!isConnected())
     {
         LOG4CXX_WARN(logger, "testArmMover: no bus connection, skip test");    
         return;
     }
-        
-    switch (test)
+            
+    switch (step)
     {
         case 0:
         {
-            int movement = MoveFactory::eMOV_LINE;
-            bool bgo = true;
-            pBodyBus->getCO_MOVER_TYPE().request(movement);
-            //pBodyBus->getCO_MOVER_ACTION().request(bgo);            
+            pBodyBus->getCO_MOVER_TYPE().request(MoveFactory::eMOV_CIRCLE);
+            pBodyBus->getCO_MOVER_ACTION().request(true);            
         }
             break;
             
         case 1:
-        {
-            bool bwider = true;
-            //pBodyBus->getCO_MOVER_WIDER().request(bwider);
-        }
+        case 2:
+        case 3:
+            pBodyBus->getCO_MOVER_WIDER().request(true);
+//            pBodyBus->getCO_MOVER_TALLER().request(true);
             break;
             
-        case 2:
-        {
-            bool bgo = false;
-            //pBodyBus->getCO_MOVER_ACTION().request(bgo);            
-        }
+        case 6:
+        case 7:
+        case 8:
+            pBodyBus->getCO_MOVER_FASTER().request(true);
+            break;
+
+        case 11:
+            pBodyBus->getCO_MOVER_ACTION().request(false);            
+            break;            
+
+        case 12:   
+            // finish test 
+            bfinished = true;            
             break;            
     }
+    
+    step++;
 }
 
 }
