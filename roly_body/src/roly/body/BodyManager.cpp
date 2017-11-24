@@ -20,7 +20,7 @@ BodyManager::BodyManager ()
     blaunched = false;
     topLevel = 1;       
     pBodyBus = 0;       
-    pBodyTalk = 0;       
+    pAmyTalker = 0;       
 }
 
 // Destructor
@@ -30,7 +30,7 @@ BodyManager::~BodyManager ()
 }
 
 
-bool BodyManager::launch(BodyBus& oBodyBus, BodyTalk& oBodyTalk)
+bool BodyManager::launch(BodyBus& oBodyBus, AmyTalker& oAmyTalker)
 {  
     // launch it if not launched yet
     if (!blaunched)
@@ -39,7 +39,7 @@ bool BodyManager::launch(BodyBus& oBodyBus, BodyTalk& oBodyTalk)
         LOG4CXX_INFO(logger, "Launching ");
 
         // skip if bus or talk not enabled
-        if (!oBodyBus.isEnabled() || !oBodyTalk.isEnabled())
+        if (!oBodyBus.isEnabled() || !oAmyTalker.isEnabled())
         {      
             LOG4CXX_ERROR(logger, "launch failed: bus or talk not enabled!");                    
             return false;
@@ -47,7 +47,7 @@ bool BodyManager::launch(BodyBus& oBodyBus, BodyTalk& oBodyTalk)
         
         // store pointers to external objects
         pBodyBus = &oBodyBus;        
-        pBodyTalk = &oBodyTalk;        
+        pAmyTalker = &oAmyTalker;        
                 
         LOG4CXX_INFO(logger, "top level: " << topLevel);
         // organize control architecture in levels
@@ -138,7 +138,7 @@ void BodyManager::initLevel(int num)
     float freq = 10; // TEMP to get from config
 
     BodyBus& oBodyBus = *pBodyBus;
-    BodyTalk& oBodyTalk = *pBodyTalk;
+    AmyTalker& oAmyTalker = *pAmyTalker;
     
     // init BodyModule's
     for (BodyModule* pModule : listModules)
@@ -146,7 +146,7 @@ void BodyManager::initLevel(int num)
         if (pModule->getLevel() == num)
         {                        
             pModule->init();
-            pModule->connect(oBodyBus, oBodyTalk);
+            pModule->connect(oBodyBus, oAmyTalker);
             pModule->setFrequency(freq);  
         }
     }

@@ -96,10 +96,10 @@ void Comfortable::senseBus()
 void Comfortable::talk2Arm()
 {
     // request arm posture
-    talky::Talk2Target& oTalk2ArmAxes = pBodyTalk->getTalk2ArmAxes();
-    oTalk2ArmAxes.addCommand(talky::ArmTopic::eAXIS_PAN_POS, relaxPosture[0]);
-    oTalk2ArmAxes.addCommand(talky::ArmTopic::eAXIS_TILT_POS, relaxPosture[1]);
-    oTalk2ArmAxes.addCommand(talky::ArmTopic::eAXIS_RAD_POS, relaxPosture[2]);
+    nety::NetNodeClient& oAxisClient = pAmyTalker->getAxisClient();
+    oAxisClient.addCommand(talky::ArmTopic::eAXIS_PAN_POS, relaxPosture[0]);
+    oAxisClient.addCommand(talky::ArmTopic::eAXIS_TILT_POS, relaxPosture[1]);
+    oAxisClient.addCommand(talky::ArmTopic::eAXIS_RAD_POS, relaxPosture[2]);
 }
 
 void Comfortable::readFromArm()
@@ -110,10 +110,10 @@ void Comfortable::readFromArm()
     realPosture[3] = 80;
 
     // sense arm posture
-//    talky::Talk2Target& oTalk2ArmAxes = pBodyTalk->getTalk2ArmAxes();
-//    oTalk2ArmAxes.addCommand(talky::ArmTopic::eAXIS_PAN_POS, relaxPosture[0]);
-//    oTalk2ArmAxes.addCommand(talky::ArmTopic::eAXIS_TILT_POS, relaxPosture[1]);
-//    oTalk2ArmAxes.addCommand(talky::ArmTopic::eAXIS_RAD_POS, relaxPosture[2]);
+//    talky::Talk2Target& ooAxisClient = pBodyTalk->getTalk2ArmAxes();
+//    oAxisClient.addCommand(talky::ArmTopic::eAXIS_PAN_POS, relaxPosture[0]);
+//    oAxisClient.addCommand(talky::ArmTopic::eAXIS_TILT_POS, relaxPosture[1]);
+//    oAxisClient.addCommand(talky::ArmTopic::eAXIS_RAD_POS, relaxPosture[2]);
 }
 
 void Comfortable::measureDistance()

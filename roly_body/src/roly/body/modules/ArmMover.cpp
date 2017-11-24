@@ -163,30 +163,29 @@ void ArmMover::triggerMove()
 {    
      //LOG4CXX_INFO(logger, modName << " triggerMove");          
     // starts cycler move
-    pBodyTalk->getTalk2ArmCycler().addCommand(talky::ArmTopic::eCYCLIC_FRONT_START);
+    pAmyTalker->getCyclerClient().addCommand(talky::ArmTopic::eCYCLIC_FRONT_START);
 }
 
 void ArmMover::stopMove()
 {    
      //LOG4CXX_INFO(logger, modName << " stopMove");          
     // stops cycler move
-    pBodyTalk->getTalk2ArmCycler().addCommand(talky::ArmTopic::eCYCLIC_FRONT_STOP);
+    pAmyTalker->getCyclerClient().addCommand(talky::ArmTopic::eCYCLIC_FRONT_STOP);
 }
 
 void ArmMover::updateMove()
 {        
      //LOG4CXX_INFO(logger, modName << " updateMove");          
-     
-     talky::Talk2Target& oTalk2ArmCycler = pBodyTalk->getTalk2ArmCycler();
+     nety::NetNodeClient& oCyclerClient = pAmyTalker->getCyclerClient();
     // modulates move of both cycler components
     // first cycler component        
-    oTalk2ArmCycler.addCommand(talky::ArmTopic::eCYCLIC_FRONT1_FREQ, oCyclicMove.getFreq1());
-    oTalk2ArmCycler.addCommand(talky::ArmTopic::eCYCLIC_FRONT1_ANGLE, oCyclicMove.getAngle1());
-    oTalk2ArmCycler.addCommand(talky::ArmTopic::eCYCLIC_FRONT1_AMP, oCyclicMove.getAmp1());
+    oCyclerClient.addCommand(talky::ArmTopic::eCYCLIC_FRONT1_FREQ, oCyclicMove.getFreq1());
+    oCyclerClient.addCommand(talky::ArmTopic::eCYCLIC_FRONT1_ANGLE, oCyclicMove.getAngle1());
+    oCyclerClient.addCommand(talky::ArmTopic::eCYCLIC_FRONT1_AMP, oCyclicMove.getAmp1());
     // second cycler component        
-    oTalk2ArmCycler.addCommand(talky::ArmTopic::eCYCLIC_FRONT2_FREQ, oCyclicMove.getFreq2());
-    oTalk2ArmCycler.addCommand(talky::ArmTopic::eCYCLIC_FRONT2_ANGLE, oCyclicMove.getAngle2());
-    oTalk2ArmCycler.addCommand(talky::ArmTopic::eCYCLIC_FRONT2_AMP, oCyclicMove.getAmp2());
+    oCyclerClient.addCommand(talky::ArmTopic::eCYCLIC_FRONT2_FREQ, oCyclicMove.getFreq2());
+    oCyclerClient.addCommand(talky::ArmTopic::eCYCLIC_FRONT2_ANGLE, oCyclicMove.getAngle2());
+    oCyclerClient.addCommand(talky::ArmTopic::eCYCLIC_FRONT2_AMP, oCyclicMove.getAmp2());
 }
 
 void ArmMover::writeBus()

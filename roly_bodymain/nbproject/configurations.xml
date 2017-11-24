@@ -54,6 +54,7 @@
             <pElem>../roly_bodycore/src</pElem>
             <pElem>../roly_bodycoms/src</pElem>
             <pElem>../../tron/tuly/src</pElem>
+            <pElem>../../tron/nety/src</pElem>
             <pElem>../../tron/talky/src</pElem>
             <pElem>../../tron/comy/src</pElem>
             <pElem>../../tron/maty/src</pElem>
@@ -108,6 +109,18 @@
                             BC="${MAKE}  -f Makefile CONF=Debug"
                             CC="${MAKE}  -f Makefile CONF=Debug clean"
                             OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libtron_tuly.${CND_DLIB_EXT}">
+              </makeArtifact>
+            </linkerLibProjectItem>
+            <linkerLibProjectItem>
+              <makeArtifact PL="../../tron/nety"
+                            CT="2"
+                            CN="Debug"
+                            AC="true"
+                            BL="true"
+                            WD="../../tron/nety"
+                            BC="${MAKE}  -f Makefile CONF=Debug"
+                            CC="${MAKE}  -f Makefile CONF=Debug clean"
+                            OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libtron_nety.${CND_DLIB_EXT}">
               </makeArtifact>
             </linkerLibProjectItem>
             <linkerLibProjectItem>

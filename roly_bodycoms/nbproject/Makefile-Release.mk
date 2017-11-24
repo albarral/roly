@@ -37,7 +37,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 OBJECTFILES= \
 	${OBJECTDIR}/src/roly/bodycoms/BodyComs.o \
 	${OBJECTDIR}/src/roly/bodycoms/modules/BodyCommander.o \
-	${OBJECTDIR}/src/roly/bodycoms/out/Body2Arm.o
+	${OBJECTDIR}/src/roly/bodycoms/modules/BodyInspector.o
 
 
 # C Compiler Flags
@@ -74,10 +74,10 @@ ${OBJECTDIR}/src/roly/bodycoms/modules/BodyCommander.o: src/roly/bodycoms/module
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycoms/modules/BodyCommander.o src/roly/bodycoms/modules/BodyCommander.cpp
 
-${OBJECTDIR}/src/roly/bodycoms/out/Body2Arm.o: src/roly/bodycoms/out/Body2Arm.cpp 
-	${MKDIR} -p ${OBJECTDIR}/src/roly/bodycoms/out
+${OBJECTDIR}/src/roly/bodycoms/modules/BodyInspector.o: src/roly/bodycoms/modules/BodyInspector.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/roly/bodycoms/modules
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycoms/out/Body2Arm.o src/roly/bodycoms/out/Body2Arm.cpp
+	$(COMPILE.cc) -O2 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycoms/modules/BodyInspector.o src/roly/bodycoms/modules/BodyInspector.cpp
 
 # Subprojects
 .build-subprojects:

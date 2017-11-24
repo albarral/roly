@@ -9,8 +9,7 @@
 #include <string>
 #include <log4cxx/logger.h>
 
-#include "roly/bodycoms/out/Body2Arm.h"
-#include "roly/bodycore/BodyTalk.h"
+#include "roly/bodycore/AmyTalker.h"
 #include "tuly/control/module3.h"
 
 namespace roly
@@ -24,14 +23,13 @@ private:
     std::string modName;          // module name
     bool benabled;
     // logic
-    BodyTalk* pBodyTalk;
-    Body2Arm oBody2Arm; 
+    AmyTalker* pAmyTalker;
 
 public:
     BodyCommander ();
     //~BodyCommander();
 
-   void init(BodyTalk& oBodyTalk);
+   void init(AmyTalker& oAmyTalker);
     bool isEnabled() {return benabled;};
                 
 private:

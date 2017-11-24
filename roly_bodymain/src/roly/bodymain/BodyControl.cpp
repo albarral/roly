@@ -30,14 +30,14 @@ bool BodyControl::launch()
             
     // init bus
     oBodyBus.init();
-    oBodyTalk.init();
+    oAmyTalker.init();
 
     // launch body coms
-    bok = oBodyComs.launch(oBodyBus, oBodyTalk);        
+    bok = oBodyComs.launch(oBodyBus, oAmyTalker);        
 
     if (bok)
         // launch body manager
-        bok = oBodyManager.launch(oBodyBus, oBodyTalk);        
+        bok = oBodyManager.launch(oBodyBus, oAmyTalker);        
 
     return bok;
 }

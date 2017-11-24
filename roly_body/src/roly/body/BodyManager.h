@@ -11,7 +11,7 @@
 #include <log4cxx/logger.h>
 
 #include "roly/bodycore/BodyBus.h"
-#include "roly/bodycore/BodyTalk.h"
+#include "roly/bodycore/AmyTalker.h"
 //#include "amy/arm/config/ArmConfig.h"
 #include "roly/body/modules/ArmMover.h"
 #include "roly/body/modules/Comfortable.h"
@@ -29,7 +29,7 @@ class BodyManager
         bool blaunched;     // indicates when the manager has been launched   
         //AmyConfig oAmyConfig;        
         BodyBus* pBodyBus;        // access to body bus
-        BodyTalk* pBodyTalk;     // access to body talk
+        AmyTalker* pAmyTalker;     // access to amy talker
         int topLevel; // allow activation of modules until this level
         // modules ...
         // level 1
@@ -42,7 +42,7 @@ class BodyManager
         ~BodyManager();
 
        // launches the arm manager to handle the specified robot arm (returns false if something fails)
-       bool launch(BodyBus& oBodyBus, BodyTalk& oBodyTalk);
+       bool launch(BodyBus& oBodyBus, AmyTalker& oAmyTalker);
        // ends the arm manager
        bool end();
        bool isLaunched() {return blaunched;};                

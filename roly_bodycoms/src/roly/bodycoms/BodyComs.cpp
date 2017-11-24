@@ -17,17 +17,22 @@ BodyComs::~BodyComs()
 {    
 }
      
- bool BodyComs::launch(BodyBus& oBodyBus, BodyTalk& oBodyTalk)
+ bool BodyComs::launch(BodyBus& oBodyBus, AmyTalker& oAmyTalker)
 {
     LOG4CXX_INFO(logger, "BodyComs: launch modules");
     //float freq = oAmyConfig.getModulesFreq();
     float freq = 10; // TEMP to get from config
      
     // launch commander module
-    oBodyCommander.init(oBodyTalk);
+    oBodyCommander.init(oAmyTalker);
     oBodyCommander.setFrequency(freq);
     if (oBodyCommander.isEnabled())
         oBodyCommander.on();
+
+    oBodyInspector.init(oAmyTalker);
+    oBodyInspector.setFrequency(freq);
+    if (oBodyInspector.isEnabled())
+        oBodyInspector.on();
     
     return true;
 }
@@ -41,6 +46,13 @@ bool BodyComs::end()
     {
         oBodyCommander.off();
         oBodyCommander.wait();      
+    }
+
+    // finish commander module
+    if (oBodyInspector.isOn())
+    {
+        oBodyInspector.off();
+        oBodyInspector.wait();      
     }
 }
 

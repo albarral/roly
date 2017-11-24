@@ -8,7 +8,7 @@
 
 #include "tuly/control/module3.h"
 #include "roly/bodycore/BodyBus.h"
-#include "roly/bodycore/BodyTalk.h"
+#include "roly/bodycore/AmyTalker.h"
 
 namespace roly
 {
@@ -26,7 +26,7 @@ protected:
     // bus
     bool bconnected;        // connected to bus
     BodyBus* pBodyBus;     // access to body bus
-    BodyTalk* pBodyTalk;     // access to body talk
+    AmyTalker* pAmyTalker;     // access to body talk
 
 public:
     BodyModule();
@@ -37,7 +37,7 @@ public:
     bool isEnabled() {return benabled;};
 
     // bus connection 
-    void connect(BodyBus& oBodyBus, BodyTalk& oBodyTalk);
+    void connect(BodyBus& oBodyBus, AmyTalker& oAmyTalker);
     bool isConnected() {return bconnected;};
     
 protected:

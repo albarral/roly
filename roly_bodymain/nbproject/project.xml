@@ -16,6 +16,7 @@
                 <make-dep-project>../roly_body</make-dep-project>
                 <make-dep-project>../../tron/talky</make-dep-project>
                 <make-dep-project>../roly_bodycoms</make-dep-project>
+                <make-dep-project>../../tron/nety</make-dep-project>
             </make-dep-projects>
             <sourceRootList>
                 <sourceRootElem>src/roly/main</sourceRootElem>
