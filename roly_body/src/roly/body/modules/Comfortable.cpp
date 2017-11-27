@@ -53,16 +53,15 @@ void Comfortable::loop()
     if (binhibited)            
         return;
 
-    readFromArm();
-    measureDistance();
+    senseArm();
     // check if arm is in the relax position (with a tolerance)
     bool brelaxed = (dif[0] <= tolAngle && dif[1] <= tolAngle && dif[3] <= tolRadius);
     
     switch (getState())
     {
         case eSTATE_IN: 
-            // if out of relax position
-            if (!brelaxed)
+            // if arm fixed and out of relax position
+            if (!barmMoving && !brelaxed)
                 setState(eSTATE_OUT);
             break;
 
@@ -74,10 +73,10 @@ void Comfortable::loop()
 
         case eSTATE_WAY:            
             // if relax position achieved, go to IN
-            if (brelaxed)
+            if (!barmMoving && brelaxed)
                 setState(eSTATE_IN);
-            // if not approaching to relax position, go back to OUT
-            else if (dif[0] >= dif0[0] || dif[1] >= dif0[1] || dif[2] >= dif0[2])
+            // if arm fixed, go back to OUT
+            else if (!barmMoving)
                 setState(eSTATE_OUT);
             break;
     }   // end switch        
@@ -96,34 +95,31 @@ void Comfortable::senseBus()
 void Comfortable::talk2Arm()
 {
     // request arm posture
-    nety::NetNodeClient& oAxisClient = pAmyTalker->getAxisClient();
+    nety::NetNodeClient& oAxisClient = pAmyTalker->getArmAxisClient();
     oAxisClient.addCommand(talky::ArmTopic::eAXIS_PAN_POS, relaxPosture[0]);
     oAxisClient.addCommand(talky::ArmTopic::eAXIS_TILT_POS, relaxPosture[1]);
     oAxisClient.addCommand(talky::ArmTopic::eAXIS_RAD_POS, relaxPosture[2]);
 }
 
-void Comfortable::readFromArm()
+void Comfortable::senseArm()
 {
-    LOG4CXX_INFO(logger, "read from arm TO DO");          
-    realPosture[0] = 60;
-    realPosture[1] = 40;
-    realPosture[3] = 80;
-
     // sense arm posture
-//    talky::Talk2Target& ooAxisClient = pBodyTalk->getTalk2ArmAxes();
-//    oAxisClient.addCommand(talky::ArmTopic::eAXIS_PAN_POS, relaxPosture[0]);
-//    oAxisClient.addCommand(talky::ArmTopic::eAXIS_TILT_POS, relaxPosture[1]);
-//    oAxisClient.addCommand(talky::ArmTopic::eAXIS_RAD_POS, relaxPosture[2]);
+    armPosture[0] = pBodyBus->getSI_ARM_PAN().getValue();
+    armPosture[1] = pBodyBus->getSI_ARM_TILT().getValue();
+    armPosture[2] = pBodyBus->getSI_ARM_RADIUS().getValue();
+    
+    measureDistance();
+    // check if arm is moving (some axis speed not zero)
+    barmMoving = (pBodyBus->getSI_ARM_PANSPEED().getValue() != 0.0 || 
+            pBodyBus->getSI_ARM_TILTSPEED().getValue() != 0.0 || 
+            pBodyBus->getSI_ARM_RADIALSPEED().getValue() != 00);
 }
 
 void Comfortable::measureDistance()
 {    
-    dif0[0] = dif[0];
-    dif0[1] = dif[1];
-    dif0[2] = dif[2];
-    dif[0] = fabs(relaxPosture[0] - realPosture[0]);
-    dif[1] = fabs(relaxPosture[1] - realPosture[1]);
-    dif[2] = fabs(relaxPosture[2] - realPosture[2]);
+    dif[0] = fabs(relaxPosture[0] - armPosture[0]);
+    dif[1] = fabs(relaxPosture[1] - armPosture[1]);
+    dif[2] = fabs(relaxPosture[2] - armPosture[2]);
 }
 
 

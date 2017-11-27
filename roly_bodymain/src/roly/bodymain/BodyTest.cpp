@@ -41,11 +41,6 @@ void BodyTest::testArmMover()
             
     switch (step)
     {
-        case 0:   
-            // finish test 
-            bfinished = true;            
-            break;            
-
         case 1:
         {
             pBodyBus->getCO_MOVER_TYPE().request(MoveFactory::eMOV_CIRCLE);

@@ -37,9 +37,9 @@ private:
     bool binhibited;
     // logic
     int relaxPosture[3];            // arm's relax posture (pan, tilt, radius)
-    int realPosture[3];              // arm's real posture (pan, tilt, radius)
+    int armPosture[3];              // arm's real posture (pan, tilt, radius)
+    bool barmMoving;            
     float dif[3];                      // distance to arm's relax posture
-    float dif0[3];                   // previous distance to arm's relax posture
     float tolAngle;                   // allowed (pan, tilt) tolerance of relax posture (degrees)
     float tolRadius;                 // allowed radial tolerance of relax posture (cm)
 
@@ -63,8 +63,8 @@ private:
         
         // sends message to arm system
         void talk2Arm();
-        // read info from arm system
-        void readFromArm();
+        // sense arm info
+        void senseArm();
         
         // measure distance 
         void measureDistance();

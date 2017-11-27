@@ -42,17 +42,18 @@ void runBody()
     BodyControl oBodyControl; 
 
     // TEST SECTION
-    BodyTest oBodyTest;
-    oBodyTest.connect2Bus(oBodyControl.getBodyBus4Test());
+//    BodyTest oBodyTest;
+//    oBodyTest.connect2Bus(oBodyControl.getBodyBus4Test());
 
     int seconds = 0;
     // launch body control & wait for it to end        
     if (oBodyControl.launch())
     {    
         //while (!oBodyControl.checkEndRequested()) 
-        while (!oBodyTest.isTestFinished()) 
+        //while (!oBodyTest.isTestFinished()) 
+        while (seconds < 20)
         {
-            oBodyTest.testArmMover();
+            //oBodyTest.testArmMover();
 
             sleep(1);            
             seconds++;            

@@ -163,20 +163,20 @@ void ArmMover::triggerMove()
 {    
      //LOG4CXX_INFO(logger, modName << " triggerMove");          
     // starts cycler move
-    pAmyTalker->getCyclerClient().addCommand(talky::ArmTopic::eCYCLIC_FRONT_START);
+    pAmyTalker->getArmCyclerClient().addCommand(talky::ArmTopic::eCYCLIC_FRONT_START);
 }
 
 void ArmMover::stopMove()
 {    
      //LOG4CXX_INFO(logger, modName << " stopMove");          
     // stops cycler move
-    pAmyTalker->getCyclerClient().addCommand(talky::ArmTopic::eCYCLIC_FRONT_STOP);
+    pAmyTalker->getArmCyclerClient().addCommand(talky::ArmTopic::eCYCLIC_FRONT_STOP);
 }
 
 void ArmMover::updateMove()
 {        
      //LOG4CXX_INFO(logger, modName << " updateMove");          
-     nety::NetNodeClient& oCyclerClient = pAmyTalker->getCyclerClient();
+     nety::NetNodeClient& oCyclerClient = pAmyTalker->getArmCyclerClient();
     // modulates move of both cycler components
     // first cycler component        
     oCyclerClient.addCommand(talky::ArmTopic::eCYCLIC_FRONT1_FREQ, oCyclicMove.getFreq1());
