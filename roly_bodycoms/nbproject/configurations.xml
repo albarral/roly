@@ -13,6 +13,10 @@
                    displayName="Source Files"
                    projectFiles="true">
       <logicalFolder name="bodycoms" displayName="bodycoms" projectFiles="true">
+        <logicalFolder name="in" displayName="in" projectFiles="true">
+          <itemPath>src/roly/bodycoms/in/ComsInBodySense.cpp</itemPath>
+          <itemPath>src/roly/bodycoms/in/ComsInBodySense.h</itemPath>
+        </logicalFolder>
         <logicalFolder name="modules" displayName="modules" projectFiles="true">
           <itemPath>src/roly/bodycoms/modules/BodyCommander.cpp</itemPath>
           <itemPath>src/roly/bodycoms/modules/BodyCommander.h</itemPath>
@@ -140,6 +144,16 @@
       </item>
       <item path="src/roly/bodycoms/BodyComs.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/roly/bodycoms/in/ComsInBodySense.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/roly/bodycoms/in/ComsInBodySense.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/roly/bodycoms/modules/BodyCommander.cpp"
             ex="false"
             tool="1"
@@ -184,6 +198,16 @@
       <item path="src/roly/bodycoms/BodyComs.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/roly/bodycoms/BodyComs.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/roly/bodycoms/in/ComsInBodySense.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/roly/bodycoms/in/ComsInBodySense.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="src/roly/bodycoms/modules/BodyCommander.cpp"
             ex="false"

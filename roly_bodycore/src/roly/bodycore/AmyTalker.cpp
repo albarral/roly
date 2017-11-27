@@ -20,15 +20,15 @@ void AmyTalker::init()
     // connects all communication nodes to amy
     int topic = talky::Topics::eTOPIC_ARM;
     // clients
-    oCyclerClient.init(topic, talky::ArmTopic::eCAT_ARM_CYCLIC);
-    oAxisClient.init(topic, talky::ArmTopic::eCAT_ARM_AXIS);
+    oArmCyclerClient.init(topic, talky::ArmTopic::eCAT_ARM_CYCLIC);
+    oArmAxisClient.init(topic, talky::ArmTopic::eCAT_ARM_AXIS);
     // subscribers
-    oAxisSubscriber.init(topic, talky::ArmTopic::eCAT_ARM_AXIS);
+    oArmAxisSubscriber.init(topic, talky::ArmTopic::eCAT_ARM_AXIS);
     
     // enabled if all nodes initialized
-    benabled = oCyclerClient.isConnected() && 
-            oAxisClient.isConnected() &&
-            oAxisSubscriber.isConnected();
+    benabled = oArmCyclerClient.isConnected() && 
+            oArmAxisClient.isConnected() &&
+            oArmAxisSubscriber.isConnected();
 }
 
 

@@ -1,5 +1,5 @@
-#ifndef __ROLY_BODYCOMS_BODYLISTENER_H
-#define __ROLY_BODYCOMS_BODYLISTENER_H
+#ifndef __ROLY_BODYCOMS_BODYINSPECTOR_H
+#define __ROLY_BODYCOMS_BODYINSPECTOR_H
 
 /***************************************************************************
  *   Copyright (C) 2016 by Migtron Robotics   *
@@ -10,8 +10,9 @@
 #include <log4cxx/logger.h>
 
 #include "roly/bodycore/AmyTalker.h"
+#include "roly/bodycore/BodyBus.h"
+#include "roly/bodycoms/in/ComsInBodySense.h"
 #include "tuly/control/module3.h"
-//#include "amy/coms/in/ComsArmControl.h"
 
 namespace roly
 {
@@ -24,22 +25,16 @@ private:
     std::string modName;          // module name
     bool benabled;
     // logic
-//    ComsArmControl oComsArmControl;         // object that gets talky commands and transforms them to bus sensorl values
-//    bool brequestedBodyEnd;
     AmyTalker* pAmyTalker;
+    ComsInBodySense oComsInBodySense;     // object to transform talky sense info into bus signals
 
 public:
     BodyInspector();
     //~BodyInspector();
 
- //   void init(ArmBus& oArmBus);       
-    void init(AmyTalker& oAmyTalker);
+    void init(BodyBus& oBodyBus, AmyTalker& oAmyTalker);
     bool isEnabled() {return benabled;};
-        
-    // check special actions
-//    bool checkSpecialActions();    
-//    bool getBodyEndRequested() {return brequestedBodyEnd;};
-        
+                
 private:
     virtual void first();
     // executes the behaviour

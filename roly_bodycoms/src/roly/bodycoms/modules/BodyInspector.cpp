@@ -13,7 +13,7 @@ using namespace log4cxx;
 
 namespace roly
 {
-LoggerPtr BodyInspector::logger(Logger::getLogger("roly.body"));
+LoggerPtr BodyInspector::logger(Logger::getLogger("roly.body.coms"));
 
 // Constructor 
 BodyInspector::BodyInspector()
@@ -23,10 +23,12 @@ BodyInspector::BodyInspector()
     pAmyTalker = 0;        
  }
 
-void BodyInspector::init(AmyTalker& oAmyTalker)
+void BodyInspector::init(BodyBus& oBodyBus, AmyTalker& oAmyTalker)
 {
     pAmyTalker = &oAmyTalker;
 
+    oComsInBodySense.connect2Bus(oBodyBus);
+    
     if (pAmyTalker != 0)
     {
         benabled = true;
@@ -43,27 +45,25 @@ void BodyInspector::first()
 
 void BodyInspector::loop()
 {
-    // listen to axis messages
-    checkSubscriber(pAmyTalker->getAxisSubscriber());
-}
-
-void BodyInspector::checkSubscriber(nety::NetNodeSubscriber& oNetySubscriber)
-{
     talky::Command oCommand;
 
+    // inspect ARM AXES data
+    nety::NetNodeSubscriber& oArmAxisSubscriber = pAmyTalker->getArmAxisSubscriber();    
     // get received messages
-    oNetySubscriber.absorb();
+    oArmAxisSubscriber.absorb();
     // process them to commands
-    oNetySubscriber.process();
+    oArmAxisSubscriber.process();
     // consume commands queue
-    while (oNetySubscriber.hasCommands())
+    while (oArmAxisSubscriber.hasCommands())
     {                    
         // process each command to a proper bus action
-        if (oNetySubscriber.fetchCommand(oCommand))
+        if (oArmAxisSubscriber.fetchCommand(oCommand))
         {
-            LOG4CXX_INFO(logger, modName + ": cmd received - " + oCommand.toString());        
-            //oComsArmControl.processCommand(oCommand);
+            //LOG4CXX_INFO(logger, modName + ": cmd received - " + oCommand.toString());        
+            oComsInBodySense.processArmAxesData(oCommand);
         }
-    }                
+    }                    
+    
 }
+
 }

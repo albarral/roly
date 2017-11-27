@@ -10,6 +10,7 @@
 
 #include "tuly/control/brooks/controlT.h"
 #include "tuly/control/brooks/inhibition.h"
+#include "tuly/control/brooks/sensorT.h"
 
 namespace roly
 {
@@ -29,6 +30,14 @@ class BodyBus
         tuly::ControlT<bool> CO_MOVER_TALLER;    // change movement height
         tuly::ControlT<bool> CO_MOVER_FASTER;    // change movement speed
         
+        // SENSORS
+        tuly::SensorT<float> SI_ARM_PAN;                  // real pan position (degrees)
+        tuly::SensorT<float> SI_ARM_TILT;                  // real tilt position (degrees)
+        tuly::SensorT<float> SI_ARM_RADIUS;                  // real radial position (cm)
+        tuly::SensorT<float> SI_ARM_PANSPEED;         // real pan speed (degrees/s)
+        tuly::SensorT<float> SI_ARM_TILTSPEED;         // real tilt speed (degrees/s)
+        tuly::SensorT<float> SI_ARM_RADIALSPEED;         // real radial speed (cm/s)
+        
     public:
         BodyBus();
         //~BodyBus();
@@ -47,7 +56,15 @@ class BodyBus
         tuly::ControlT<bool>& getCO_MOVER_WIDER() {return CO_MOVER_WIDER;};
         tuly::ControlT<bool>& getCO_MOVER_TALLER() {return CO_MOVER_TALLER;};
         tuly::ControlT<bool>& getCO_MOVER_FASTER() {return CO_MOVER_FASTER;};
-                
+
+        // SENSORS
+        tuly::SensorT<float>& getSI_ARM_PAN() {return SI_ARM_PAN;};        
+        tuly::SensorT<float>& getSI_ARM_TILT() {return SI_ARM_TILT;};        
+        tuly::SensorT<float>& getSI_ARM_RADIUS() {return SI_ARM_RADIUS;};        
+        tuly::SensorT<float>& getSI_ARM_PANSPEED() {return SI_ARM_PANSPEED;};        
+        tuly::SensorT<float>& getSI_ARM_TILTSPEED() {return SI_ARM_TILTSPEED;};        
+        tuly::SensorT<float>& getSI_ARM_RADIALSPEED() {return SI_ARM_RADIALSPEED;};        
+        
         std::string toString();
 };
 

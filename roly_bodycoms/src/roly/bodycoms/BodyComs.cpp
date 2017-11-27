@@ -7,7 +7,7 @@
 
 namespace roly
 {
-log4cxx::LoggerPtr BodyComs::logger(log4cxx::Logger::getLogger("roly.body"));
+log4cxx::LoggerPtr BodyComs::logger(log4cxx::Logger::getLogger("roly.body.coms"));
 
 BodyComs::BodyComs() 
 {
@@ -29,7 +29,7 @@ BodyComs::~BodyComs()
     if (oBodyCommander.isEnabled())
         oBodyCommander.on();
 
-    oBodyInspector.init(oAmyTalker);
+    oBodyInspector.init(oBodyBus, oAmyTalker);
     oBodyInspector.setFrequency(freq);
     if (oBodyInspector.isEnabled())
         oBodyInspector.on();

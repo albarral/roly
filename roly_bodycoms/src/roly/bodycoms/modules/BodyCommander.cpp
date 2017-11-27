@@ -11,7 +11,7 @@ using namespace log4cxx;
 
 namespace roly
 {
-LoggerPtr BodyCommander::logger(Logger::getLogger("roly.body"));
+LoggerPtr BodyCommander::logger(Logger::getLogger("roly.body.coms"));
 
 // Constructor 
 BodyCommander::BodyCommander ()
@@ -42,11 +42,11 @@ void BodyCommander::first()
 void BodyCommander::loop()
 {      
     // send commands for arm cyclic category
-    pAmyTalker->getCyclerClient().process();
-    pAmyTalker->getCyclerClient().flush();
+    pAmyTalker->getArmCyclerClient().process();
+    pAmyTalker->getArmCyclerClient().flush();
     // send commands for arm axis category
-    pAmyTalker->getAxisClient().process();
-    pAmyTalker->getAxisClient().flush();    
+    pAmyTalker->getArmAxisClient().process();
+    pAmyTalker->getArmAxisClient().flush();    
 }
 
 }

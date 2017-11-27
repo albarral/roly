@@ -36,6 +36,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/src/roly/bodycoms/BodyComs.o \
+	${OBJECTDIR}/src/roly/bodycoms/in/ComsInBodySense.o \
 	${OBJECTDIR}/src/roly/bodycoms/modules/BodyCommander.o \
 	${OBJECTDIR}/src/roly/bodycoms/modules/BodyInspector.o
 
@@ -78,6 +79,11 @@ ${OBJECTDIR}/src/roly/bodycoms/BodyComs.o: src/roly/bodycoms/BodyComs.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/roly/bodycoms
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -Isrc -I../roly_bodycore/src -I../../tron/tuly/src -I../../tron/nety/src -I../../tron/talky/src -I../../tron/comy/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycoms/BodyComs.o src/roly/bodycoms/BodyComs.cpp
+
+${OBJECTDIR}/src/roly/bodycoms/in/ComsInBodySense.o: src/roly/bodycoms/in/ComsInBodySense.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/roly/bodycoms/in
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -Isrc -I../roly_bodycore/src -I../../tron/tuly/src -I../../tron/nety/src -I../../tron/talky/src -I../../tron/comy/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycoms/in/ComsInBodySense.o src/roly/bodycoms/in/ComsInBodySense.cpp
 
 ${OBJECTDIR}/src/roly/bodycoms/modules/BodyCommander.o: src/roly/bodycoms/modules/BodyCommander.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/roly/bodycoms/modules
