@@ -18,8 +18,8 @@
           <itemPath>src/roly/body/modules/ArmMover.h</itemPath>
           <itemPath>src/roly/body/modules/BodyModule.cpp</itemPath>
           <itemPath>src/roly/body/modules/BodyModule.h</itemPath>
-          <itemPath>src/roly/body/modules/Comfortable.cpp</itemPath>
-          <itemPath>src/roly/body/modules/Comfortable.h</itemPath>
+          <itemPath>src/roly/body/modules/ComfortableArm.cpp</itemPath>
+          <itemPath>src/roly/body/modules/ComfortableArm.h</itemPath>
         </logicalFolder>
         <logicalFolder name="moves" displayName="moves" projectFiles="true">
           <itemPath>src/roly/body/moves/CyclicMove.cpp</itemPath>
@@ -159,12 +159,12 @@
       </item>
       <item path="src/roly/body/modules/BodyModule.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/roly/body/modules/Comfortable.cpp"
+      <item path="src/roly/body/modules/ComfortableArm.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
-      <item path="src/roly/body/modules/Comfortable.h"
+      <item path="src/roly/body/modules/ComfortableArm.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -216,12 +216,12 @@
       </item>
       <item path="src/roly/body/modules/BodyModule.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/roly/body/modules/Comfortable.cpp"
+      <item path="src/roly/body/modules/ComfortableArm.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
-      <item path="src/roly/body/modules/Comfortable.h"
+      <item path="src/roly/body/modules/ComfortableArm.h"
             ex="false"
             tool="3"
             flavor2="0">

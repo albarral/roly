@@ -38,7 +38,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/roly/body/BodyManager.o \
 	${OBJECTDIR}/src/roly/body/modules/ArmMover.o \
 	${OBJECTDIR}/src/roly/body/modules/BodyModule.o \
-	${OBJECTDIR}/src/roly/body/modules/Comfortable.o \
+	${OBJECTDIR}/src/roly/body/modules/ComfortableArm.o \
 	${OBJECTDIR}/src/roly/body/moves/CyclicMove.o \
 	${OBJECTDIR}/src/roly/body/moves/MoveFactory.o
 
@@ -82,10 +82,10 @@ ${OBJECTDIR}/src/roly/body/modules/BodyModule.o: src/roly/body/modules/BodyModul
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/body/modules/BodyModule.o src/roly/body/modules/BodyModule.cpp
 
-${OBJECTDIR}/src/roly/body/modules/Comfortable.o: src/roly/body/modules/Comfortable.cpp 
+${OBJECTDIR}/src/roly/body/modules/ComfortableArm.o: src/roly/body/modules/ComfortableArm.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/roly/body/modules
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/body/modules/Comfortable.o src/roly/body/modules/Comfortable.cpp
+	$(COMPILE.cc) -O2 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/body/modules/ComfortableArm.o src/roly/body/modules/ComfortableArm.cpp
 
 ${OBJECTDIR}/src/roly/body/moves/CyclicMove.o: src/roly/body/moves/CyclicMove.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/roly/body/moves

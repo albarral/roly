@@ -1,5 +1,5 @@
-#ifndef __ROLY_BODY_COMFORTABLE_H
-#define __ROLY_BODY_COMFORTABLE_H
+#ifndef __ROLY_BODY_COMFORTABLE_ARM_H
+#define __ROLY_BODY_COMFORTABLE_ARM_H
 
 /***************************************************************************
  *   Copyright (C) 2017 by Migtron Robotics   *
@@ -10,25 +10,28 @@
 #include <log4cxx/logger.h>
 
 #include "roly/body/modules/BodyModule.h"
+#include "maty/math/Click.h"
 
 namespace roly
 {
-// Module used to have a comfortable posture.
+// Module used to have a comfortable arm posture.
 // States: 
-// IN: body in comfortable posture
-// OUT: body out of comfortable posture (request posture) 
-// WAY: body on its way to the comfortable posture
+// RELAXED: arm in comfort zone
+// OUT: arm moving out of comfort zone
+// TIRED: motionless arm out of comfort zone
+// RELAX: command arm relax posture
 // Output: 
 // arm position (pan, tilt, radius)
-class Comfortable : public BodyModule
+class ComfortableArm : public BodyModule
 {
 public:
     // states of the module
-    enum eType
+    enum eState
     {
-         eSTATE_IN,           
+         eSTATE_RELAXED,           
          eSTATE_OUT, 
-         eSTATE_WAY 
+         eSTATE_TIRED, 
+         eSTATE_RELAX 
     };
     
 private:    
@@ -36,16 +39,20 @@ private:
     // bus
     bool binhibited;
     // logic
+    int armPosture[3];            // measured arm posture (pan, tilt, radius)
+    int armSpeed[3];              // measured arm speed (vpan, vtilt, vradius)
+    bool barmMoving;    
+    bool bcomfortZone;
+    maty::Click oClickTired;
+    // config
     int relaxPosture[3];            // arm's relax posture (pan, tilt, radius)
-    int armPosture[3];              // arm's real posture (pan, tilt, radius)
-    bool barmMoving;            
-    float dif[3];                      // distance to arm's relax posture
     float tolAngle;                   // allowed (pan, tilt) tolerance of relax posture (degrees)
     float tolRadius;                 // allowed radial tolerance of relax posture (cm)
+    int maxTiredMillis;            // max allowed time for a tired arm  (motionless & out of comfort) (milliseconds)
 
 public:
-        Comfortable();
-        //~Comfortable();
+        ComfortableArm();
+        //~ComfortableArm();
                                
 private:       
         // first actions when the thread begins 
@@ -62,12 +69,12 @@ private:
         void showState();
         
         // sends message to arm system
-        void talk2Arm();
-        // sense arm info
-        void senseArm();
+        void requestComfortPosture();
         
-        // measure distance 
-        void measureDistance();
+        // check if arm is in the comfort zone (near the relax posture)
+        void checkComfortZone();
+        // checks if arm is moving 
+        void checkArmMovement();
 };
 }
 #endif

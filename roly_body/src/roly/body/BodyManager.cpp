@@ -19,8 +19,6 @@ BodyManager::BodyManager ()
 {    
     blaunched = false;
     topLevel = 1;       
-    pBodyBus = 0;       
-    pAmyTalker = 0;       
 }
 
 // Destructor
@@ -81,9 +79,9 @@ void BodyManager::initArchitecture()
     // arm mover
     oArmMover.setLevel(nivel);
     listModules.push_back(&oArmMover);
-    // arm mover
-    oComfortable.setLevel(nivel);
-    listModules.push_back(&oComfortable);
+    // comfortable arm
+    oComfortableArm.setLevel(nivel);
+    listModules.push_back(&oComfortableArm);
 }
 
 void BodyManager::showArchitecture()

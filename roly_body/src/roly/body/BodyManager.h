@@ -14,7 +14,7 @@
 #include "roly/bodycore/AmyTalker.h"
 //#include "amy/arm/config/ArmConfig.h"
 #include "roly/body/modules/ArmMover.h"
-#include "roly/body/modules/Comfortable.h"
+#include "roly/body/modules/ComfortableArm.h"
 #include "roly/body/modules/BodyModule.h"
 
 namespace roly
@@ -34,7 +34,7 @@ class BodyManager
         // modules ...
         // level 1
         ArmMover oArmMover;
-        Comfortable oComfortable;
+        ComfortableArm oComfortableArm;
         std::vector<BodyModule*> listModules;      // list of modules (pointers)
 
     public:
