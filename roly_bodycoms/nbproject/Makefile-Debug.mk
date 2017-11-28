@@ -36,9 +36,11 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/src/roly/bodycoms/BodyComs.o \
+	${OBJECTDIR}/src/roly/bodycoms/in/ComsInBodyControl.o \
 	${OBJECTDIR}/src/roly/bodycoms/in/ComsInBodySense.o \
 	${OBJECTDIR}/src/roly/bodycoms/modules/BodyCommander.o \
-	${OBJECTDIR}/src/roly/bodycoms/modules/BodyInspector.o
+	${OBJECTDIR}/src/roly/bodycoms/modules/BodyInspector.o \
+	${OBJECTDIR}/src/roly/bodycoms/modules/BodyListener.o
 
 
 # C Compiler Flags
@@ -80,6 +82,11 @@ ${OBJECTDIR}/src/roly/bodycoms/BodyComs.o: src/roly/bodycoms/BodyComs.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -Isrc -I../roly_bodycore/src -I../../tron/tuly/src -I../../tron/nety/src -I../../tron/talky/src -I../../tron/comy/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycoms/BodyComs.o src/roly/bodycoms/BodyComs.cpp
 
+${OBJECTDIR}/src/roly/bodycoms/in/ComsInBodyControl.o: src/roly/bodycoms/in/ComsInBodyControl.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/roly/bodycoms/in
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -Isrc -I../roly_bodycore/src -I../../tron/tuly/src -I../../tron/nety/src -I../../tron/talky/src -I../../tron/comy/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycoms/in/ComsInBodyControl.o src/roly/bodycoms/in/ComsInBodyControl.cpp
+
 ${OBJECTDIR}/src/roly/bodycoms/in/ComsInBodySense.o: src/roly/bodycoms/in/ComsInBodySense.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/roly/bodycoms/in
 	${RM} "$@.d"
@@ -94,6 +101,11 @@ ${OBJECTDIR}/src/roly/bodycoms/modules/BodyInspector.o: src/roly/bodycoms/module
 	${MKDIR} -p ${OBJECTDIR}/src/roly/bodycoms/modules
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -Isrc -I../roly_bodycore/src -I../../tron/tuly/src -I../../tron/nety/src -I../../tron/talky/src -I../../tron/comy/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycoms/modules/BodyInspector.o src/roly/bodycoms/modules/BodyInspector.cpp
+
+${OBJECTDIR}/src/roly/bodycoms/modules/BodyListener.o: src/roly/bodycoms/modules/BodyListener.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/roly/bodycoms/modules
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -Isrc -I../roly_bodycore/src -I../../tron/tuly/src -I../../tron/nety/src -I../../tron/talky/src -I../../tron/comy/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycoms/modules/BodyListener.o src/roly/bodycoms/modules/BodyListener.cpp
 
 # Subprojects
 .build-subprojects:

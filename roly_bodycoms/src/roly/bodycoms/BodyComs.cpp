@@ -23,7 +23,8 @@ BodyComs::~BodyComs()
     //float freq = oAmyConfig.getModulesFreq();
     float freq = 10; // TEMP to get from config
      
-    // launch commander module
+    // init and start modules
+    
     oBodyCommander.init(oAmyTalker);
     oBodyCommander.setFrequency(freq);
     if (oBodyCommander.isEnabled())
@@ -34,6 +35,11 @@ BodyComs::~BodyComs()
     if (oBodyInspector.isEnabled())
         oBodyInspector.on();
     
+    oBodyListener.init(oBodyBus);
+    oBodyListener.setFrequency(freq);
+    if (oBodyListener.isEnabled())
+        oBodyListener.on();
+
     return true;
 }
 
@@ -41,18 +47,24 @@ bool BodyComs::end()
 {
     LOG4CXX_INFO(logger, "BodyComs: end modules");
 
-    // finish commander module
+    // finish modules
+    
     if (oBodyCommander.isOn())
     {
         oBodyCommander.off();
         oBodyCommander.wait();      
     }
 
-    // finish commander module
     if (oBodyInspector.isOn())
     {
         oBodyInspector.off();
         oBodyInspector.wait();      
+    }
+
+    if (oBodyListener.isOn())
+    {
+        oBodyListener.off();
+        oBodyListener.wait();      
     }
 }
 
@@ -60,23 +72,11 @@ bool BodyComs::checkEndRequested()
 {
     bool byes = false;
 
-    // TO DO from BodyListener
-//    // if pending special actions
-//    if (oAmyListener.checkSpecialActions())
-//    {
-//        // check if end action requested
-//        for (int action : oAmyListener.getComsData().getListSpecialActions())
-//        {
-//            if (action == ComsData::eACTION_AMY_END)
-//            {
-//                byes = true;
-//                break;
-//            }
-//        }
-//
-//        // reset special actions
-//        oAmyListener.clearSpecialActions();
-//    }
+    // if pending special actions
+    if (oBodyListener.checkSpecialActions())
+    {
+        byes = oBodyListener.getBodyEndRequested();
+    }
     return byes;    
 }
 

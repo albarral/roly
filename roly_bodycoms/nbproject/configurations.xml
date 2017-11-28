@@ -14,6 +14,8 @@
                    projectFiles="true">
       <logicalFolder name="bodycoms" displayName="bodycoms" projectFiles="true">
         <logicalFolder name="in" displayName="in" projectFiles="true">
+          <itemPath>src/roly/bodycoms/in/ComsInBodyControl.cpp</itemPath>
+          <itemPath>src/roly/bodycoms/in/ComsInBodyControl.h</itemPath>
           <itemPath>src/roly/bodycoms/in/ComsInBodySense.cpp</itemPath>
           <itemPath>src/roly/bodycoms/in/ComsInBodySense.h</itemPath>
         </logicalFolder>
@@ -22,6 +24,8 @@
           <itemPath>src/roly/bodycoms/modules/BodyCommander.h</itemPath>
           <itemPath>src/roly/bodycoms/modules/BodyInspector.cpp</itemPath>
           <itemPath>src/roly/bodycoms/modules/BodyInspector.h</itemPath>
+          <itemPath>src/roly/bodycoms/modules/BodyListener.cpp</itemPath>
+          <itemPath>src/roly/bodycoms/modules/BodyListener.h</itemPath>
         </logicalFolder>
         <itemPath>src/roly/bodycoms/BodyComs.cpp</itemPath>
         <itemPath>src/roly/bodycoms/BodyComs.h</itemPath>
@@ -144,6 +148,16 @@
       </item>
       <item path="src/roly/bodycoms/BodyComs.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/roly/bodycoms/in/ComsInBodyControl.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/roly/bodycoms/in/ComsInBodyControl.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/roly/bodycoms/in/ComsInBodySense.cpp"
             ex="false"
             tool="1"
@@ -170,6 +184,16 @@
             flavor2="0">
       </item>
       <item path="src/roly/bodycoms/modules/BodyInspector.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/roly/bodycoms/modules/BodyListener.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/roly/bodycoms/modules/BodyListener.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -199,6 +223,16 @@
       </item>
       <item path="src/roly/bodycoms/BodyComs.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/roly/bodycoms/in/ComsInBodyControl.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/roly/bodycoms/in/ComsInBodyControl.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/roly/bodycoms/in/ComsInBodySense.cpp"
             ex="false"
             tool="1"
@@ -225,6 +259,16 @@
             flavor2="0">
       </item>
       <item path="src/roly/bodycoms/modules/BodyInspector.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/roly/bodycoms/modules/BodyListener.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/roly/bodycoms/modules/BodyListener.h"
             ex="false"
             tool="3"
             flavor2="0">

@@ -13,6 +13,7 @@
 //#include "roly/bodycore/config/AmyConfig.h"
 #include "roly/bodycoms/modules/BodyCommander.h"
 #include "roly/bodycoms/modules/BodyInspector.h"
+#include "roly/bodycoms/modules/BodyListener.h"
 
 namespace roly
 {
@@ -21,8 +22,9 @@ class BodyComs
 private:    
     static log4cxx::LoggerPtr logger;      
     //AmyConfig oAmyConfig;
-    BodyCommander oBodyCommander;   // communications module for commanding control info
-    BodyInspector oBodyInspector;
+    BodyCommander oBodyCommander;   // communications module to send control commands to external nodes
+    BodyInspector oBodyInspector;            // communications module to inspect sensor info from external nodes
+    BodyListener oBodyListener;        // communications module to listen to control commands from external nodes
 
 public:
   BodyComs();
