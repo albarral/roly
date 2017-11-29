@@ -19,10 +19,16 @@ class BodyBus
     private:        
         bool benabled;
 
-        // Comfortable module
+        // INHIBITIONS
+        tuly::Inhibition CO_INHIBIT_EXPRESSIVE;       // inhibit expressive module
         tuly::Inhibition CO_INHIBIT_COMFORTABLE;    // inhibit comfortable module
         
-        // ArmMover
+        // CONTROLS        
+        // Expressive module
+        tuly::ControlT<int> CO_EXPRESSIVE_ACTION;   // action to express 
+        tuly::ControlT<bool> CO_EXPRESSIVE_HALT;    // halt any ongoing action expression        
+        
+        // ArmMover module
         tuly::ControlT<int> CO_MOVER_TYPE;       // set movement type
         tuly::ControlT<bool> CO_MOVER_ACTION;    // start/stop movement
         tuly::ControlT<int> CO_MOVER_TURN;       // change movement orientation
@@ -45,11 +51,15 @@ class BodyBus
         void init();        
         bool isEnabled() {return benabled;};
         
-        // CONTROLS
-        // Comfortable module
+        // INHIBITIONS
+        tuly::Inhibition& getCO_INHIBIT_EXPRESSIVE() {return CO_INHIBIT_EXPRESSIVE;};
         tuly::Inhibition& getCO_INHIBIT_COMFORTABLE() {return CO_INHIBIT_COMFORTABLE;};
-        
-        // ArmMover
+
+        // CONTROLS        
+        // Expressive module
+        tuly::ControlT<int>& getCO_EXPRESSIVE_ACTION() {return CO_EXPRESSIVE_ACTION;};
+        tuly::ControlT<bool>& getCO_EXPRESSIVE_HALT() {return CO_EXPRESSIVE_HALT;};
+        // ArmMover module
         tuly::ControlT<int>& getCO_MOVER_TYPE() {return CO_MOVER_TYPE;};
         tuly::ControlT<bool>& getCO_MOVER_ACTION() {return CO_MOVER_ACTION;};
         tuly::ControlT<int>& getCO_MOVER_TURN() {return CO_MOVER_TURN;};

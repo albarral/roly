@@ -18,7 +18,7 @@ LoggerPtr BodyManager::logger(Logger::getLogger("roly.body"));
 BodyManager::BodyManager ()
 {    
     blaunched = false;
-    topLevel = 1;       
+    topLevel = 2;       
 }
 
 // Destructor
@@ -71,10 +71,8 @@ bool BodyManager::end()
 
 void BodyManager::initArchitecture()
 {
-    int nivel;
-    
     // LEVEL 1    
-    nivel = 1;
+    int nivel = 1;
     
     // arm mover
     oArmMover.setLevel(nivel);
@@ -82,6 +80,12 @@ void BodyManager::initArchitecture()
     // comfortable arm
     oComfortableArm.setLevel(nivel);
     listModules.push_back(&oComfortableArm);
+
+    nivel = 2;
+    
+    // expressive
+    oExpressive.setLevel(nivel);
+    listModules.push_back(&oExpressive);
 }
 
 void BodyManager::showArchitecture()

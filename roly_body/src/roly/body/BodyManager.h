@@ -13,6 +13,7 @@
 #include "roly/bodycore/BodyBus.h"
 #include "roly/bodycore/AmyTalker.h"
 //#include "amy/arm/config/ArmConfig.h"
+#include "roly/body/modules/Expressive.h"
 #include "roly/body/modules/ArmMover.h"
 #include "roly/body/modules/ComfortableArm.h"
 #include "roly/body/modules/BodyModule.h"
@@ -32,6 +33,8 @@ class BodyManager
         AmyTalker* pAmyTalker;     // access to amy talker
         int topLevel; // allow activation of modules until this level
         // modules ...
+        // level 2
+        Expressive oExpressive;
         // level 1
         ArmMover oArmMover;
         ComfortableArm oComfortableArm;

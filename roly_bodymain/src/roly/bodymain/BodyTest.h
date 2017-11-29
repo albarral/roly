@@ -32,6 +32,7 @@ public:
     bool isTestFinished() {return bfinished;};
 
     void testArmMover();    
+    void testExpressive();
 };
 
 }    

@@ -73,4 +73,24 @@ void BodyTest::testArmMover()
     step++;
 }
 
+void BodyTest::testExpressive()
+{
+    if (!isConnected())
+    {
+        LOG4CXX_WARN(logger, "testExpressive: no bus connection, skip test");    
+        return;
+    }
+            
+    switch (step)
+    {
+        case 5:
+        case 10:
+        case 15:
+            pBodyBus->getCO_EXPRESSIVE_ACTION().request(0);
+            break;            
+    }
+    
+    step++;
+}
+
 }

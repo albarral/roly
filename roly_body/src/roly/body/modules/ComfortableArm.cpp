@@ -7,7 +7,6 @@
 #include "log4cxx/ndc.h"
 
 #include "roly/body/modules/ComfortableArm.h"
-#include "talky/Talk2Target.h"
 #include "talky/topics/ArmTopic.h"
 
 

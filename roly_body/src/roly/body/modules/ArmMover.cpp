@@ -6,7 +6,6 @@
 #include "log4cxx/ndc.h"
 
 #include "roly/body/modules/ArmMover.h"
-#include "talky/Talk2Target.h"
 #include "talky/topics/ArmTopic.h"
 
 
