@@ -26,7 +26,7 @@ log4cxx::LoggerPtr logger(log4cxx::Logger::getLogger("roly.body"));
 int main(int argc, char** argv) 
 {
     std::string home = getHomePath();
-    std::string configFile = home + "/.roly/log4cxx_config_body.xml";
+    std::string configFile = home + "/.tron/log4cxx_config_body.xml";
     log4cxx::xml::DOMConfigurator::configure(configFile);    
         
     LOG4CXX_INFO(logger, "\n\nSTART roly_body\n");
@@ -42,15 +42,15 @@ void runBody()
     BodyControl oBodyControl; 
 
     // TEST SECTION
-    BodyTest oBodyTest;
-    oBodyTest.connect2Bus(oBodyControl.getBodyBus4Test());
+//    BodyTest oBodyTest;
+//    oBodyTest.connect2Bus(oBodyControl.getBodyBus4Test());
 
     // launch body control & wait for it to end        
     if (oBodyControl.launch())
     {    
         while (!oBodyControl.checkEndRequested()) 
         {
-            oBodyTest.testExpressive();
+//            oBodyTest.testExpressive();
 
             sleep(1);            
         }    
