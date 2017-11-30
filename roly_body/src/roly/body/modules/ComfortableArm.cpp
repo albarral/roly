@@ -25,7 +25,7 @@ ComfortableArm::ComfortableArm()
     relaxPosture[2] = 40; 
     tolAngle = 5.0;                      // allowed (pan, tilt) tolerance = 5 deg
     tolRadius = 5.0;                    // allowed radial tolerance =  5cm
-    maxTiredMillis = 3000;               // max allowed time for a motionless arm out of relax position
+    maxTiredMillis = 500;            // 0.5s for tired timeout
 }
 
 //ComfortableArm::~ComfortableArm()
