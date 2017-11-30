@@ -25,8 +25,9 @@ private:
     std::string modName;          // module name
     bool benabled;
     // logic
-    nety::NetNodeServer oBodyServer4ArmMover;      // communications server for arm mover category
-    nety::NetNodeServer oBodyServer4Extra;             // communications server for extra category
+    nety::NetNodeServer oBodyServer4Expressive;      // server for expressive category
+    nety::NetNodeServer oBodyServer4ArmMover;      // server for arm mover category
+    nety::NetNodeServer oBodyServer4Extra;             // server for extra category
     ComsInBodyControl oComsInBodyControl;         // object that gets talky commands and transforms them to bus control values
     bool brequestedBodyEnd;
 

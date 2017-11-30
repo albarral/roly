@@ -43,6 +43,8 @@ public:
     tuly::IntegerQueue& getQueueSpecialActions() {return oQueueSpecialActions;}
     
 private:
+    // process commands of expressive category
+    bool processExpressiveCommand(talky::Command& oCommand);
     // process commands of arm mover category
     bool processArmMoverCommand(talky::Command& oCommand);
     // process command of extra category

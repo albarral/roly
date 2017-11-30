@@ -8,6 +8,7 @@
 
 #include <string>
 
+#include "tuly/control/brooks/control.h"
 #include "tuly/control/brooks/controlT.h"
 #include "tuly/control/brooks/inhibition.h"
 #include "tuly/control/brooks/sensorT.h"
@@ -26,7 +27,7 @@ class BodyBus
         // CONTROLS        
         // Expressive module
         tuly::ControlT<int> CO_EXPRESSIVE_ACTION;   // action to express 
-        tuly::ControlT<bool> CO_EXPRESSIVE_HALT;    // halt any ongoing action expression        
+        tuly::Control CO_EXPRESSIVE_HALT;                // halt any ongoing action expression        
         
         // ArmMover module
         tuly::ControlT<int> CO_MOVER_TYPE;       // set movement type
@@ -58,7 +59,7 @@ class BodyBus
         // CONTROLS        
         // Expressive module
         tuly::ControlT<int>& getCO_EXPRESSIVE_ACTION() {return CO_EXPRESSIVE_ACTION;};
-        tuly::ControlT<bool>& getCO_EXPRESSIVE_HALT() {return CO_EXPRESSIVE_HALT;};
+        tuly::Control& getCO_EXPRESSIVE_HALT() {return CO_EXPRESSIVE_HALT;};
         // ArmMover module
         tuly::ControlT<int>& getCO_MOVER_TYPE() {return CO_MOVER_TYPE;};
         tuly::ControlT<bool>& getCO_MOVER_ACTION() {return CO_MOVER_ACTION;};

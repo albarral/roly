@@ -36,6 +36,10 @@ bool ComsInBodyControl::processCommand(talky::Command& oCommand)
 
     switch (oCommand.getCategory())
     {
+        case talky::BodyTopic::eCAT_BODY_EXPRESSIVE:
+            bret = processExpressiveCommand(oCommand);
+            break;
+
         case talky::BodyTopic::eCAT_BODY_ARMMOVER:
             bret = processArmMoverCommand(oCommand);
             break;
@@ -48,6 +52,30 @@ bool ComsInBodyControl::processCommand(talky::Command& oCommand)
             bret = false;
             LOG4CXX_WARN(logger, "ComsInBodyControl: can't process command, untreated category " << oCommand.getCategory());                        
     }                
+    return bret;
+}
+
+bool ComsInBodyControl::processExpressiveCommand(talky::Command& oCommand)
+{
+    bool bret = true;
+    float quantity = oCommand.getQuantity();
+
+    switch (oCommand.getConcept())
+    {
+        case talky::BodyTopic::eEXPRESS_FEELING:
+            LOG4CXX_INFO(logger, "> express feeling " << (int)quantity);                        
+            pBodyBus->getCO_EXPRESSIVE_ACTION().request((int)quantity);
+            break;
+            
+        case talky::BodyTopic::eEXPRESS_HALT:
+            LOG4CXX_INFO(logger, "> halt expression");                     
+            pBodyBus->getCO_EXPRESSIVE_HALT().request();
+            break;
+
+        default:
+            bret = false;
+            LOG4CXX_WARN(logger, "ComsInBodyControl: can't process command, untreated expressive concept " << oCommand.getConcept());           
+    }    
     return bret;
 }
 
