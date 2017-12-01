@@ -16,10 +16,10 @@ namespace roly
 {
 // Module used to have a comfortable arm posture.
 // States: 
-// RELAXED: arm in comfort zone
-// OUT: arm moving out of comfort zone
-// TIRED: motionless arm out of comfort zone
-// RELAX: command arm relax posture
+// RELAXED: motionless arm in comfort zone
+// STILL: motionless arm out of comfort zone
+// MOVING: arm moving
+// TIRED: motionless arm out of comfort zone for long time (command relax posture)
 // Output: 
 // arm position (pan, tilt, radius)
 class ComfortableArm : public BodyModule
@@ -29,9 +29,9 @@ public:
     enum eState
     {
          eSTATE_RELAXED,           
-         eSTATE_OUT, 
-         eSTATE_TIRED, 
-         eSTATE_RELAX 
+         eSTATE_STILL, 
+         eSTATE_MOVING, 
+         eSTATE_TIRED 
     };
     
 private:    
@@ -67,14 +67,15 @@ private:
         virtual void showInitialized();
         // shows the present state name
         void showState();
-        
-        // sends message to arm system
-        void requestComfortPosture();
-        
-        // check if arm is in the comfort zone (near the relax posture)
-        void checkComfortZone();
+                
         // checks if arm is moving 
         void checkArmMovement();
+        // check if arm is in the comfort zone (near the relax posture)
+        void checkComfortZone();
+        // enters still state
+        void enterSTILL();
+        // sends message to arm system
+        void requestComfortPosture();
 };
 }
 #endif

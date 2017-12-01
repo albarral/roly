@@ -25,7 +25,7 @@ ComfortableArm::ComfortableArm()
     relaxPosture[2] = 40; 
     tolAngle = 5.0;                      // allowed (pan, tilt) tolerance = 5 deg
     tolRadius = 5.0;                    // allowed radial tolerance =  5cm
-    maxTiredMillis = 500;            // 0.5s for tired timeout
+    maxTiredMillis = 300;            // 0.3s for tired timeout
 }
 
 //ComfortableArm::~ComfortableArm()
@@ -43,7 +43,6 @@ void ComfortableArm::first()
     // start at relaxed state
     setState(eSTATE_RELAXED);    
     log4cxx::NDC::push(modName);   
-    showState();
 }
                     
 void ComfortableArm::loop()
@@ -54,58 +53,67 @@ void ComfortableArm::loop()
     if (binhibited)            
         return;
 
+    if (isStateChanged())
+        showState();
+    
     checkComfortZone();
     checkArmMovement();
     
     switch (getState())
     {
         case eSTATE_RELAXED: 
-            // if arm not in comfort zone -> OUT
-            if (!bcomfortZone)
-                setState(eSTATE_OUT);
+            // if arm moving -> MOVING
+            if (barmMoving)
+                setState(eSTATE_MOVING);
+            // if arm still & not in comfort -> STILL
+            else if (!bcomfortZone)
+                enterSTILL();
             break;
 
-        case eSTATE_OUT:            
-            // if arm in comfort zone -> RELAXED
-            if (bcomfortZone)
-                setState(eSTATE_RELAXED);
-            // if not in comfort zone & motionless -> TIRED (start timer)
-            else if (!barmMoving)
-            {
-                oClickTired.start();
-                setState(eSTATE_TIRED);                    
-            }
-            break;
-
-        case eSTATE_TIRED:            
-            // if arm in comfort zone -> RELAXED
-            if (bcomfortZone)
-                setState(eSTATE_RELAXED);
+        case eSTATE_STILL:            
+            // if arm moving -> MOVING
+            if (barmMoving)
+                setState(eSTATE_MOVING);
+            // if arm still ...
             else
             {
-                // if moving -> back to OUT
-                if (barmMoving)
-                    setState(eSTATE_OUT);
-                // if still motionless, check tired time
+                // and also in comfort -> RELAXED
+                if (bcomfortZone)
+                    setState(eSTATE_RELAXED);
+                // and not in comfort 
                 else
                 {
+                    // check tired time
                     oClickTired.read();
-                    // if tired time too much -> RELAX
+                    // if too tired -> TIRED
                     if (oClickTired.getMillis() > maxTiredMillis)        
-                        setState(eSTATE_RELAX);
+                        setState(eSTATE_TIRED);
                 }
             }
             break;
 
-        case eSTATE_RELAX:            
-            // request relax posture -> OUT
-            requestComfortPosture();
-            setState(eSTATE_OUT);
+        case eSTATE_MOVING:            
+            // if arm not moving -> STILL
+            if (!barmMoving)
+                enterSTILL();
+            break;
+
+        case eSTATE_TIRED:            
+            // if arm moving -> MOVING
+            if (barmMoving)
+                setState(eSTATE_MOVING);
+            // if arm still ...
+            else
+            {
+                // check tired time
+                oClickTired.read();
+                // if too tired -> request relax posture
+                if (oClickTired.getMillis() > maxTiredMillis)        
+                    requestComfortPosture();
+            }
             break;
     }  
     
-    if (isStateChanged())
-        showState();
     //writeBus();
 }
 
@@ -122,6 +130,14 @@ void ComfortableArm::senseBus()
     armSpeed[1] = pBodyBus->getSI_ARM_TILTSPEED().getValue();
     armSpeed[2] = pBodyBus->getSI_ARM_RADIALSPEED().getValue();
     //LOG4CXX_INFO(logger, pBodyBus->toString());    
+}
+
+void ComfortableArm::enterSTILL()
+{
+    // reset tired time
+    oClickTired.start();
+    // and -> STILL
+    setState(eSTATE_STILL);                    
 }
 
 void ComfortableArm::requestComfortPosture()
@@ -161,16 +177,16 @@ void ComfortableArm::showState()
             LOG4CXX_INFO(logger, ">> relaxed");
             break;
                         
-        case eSTATE_OUT:
-            LOG4CXX_INFO(logger, ">> out");
+        case eSTATE_STILL:
+            LOG4CXX_INFO(logger, ">> still");
+            break;
+
+        case eSTATE_MOVING:
+            LOG4CXX_INFO(logger, ">> moving");
             break;
 
         case eSTATE_TIRED:
             LOG4CXX_INFO(logger, ">> tired");
-            break;
-
-        case eSTATE_RELAX:
-            LOG4CXX_INFO(logger, ">> relax");
             break;
     }   // end switch    
 }
