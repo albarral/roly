@@ -35,7 +35,6 @@ void Expressive::first()
     // start at rest state
     setState(eSTATE_REST);    
     log4cxx::NDC::push(modName);   
-    showState();
 }
                     
 void Expressive::loop()
@@ -45,6 +44,9 @@ void Expressive::loop()
     // skip if module is inhibited
     if (binhibited)            
         return;
+
+    if (isStateChanged())
+        showState();
     
     switch (getState())
     {
@@ -82,9 +84,7 @@ void Expressive::loop()
             break;
     }  
     
-    if (isStateChanged())
-        showState();
-    //writeBus();
+    writeBus();
 }
 
 void Expressive::senseBus()
@@ -160,8 +160,14 @@ void Expressive::loadMovement4Joy()
 
 void Expressive::writeBus()
 {
-    // nothing to do here    
-    // control already done by talk2arm())
+    // inhibig comfortable arm while expressing a movement
+    switch (getState())
+    {
+        case eSTATE_ACTION:            
+        case eSTATE_WAIT:   
+            pBodyBus->getCO_INHIBIT_COMFORTABLE().request(1);
+            break;
+    }
 }
 
 void Expressive::showState()
