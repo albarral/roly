@@ -46,8 +46,6 @@ public:
     
 private:    
     static log4cxx::LoggerPtr logger;
-    // bus
-    bool binhibited;
     // logic
     std::vector<ArmMovement> listMovements;
     int step;       // present step of arm movement sequence

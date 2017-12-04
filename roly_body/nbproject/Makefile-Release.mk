@@ -36,10 +36,11 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/src/roly/body/BodyManager.o \
-	${OBJECTDIR}/src/roly/body/modules/ArmMover.o \
+	${OBJECTDIR}/src/roly/body/modules/Artistic.o \
 	${OBJECTDIR}/src/roly/body/modules/BodyModule.o \
 	${OBJECTDIR}/src/roly/body/modules/ComfortableArm.o \
 	${OBJECTDIR}/src/roly/body/modules/Expressive.o \
+	${OBJECTDIR}/src/roly/body/moves/ArmFigure.o \
 	${OBJECTDIR}/src/roly/body/moves/ArmMovement.o \
 	${OBJECTDIR}/src/roly/body/moves/CyclicMove.o \
 	${OBJECTDIR}/src/roly/body/moves/MoveFactory.o
@@ -74,10 +75,10 @@ ${OBJECTDIR}/src/roly/body/BodyManager.o: src/roly/body/BodyManager.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/body/BodyManager.o src/roly/body/BodyManager.cpp
 
-${OBJECTDIR}/src/roly/body/modules/ArmMover.o: src/roly/body/modules/ArmMover.cpp 
+${OBJECTDIR}/src/roly/body/modules/Artistic.o: src/roly/body/modules/Artistic.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/roly/body/modules
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/body/modules/ArmMover.o src/roly/body/modules/ArmMover.cpp
+	$(COMPILE.cc) -O2 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/body/modules/Artistic.o src/roly/body/modules/Artistic.cpp
 
 ${OBJECTDIR}/src/roly/body/modules/BodyModule.o: src/roly/body/modules/BodyModule.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/roly/body/modules
@@ -93,6 +94,11 @@ ${OBJECTDIR}/src/roly/body/modules/Expressive.o: src/roly/body/modules/Expressiv
 	${MKDIR} -p ${OBJECTDIR}/src/roly/body/modules
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/body/modules/Expressive.o src/roly/body/modules/Expressive.cpp
+
+${OBJECTDIR}/src/roly/body/moves/ArmFigure.o: src/roly/body/moves/ArmFigure.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/roly/body/moves
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/body/moves/ArmFigure.o src/roly/body/moves/ArmFigure.cpp
 
 ${OBJECTDIR}/src/roly/body/moves/ArmMovement.o: src/roly/body/moves/ArmMovement.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/roly/body/moves

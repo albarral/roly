@@ -31,7 +31,7 @@ public:
     void resetStep() {step = 0;}
     bool isTestFinished() {return bfinished;};
 
-    void testArmMover();    
+//    void testArmMover();    
     void testExpressive();
 };
 

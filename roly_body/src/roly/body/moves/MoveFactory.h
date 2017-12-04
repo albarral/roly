@@ -6,6 +6,7 @@
  *   albarral@migtron.com   *
  ***************************************************************************/
 
+#include "roly/body/moves/ArmFigure.h"
 #include "roly/body/moves/CyclicMove.h"
  
 namespace roly
@@ -14,45 +15,24 @@ namespace roly
 // These movements result from the combination of two simple linear movements (also cyclic).
 // Each linear movement has its proper frequency, angle and amplitude.
 // And they are both related by a phase difference.
-// Initially, default values are assigned to the components, but can be modified later.
 class MoveFactory
-{
-public:
-    enum eMoves
-    {
-        eMOV_LINE,
-        eMOV_CIRCLE,
-        eMOV_ELLIPSE,
-      //  eMOV_PAJARITA,                
-        eMOV_UNDEFINED                
-    };
-private:
-    // default values
-    float defFreq;     // frequency of the movement
-    float defAngle;    // orientation angle (degrees)
-    float defAmp;    // movement amplitude (degrees)
-    
+{    
 public:  
-    MoveFactory();
+    //MoveFactory();
     //~MoveFactory();
-
-    // parameters
-    void setDefFrequency(float value)  {defFreq = value;}    
-    void setDefAngle(float value)  {defAngle = value;}    
-    void setDefAmplitude(float value)  {defAmp = value;}    
     
-    // compute the specified cyclic movement (one of eMoves)
-    CyclicMove computeMove(int type);
+    // compute the cyclic move that produces the specified arm figure
+    static CyclicMove createMove(ArmFigure& oArmFigure);
 
 private:
     // create linear movement
-    void createMoveLine(CyclicMove& oCyclicMove); 
+    static void createLineMove(ArmFigure& oArmFigure, CyclicMove& oCyclicMove); 
     // create circular movement
-    void createMoveCircle(CyclicMove& oCyclicMove); 
+    static void createCircularMove(ArmFigure& oArmFigure, CyclicMove& oCyclicMove); 
     // create elliptic movement
-    void createMoveEllipse(CyclicMove& oCyclicMove); 
+    static void createEllipticMove(ArmFigure& oArmFigure, CyclicMove& oCyclicMove); 
     // create pajarita movement
-    //void createMovePajarita(CyclicMove& oCyclicMove); 
+    //void createPajaritaMove(ArmFigure& oArmFigure, CyclicMove& oCyclicMove); 
 };
 }
 #endif
