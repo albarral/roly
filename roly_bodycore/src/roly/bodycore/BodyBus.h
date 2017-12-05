@@ -27,25 +27,17 @@ class BodyBus
         
         // CONTROLS                
         // Artistic module
-        tuly::ControlT<int> CO_ARTISTIC_FIGURE;       // set artistic figure to implement
-        tuly::ControlT<float> CO_ARTISTIC_FREQ;
-        tuly::ControlT<float> CO_ARTISTIC_SIZE;
-        tuly::ControlT<float> CO_ARTISTIC_ORIENTATION;
-        tuly::ControlT<float> CO_ARTISTIC_RELFACTOR;
-        tuly::Control CO_ARTISTIC_HALT;                // halt any ongoing aristic movement
+        tuly::ControlT<int> CO_ARTISTIC_FIGURE;       // id of artistic figure to implement
+        tuly::ControlT<float> CO_ARTISTIC_FREQ;       // frequency of cyclic figure (Hz) 
+        tuly::ControlT<float> CO_ARTISTIC_SIZE;        // size of cyclic figure (degrees)
+        tuly::ControlT<float> CO_ARTISTIC_ORIENTATION;  // orientation of cyclic figure (degrees)
+        tuly::ControlT<float> CO_ARTISTIC_RELFACTOR;    // relative xy factor of cyclic figure 
+        tuly::Control CO_ARTISTIC_HALT;                // halt ongoing artistic movement
         
         // Expressive module
         tuly::ControlT<int> CO_EXPRESSIVE_ACTION;   // action to express 
         tuly::Control CO_EXPRESSIVE_HALT;                // halt any ongoing action expression        
-        
-        // ArmMover module
-//        tuly::ControlT<int> CO_MOVER_TYPE;       // set movement type
-//        tuly::ControlT<bool> CO_MOVER_ACTION;    // start/stop movement
-//        tuly::ControlT<int> CO_MOVER_TURN;       // change movement orientation
-//        tuly::ControlT<bool> CO_MOVER_WIDER;    // change movement width
-//        tuly::ControlT<bool> CO_MOVER_TALLER;    // change movement height
-//        tuly::ControlT<bool> CO_MOVER_FASTER;    // change movement speed
-        
+                
         // SENSORS
         tuly::SensorT<float> SI_ARM_PAN;                  // real pan position (degrees)
         tuly::SensorT<float> SI_ARM_TILT;                  // real tilt position (degrees)
@@ -79,14 +71,6 @@ class BodyBus
         tuly::ControlT<int>& getCO_EXPRESSIVE_ACTION() {return CO_EXPRESSIVE_ACTION;};
         tuly::Control& getCO_EXPRESSIVE_HALT() {return CO_EXPRESSIVE_HALT;};
         
-        // ArmMover module
-//        tuly::ControlT<int>& getCO_MOVER_TYPE() {return CO_MOVER_TYPE;};
-//        tuly::ControlT<bool>& getCO_MOVER_ACTION() {return CO_MOVER_ACTION;};
-//        tuly::ControlT<int>& getCO_MOVER_TURN() {return CO_MOVER_TURN;};
-//        tuly::ControlT<bool>& getCO_MOVER_WIDER() {return CO_MOVER_WIDER;};
-//        tuly::ControlT<bool>& getCO_MOVER_TALLER() {return CO_MOVER_TALLER;};
-//        tuly::ControlT<bool>& getCO_MOVER_FASTER() {return CO_MOVER_FASTER;};
-
         // SENSORS
         tuly::SensorT<float>& getSI_ARM_PAN() {return SI_ARM_PAN;};        
         tuly::SensorT<float>& getSI_ARM_TILT() {return SI_ARM_TILT;};        

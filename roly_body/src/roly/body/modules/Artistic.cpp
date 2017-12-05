@@ -157,22 +157,18 @@ void Artistic::senseBus()
     if (pBodyBus->getCO_ARTISTIC_ORIENTATION().checkRequested())
     {  
         float orientation = pBodyBus->getCO_ARTISTIC_ORIENTATION().getValue();
-        if (orientation > 0)
-        {
-            oArmFigure.setOrientation(orientation);    
-            // if not new figure -> UPDATE movement
-            if (!bnewFigure)
-                setState(eSTATE_UPDATE);                                       
-        }
-        else
-            LOG4CXX_WARN(logger, modName << " invalid orientation requested " + std::to_string(orientation));                     
+        // all orientations are valid
+        oArmFigure.setOrientation(orientation);    
+        // if not new figure -> UPDATE movement
+        if (!bnewFigure)
+            setState(eSTATE_UPDATE);                                       
     }
 
     // check relative factor requests
     if (pBodyBus->getCO_ARTISTIC_RELFACTOR().checkRequested())
     {  
         float relFactor = pBodyBus->getCO_ARTISTIC_RELFACTOR().getValue();
-        if (relFactor > 0)
+        if (relFactor > 0.0)
         {
             oArmFigure.setRelativeFactor(relFactor);    
             // if not new figure -> UPDATE movement

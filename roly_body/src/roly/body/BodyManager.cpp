@@ -73,19 +73,17 @@ void BodyManager::initArchitecture()
 {
     // LEVEL 1    
     int nivel = 1;    
-    // arm mover
-//    oArmMover.setLevel(nivel);
-//    listModules.push_back(&oArmMover);
-    // comfortable arm
+    // comfortable arm behaviour
     oComfortableArm.setLevel(nivel);
     listModules.push_back(&oComfortableArm);
 
     nivel = 2;    
-    // expressive
+    // expressive behaviour
     oExpressive.setLevel(nivel);
     listModules.push_back(&oExpressive);
 
     nivel = 3;    
+    // artistic behaviour
     oArtistic.setLevel(nivel);
     listModules.push_back(&oArtistic);
 }

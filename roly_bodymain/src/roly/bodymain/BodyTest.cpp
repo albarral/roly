@@ -9,7 +9,7 @@
 #include <log4cxx/logger.h>
 
 #include "roly/bodymain/BodyTest.h"
-#include "roly/body/moves/MoveFactory.h"
+#include "roly/body/moves/ArmFigure.h"
 
 using namespace log4cxx;
 
@@ -28,51 +28,6 @@ void BodyTest::connect2Bus(BodyBus& oBodyBus)
     pBodyBus = &oBodyBus;
 }
 
-
-//void BodyTest::testArmMover()
-//{
-//    LOG4CXX_INFO(logger, "testArmMover - step " + std::to_string(step));    
-//    
-//    if (!isConnected())
-//    {
-//        LOG4CXX_WARN(logger, "testArmMover: no bus connection, skip test");    
-//        return;
-//    }
-//            
-//    switch (step)
-//    {
-//        case 1:
-//        {
-//            pBodyBus->getCO_MOVER_TYPE().request(MoveFactory::eMOV_CIRCLE);
-//            pBodyBus->getCO_MOVER_ACTION().request(true);            
-//        }
-//            break;
-//            
-//        case 2:
-//        case 3:
-//            pBodyBus->getCO_MOVER_WIDER().request(true);
-////            pBodyBus->getCO_MOVER_TALLER().request(true);
-//            break;
-//            
-//        case 6:
-//        case 7:
-//        case 8:
-//            pBodyBus->getCO_MOVER_FASTER().request(true);
-//            break;
-//
-//        case 11:
-//            pBodyBus->getCO_MOVER_ACTION().request(false);            
-//            break;            
-//
-//        case 12:   
-//            // finish test 
-//            bfinished = true;            
-//            break;            
-//    }
-//    
-//    step++;
-//}
-
 void BodyTest::testExpressive()
 {
     if (!isConnected())
@@ -87,6 +42,42 @@ void BodyTest::testExpressive()
         case 10:
         case 15:
             pBodyBus->getCO_EXPRESSIVE_ACTION().request(0);
+            break;            
+    }
+    
+    step++;
+}
+
+void BodyTest::testArtistic()
+{
+    LOG4CXX_INFO(logger, "testArtistic - step " + std::to_string(step));    
+    
+    if (!isConnected())
+    {
+        LOG4CXX_WARN(logger, "testArtistic: no bus connection, skip test");    
+        return;
+    }
+            
+    switch (step)
+    {
+        case 2:
+            pBodyBus->getCO_ARTISTIC_FIGURE().request(ArmFigure::eFIGURE_CIRCLE);
+            break;            
+            
+        case 5:
+            pBodyBus->getCO_ARTISTIC_FREQ().request(0.2);
+            break;
+
+        case 10:
+            pBodyBus->getCO_ARTISTIC_SIZE().request(20.0);            
+            break;            
+
+        case 15:   
+            pBodyBus->getCO_ARTISTIC_FREQ().request(1.0);            
+            break;            
+
+        case 20:   
+            pBodyBus->getCO_ARTISTIC_HALT().request();            
             break;            
     }
     

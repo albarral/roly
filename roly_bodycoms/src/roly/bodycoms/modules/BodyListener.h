@@ -26,7 +26,7 @@ private:
     bool benabled;
     // logic
     nety::NetNodeServer oBodyServer4Expressive;      // server for expressive category
-    nety::NetNodeServer oBodyServer4ArmMover;      // server for arm mover category
+    nety::NetNodeServer oBodyServer4Artistic;      // server for arm mover category
     nety::NetNodeServer oBodyServer4Extra;             // server for extra category
     ComsInBodyControl oComsInBodyControl;         // object that gets talky commands and transforms them to bus control values
     bool brequestedBodyEnd;

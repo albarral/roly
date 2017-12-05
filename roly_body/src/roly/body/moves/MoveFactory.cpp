@@ -14,6 +14,7 @@ namespace roly
 
 CyclicMove MoveFactory::createMove(ArmFigure& oArmFigure)
 {
+    // brand new cyclic move
     CyclicMove oCyclicMove;    
 
     switch (oArmFigure.getFigure())
