@@ -34,8 +34,8 @@ void Artistic::showInitialized()
 void Artistic::first()
 {
     // set default figure values
-    oArmFigure.setFreq(1.0);
-    oArmFigure.setSize(30.0);
+    oArmFigure.setFreq(0.5);
+    oArmFigure.setSize(40.0);
     oArmFigure.setRelativeFactor(0.5);
     oArmFigure.setOrientation(0.0);
     
@@ -209,8 +209,10 @@ void Artistic::triggerMove()
     oCyclerClient.addCommand(talky::ArmTopic::eCYCLIC_FRONT2_FREQ, oCyclicMove.getFreq2());
     oCyclerClient.addCommand(talky::ArmTopic::eCYCLIC_FRONT2_ANGLE, oCyclicMove.getAngle2());
     oCyclerClient.addCommand(talky::ArmTopic::eCYCLIC_FRONT2_AMP, oCyclicMove.getAmp2());
+    // phase
+    oCyclerClient.addCommand(talky::ArmTopic::eCYCLIC_FRONT_PHASE, oCyclicMove.getPhase());
     // start movement
-    oCyclerClient.addCommand(talky::ArmTopic::eCYCLIC_FRONT_START);
+    oCyclerClient.addCommand(talky::ArmTopic::eCYCLIC_FRONT_ACTION, 1);
 }
 
 void Artistic::updateMove()
@@ -228,12 +230,14 @@ void Artistic::updateMove()
     oCyclerClient.addCommand(talky::ArmTopic::eCYCLIC_FRONT2_FREQ, oCyclicMove.getFreq2());
     oCyclerClient.addCommand(talky::ArmTopic::eCYCLIC_FRONT2_ANGLE, oCyclicMove.getAngle2());
     oCyclerClient.addCommand(talky::ArmTopic::eCYCLIC_FRONT2_AMP, oCyclicMove.getAmp2());
+    // phase
+    oCyclerClient.addCommand(talky::ArmTopic::eCYCLIC_FRONT_PHASE, oCyclicMove.getPhase());
 }
 
 void Artistic::stopMove()
 {    
     // stop movement
-    pAmyTalker->getArmCyclerClient().addCommand(talky::ArmTopic::eCYCLIC_FRONT_STOP);
+    pAmyTalker->getArmCyclerClient().addCommand(talky::ArmTopic::eCYCLIC_FRONT_ACTION, 0);
 }
 
 void Artistic::writeBus()

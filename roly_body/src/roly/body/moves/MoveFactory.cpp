@@ -67,7 +67,7 @@ void MoveFactory::createEllipticMove(ArmFigure& oArmFigure, CyclicMove& oCyclicM
     float amp2 = oArmFigure.getSize() * oArmFigure.getRelativeFactor();
     oCyclicMove.setAmp1(oArmFigure.getSize());
     oCyclicMove.setAmp2(amp2);
-    // 90 degrees phase
+    // 90 degrees phase difference
     oCyclicMove.setPhase(90);
 }
 }

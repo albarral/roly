@@ -69,14 +69,10 @@ void BodyTest::testArtistic()
             break;
 
         case 10:
-            pBodyBus->getCO_ARTISTIC_SIZE().request(20.0);            
+            pBodyBus->getCO_ARTISTIC_SIZE().request(60.0);            
             break;            
 
         case 15:   
-            pBodyBus->getCO_ARTISTIC_FREQ().request(1.0);            
-            break;            
-
-        case 20:   
             pBodyBus->getCO_ARTISTIC_HALT().request();            
             break;            
     }
