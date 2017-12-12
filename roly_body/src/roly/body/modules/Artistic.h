@@ -10,46 +10,37 @@
 #include <log4cxx/logger.h>
 
 #include "roly/body/modules/BodyModule.h"
+#include "roly/body/moves/ArmFigure.h"
 #include "roly/body/moves/CyclicMove.h"
-#include "roly/body/moves/MoveFactory.h"
 #include "tuly/utils/IntegerQueue.h"
 
 namespace roly
 {
-// Module to perform complex cyclic movements with the arm. It controls a cycler module.
-// States: 
-// The module is usually in WAIT state.
-// It goes to TALK state for sending commands to the cycler.
-// Then returns fast to WAIT state.
+// Module to perform complex cyclic movements with the arm. It controls the frontal cycler module of amy node.
 // Messages:
 // It sends 3 types of messages to the cycler: trigger, stop & update.
-class ArmMover : public BodyModule
+class Artistic : public BodyModule
 {
 public:
-    // states of ArmMover module
+    // states of Artistic module
     enum eType
     {
-         eSTATE_WAIT,           // just senses bus
-         eSTATE_TALK           // send commands to cycler
+         eSTATE_IDLE,           // waits for requests
+         eSTATE_LAUNCH,      // launches cycler movement
+         eSTATE_WAIT,           // waits for movement to finish (until halt request in continuous mode)
+         eSTATE_UPDATE,      // updates cycler movement
+         eSTATE_STOP           // stops cycler movement
     };
 private:    
-    // types of command
-    enum eCmd
-    {
-         eCMD_TRIGGER,       // starts a cyclic movement   
-         eCMD_STOP,           // ends a cyclic movement   
-         eCMD_UPDATE       // modifies a cyclic movement
-    };
-
     static log4cxx::LoggerPtr logger;
     // logic
-    MoveFactory oMoveFactory;    
+    ArmFigure oArmFigure;
+    bool bcontinuous;       // continuous or simple mode
     CyclicMove oCyclicMove;    
-    tuly::IntegerQueue oCommandsQueue;
 
 public:
-        ArmMover();
-        //~ArmMover();
+        Artistic();
+        //~Artistic();
                                
 private:       
         // first actions when the thread begins 
@@ -65,14 +56,15 @@ private:
         // shows the present state name
         void showState();
         
-        // sends message to cyclers
-        void talk2Cyclers();
         // triggers a cyclic movement
         void triggerMove();
         // stop a cyclic movement
         void stopMove();
         // changes a cyclic movement        
         void updateMove();
+        
+        // checks if ordered movement is finished (just for simple mode)
+        bool checkMovementFinished();
 };
 }
 #endif

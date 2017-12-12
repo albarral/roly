@@ -27,14 +27,14 @@ void BodyListener::init(BodyBus& oBodyBus)
     int topic = talky::Topics::eTOPIC_BODYROLE;
     // prepare communication servers
     oBodyServer4Expressive.init(topic, talky::BodyTopic::eCAT_BODY_EXPRESSIVE);
-    oBodyServer4ArmMover.init(topic, talky::BodyTopic::eCAT_BODY_ARMMOVER);
+    oBodyServer4Artistic.init(topic, talky::BodyTopic::eCAT_BODY_ARTISTIC);
     oBodyServer4Extra.init(topic, talky::BodyTopic::eCAT_BODY_EXTRA);    
     
     oComsInBodyControl.connect2Bus(oBodyBus);
     
     // if servers enabled
     if (oBodyServer4Expressive.isConnected() &&            
-        oBodyServer4ArmMover.isConnected() &&
+        oBodyServer4Artistic.isConnected() &&
         oBodyServer4Extra.isConnected())
     {
         benabled = true;
@@ -53,8 +53,8 @@ void BodyListener::loop()
 {
     // listen to expressive messages
     checkServer(oBodyServer4Expressive);
-    // listen to arm mover messages
-    checkServer(oBodyServer4ArmMover);
+    // listen to artistic messages
+    checkServer(oBodyServer4Artistic);
     // listen to extra messages
     checkServer(oBodyServer4Extra);
 }

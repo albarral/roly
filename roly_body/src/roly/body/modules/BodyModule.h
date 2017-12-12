@@ -25,6 +25,7 @@ protected:
     bool benabled;
     // bus
     bool bconnected;        // connected to bus
+    bool binhibited;
     BodyBus* pBodyBus;     // access to body bus
     AmyTalker* pAmyTalker;     // access to body talk
 

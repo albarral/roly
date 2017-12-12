@@ -50,7 +50,7 @@ void runBody()
     {    
         while (!oBodyControl.checkEndRequested()) 
         {
-//            oBodyTest.testExpressive();
+//            oBodyTest.testArtistic();
 
             sleep(1);            
         }    

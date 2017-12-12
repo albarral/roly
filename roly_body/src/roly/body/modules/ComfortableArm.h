@@ -36,8 +36,6 @@ public:
     
 private:    
     static log4cxx::LoggerPtr logger;
-    // bus
-    bool binhibited;
     // logic
     int armPosture[3];            // measured arm posture (pan, tilt, radius)
     int armSpeed[3];              // measured arm speed (vpan, vtilt, vradius)

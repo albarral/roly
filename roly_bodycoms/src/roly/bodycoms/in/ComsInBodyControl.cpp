@@ -40,8 +40,8 @@ bool ComsInBodyControl::processCommand(talky::Command& oCommand)
             bret = processExpressiveCommand(oCommand);
             break;
 
-        case talky::BodyTopic::eCAT_BODY_ARMMOVER:
-            bret = processArmMoverCommand(oCommand);
+        case talky::BodyTopic::eCAT_BODY_ARTISTIC:
+            bret = processArtisticCommand(oCommand);
             break;
 
         case talky::BodyTopic::eCAT_BODY_EXTRA:
@@ -79,51 +79,46 @@ bool ComsInBodyControl::processExpressiveCommand(talky::Command& oCommand)
     return bret;
 }
 
-bool ComsInBodyControl::processArmMoverCommand(talky::Command& oCommand)
+bool ComsInBodyControl::processArtisticCommand(talky::Command& oCommand)
 {
     bool bret = true;
     float quantity = oCommand.getQuantity();
-    bool byes;
 
     switch (oCommand.getConcept())
     {
-        case talky::BodyTopic::eARMMOVER_TYPE:
-            LOG4CXX_INFO(logger, "> arm mover movement type " << (int)quantity);                        
-            pBodyBus->getCO_MOVER_TYPE().request((int)quantity);
+        case talky::BodyTopic::eARTISTIC_FIGURE:
+            LOG4CXX_INFO(logger, "> artistic figure " << (int)quantity);                        
+            pBodyBus->getCO_ARTISTIC_FIGURE().request((int)quantity);
             break;
             
-        case talky::BodyTopic::eARMMOVER_ACTION:
-            byes = (quantity != 0.0);
-            LOG4CXX_INFO(logger, "> arm mover start/stop " << byes); 
-            pBodyBus->getCO_MOVER_ACTION().request(byes);
+        case talky::BodyTopic::eARTISTIC_FREQ:
+            LOG4CXX_INFO(logger, "> artistic freq " << quantity); 
+            pBodyBus->getCO_ARTISTIC_FREQ().request(quantity);
             break;
 
-        case talky::BodyTopic::eARMMOVER_TURN:
-            LOG4CXX_INFO(logger, "> arm mover turn " << (int)quantity);                        
-            pBodyBus->getCO_MOVER_TURN().request((int)quantity);
+        case talky::BodyTopic::eARTISTIC_SIZE:
+            LOG4CXX_INFO(logger, "> artistic size " << quantity);                        
+            pBodyBus->getCO_ARTISTIC_SIZE().request(quantity);
             break;
 
-        case talky::BodyTopic::eARMMOVER_WIDER:
-            byes = (quantity != 0.0);
-            LOG4CXX_INFO(logger, "> arm mover wider " << byes);                     
-            pBodyBus->getCO_MOVER_WIDER().request(byes);
+        case talky::BodyTopic::eARTISTIC_ORIENTATION:
+            LOG4CXX_INFO(logger, "> artistic orientation " << quantity);                     
+            pBodyBus->getCO_ARTISTIC_ORIENTATION().request(quantity);
             break;
             
-        case talky::BodyTopic::eARMMOVER_TALLER:
-            byes = (quantity != 0.0);
-            LOG4CXX_INFO(logger, "> arm mover taller " << byes);                     
-            pBodyBus->getCO_MOVER_TALLER().request(byes);
+        case talky::BodyTopic::eARTISTIC_RELFACTOR:
+            LOG4CXX_INFO(logger, "> artistic relative factor " << quantity);                     
+            pBodyBus->getCO_ARTISTIC_RELFACTOR().request(quantity);
             break;
 
-        case talky::BodyTopic::eARMMOVER_FASTER:
-            byes = (quantity != 0.0);
-            LOG4CXX_INFO(logger, "> arm mover faster " << byes);                     
-            pBodyBus->getCO_MOVER_FASTER().request(byes);
+        case talky::BodyTopic::eARTISTIC_HALT:
+            LOG4CXX_INFO(logger, "> artistic halt");                     
+            pBodyBus->getCO_ARTISTIC_HALT().request();
             break;
 
         default:
             bret = false;
-            LOG4CXX_WARN(logger, "ComsInBodyControl: can't process command, untreated arm mover concept " << oCommand.getConcept());           
+            LOG4CXX_WARN(logger, "ComsInBodyControl: can't process command, untreated artistic concept " << oCommand.getConcept());           
     }    
     return bret;
 }

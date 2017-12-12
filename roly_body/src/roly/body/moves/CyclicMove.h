@@ -53,6 +53,8 @@ public:
     float getAmp2() {return amp2;}; 
     // general
     void setPhase(float value) {phase = value;}
+    float getPhase() {return phase;};
+    
     void setElasticity(float value);
     
     // update movement making it wider/narrower
