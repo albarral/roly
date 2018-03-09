@@ -14,7 +14,6 @@ BodyModule::BodyModule()
     benabled = false;
     bconnected = false;
     pBodyBus = 0;
-    pAmyTalker = 0;
  }
 
 void BodyModule::init()
@@ -23,10 +22,9 @@ void BodyModule::init()
     showInitialized();
 }
 
-void BodyModule::connect(BodyBus& oBodyBus, AmyTalker& oAmyTalker)
+void BodyModule::connect(BodyBus& oBodyBus)
 {
     pBodyBus = &oBodyBus;    
-    pAmyTalker = &oAmyTalker;
     bconnected = true;
 }
 

@@ -11,6 +11,7 @@
 
 #include "roly/body/modules/BodyModule.h"
 #include "maty/math/Click.h"
+#include "tron/talky2/arm/ArmClient.h"
 
 namespace roly
 {
@@ -36,6 +37,7 @@ public:
     
 private:    
     static log4cxx::LoggerPtr logger;
+    tron::ArmClient oArmClient;         // client for arm control
     // logic
     int armPosture[3];            // measured arm posture (pan, tilt, radius)
     int armSpeed[3];              // measured arm speed (vpan, vtilt, vradius)

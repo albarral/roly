@@ -13,6 +13,7 @@
 #include "roly/body/moves/ArmFigure.h"
 #include "roly/body/moves/CyclicMove.h"
 #include "tuly/utils/IntegerQueue.h"
+#include "tron/talky2/arm/ArmClient.h"
 
 namespace roly
 {
@@ -34,6 +35,7 @@ public:
 private:    
     static log4cxx::LoggerPtr logger;
     // logic
+    tron::ArmClient oArmClient;     // client for arm control
     ArmFigure oArmFigure;
     bool bcontinuous;       // continuous or simple mode
     CyclicMove oCyclicMove;    

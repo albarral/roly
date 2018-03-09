@@ -8,14 +8,12 @@
 
 #include "tuly/control/module3.h"
 #include "roly/bodycore/BodyBus.h"
-#include "roly/bodycore/AmyTalker.h"
 
 namespace roly
 {
 // Base class for arm modules.
-// It has bus connection and a copy of the arm's configuration.
 // Usage:
-// - tune and connect chip    
+// - connect bus
 // - init
 // - on (now it works)
 // - off    
@@ -27,7 +25,6 @@ protected:
     bool bconnected;        // connected to bus
     bool binhibited;
     BodyBus* pBodyBus;     // access to body bus
-    AmyTalker* pAmyTalker;     // access to body talk
 
 public:
     BodyModule();
@@ -38,7 +35,7 @@ public:
     bool isEnabled() {return benabled;};
 
     // bus connection 
-    void connect(BodyBus& oBodyBus, AmyTalker& oAmyTalker);
+    void connect(BodyBus& oBodyBus);
     bool isConnected() {return bconnected;};
     
 protected:

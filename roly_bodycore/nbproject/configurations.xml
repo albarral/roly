@@ -13,8 +13,6 @@
                    displayName="Source Files"
                    projectFiles="true">
       <logicalFolder name="bodycore" displayName="bodycore" projectFiles="true">
-        <itemPath>src/roly/bodycore/AmyTalker.cpp</itemPath>
-        <itemPath>src/roly/bodycore/AmyTalker.h</itemPath>
         <itemPath>src/roly/bodycore/BodyBus.cpp</itemPath>
         <itemPath>src/roly/bodycore/BodyBus.h</itemPath>
       </logicalFolder>
@@ -51,9 +49,6 @@
           <incDir>
             <pElem>src</pElem>
             <pElem>../../tron/tuly/src</pElem>
-            <pElem>../../tron/nety/src</pElem>
-            <pElem>../../tron/talky/src</pElem>
-            <pElem>../../tron/comy/src</pElem>
           </incDir>
         </ccTool>
         <linkerTool>
@@ -70,49 +65,9 @@
                             OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libtron_tuly.${CND_DLIB_EXT}">
               </makeArtifact>
             </linkerLibProjectItem>
-            <linkerLibProjectItem>
-              <makeArtifact PL="../../tron/nety"
-                            CT="2"
-                            CN="Debug"
-                            AC="true"
-                            BL="true"
-                            WD="../../tron/nety"
-                            BC="${MAKE}  -f Makefile CONF=Debug"
-                            CC="${MAKE}  -f Makefile CONF=Debug clean"
-                            OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libtron_nety.${CND_DLIB_EXT}">
-              </makeArtifact>
-            </linkerLibProjectItem>
-            <linkerLibProjectItem>
-              <makeArtifact PL="../../tron/talky"
-                            CT="2"
-                            CN="Debug"
-                            AC="true"
-                            BL="true"
-                            WD="../../tron/talky"
-                            BC="${MAKE}  -f Makefile CONF=Debug"
-                            CC="${MAKE}  -f Makefile CONF=Debug clean"
-                            OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libtron_talky.${CND_DLIB_EXT}">
-              </makeArtifact>
-            </linkerLibProjectItem>
-            <linkerLibProjectItem>
-              <makeArtifact PL="../../tron/comy"
-                            CT="2"
-                            CN="Debug"
-                            AC="true"
-                            BL="true"
-                            WD="../../tron/comy"
-                            BC="${MAKE}  -f Makefile CONF=Debug"
-                            CC="${MAKE}  -f Makefile CONF=Debug clean"
-                            OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libtron_comy.${CND_DLIB_EXT}">
-              </makeArtifact>
-            </linkerLibProjectItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>
-      <item path="src/roly/bodycore/AmyTalker.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/roly/bodycore/AmyTalker.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="src/roly/bodycore/BodyBus.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/roly/bodycore/BodyBus.h" ex="false" tool="3" flavor2="0">
@@ -138,10 +93,6 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
-      <item path="src/roly/bodycore/AmyTalker.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/roly/bodycore/AmyTalker.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="src/roly/bodycore/BodyBus.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/roly/bodycore/BodyBus.h" ex="false" tool="3" flavor2="0">

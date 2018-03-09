@@ -6,8 +6,6 @@
 #include "log4cxx/ndc.h"
 
 #include "roly/body/modules/Expressive.h"
-#include "talky/topics/ArmTopic.h"
-
 
 using namespace log4cxx;
 
@@ -109,21 +107,19 @@ void Expressive::senseBus()
 
 void Expressive::performStep(ArmMovement& oArmMovement)
 {
-    // get client for arm axis
-    nety::NetNodeClient& oAxisClient = pAmyTalker->getArmAxisClient();
-    // if posture request
+    // if posture request, command arm position
     if (oArmMovement.getType() == ArmMovement::eTYPE_POSTURE)
     {
-        oAxisClient.addCommand(talky::ArmTopic::eAXIS_PAN_POS, oArmMovement.getPan());
-        oAxisClient.addCommand(talky::ArmTopic::eAXIS_TILT_POS, oArmMovement.getTilt());
-        oAxisClient.addCommand(talky::ArmTopic::eAXIS_RAD_POS, oArmMovement.getRadius());
+        oArmClient.setPan(oArmMovement.getPan());
+        oArmClient.setTilt(oArmMovement.getTilt());
+        oArmClient.setRadial(oArmMovement.getRadius());
     }
-    // if move request
+    // if move request, command arm speed
     else
     {
-        oAxisClient.addCommand(talky::ArmTopic::eAXIS_PAN_SPEED, oArmMovement.getPan());
-        oAxisClient.addCommand(talky::ArmTopic::eAXIS_TILT_SPEED, oArmMovement.getTilt());
-        oAxisClient.addCommand(talky::ArmTopic::eAXIS_RAD_SPEED, oArmMovement.getRadius());
+        oArmClient.setPanSpeed(oArmMovement.getPan());
+        oArmClient.setTiltSpeed(oArmMovement.getTilt());
+        oArmClient.setRadialSpeed(oArmMovement.getRadius());
     }                
 }
 

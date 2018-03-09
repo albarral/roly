@@ -1,5 +1,5 @@
-#ifndef __ROLY_BODYCOMS_BODYINSPECTOR_H
-#define __ROLY_BODYCOMS_BODYINSPECTOR_H
+#ifndef __ROLY_BODYCOMS_BODYAWARE_H
+#define __ROLY_BODYCOMS_BODYAWARE_H
 
 /***************************************************************************
  *   Copyright (C) 2016 by Migtron Robotics   *
@@ -9,38 +9,35 @@
 #include <string>
 #include <log4cxx/logger.h>
 
-#include "roly/bodycore/AmyTalker.h"
 #include "roly/bodycore/BodyBus.h"
-#include "roly/bodycoms/in/ComsInBodySense.h"
+#include "tron/talky2/arm/ArmListener.h"
 #include "tuly/control/module3.h"
 
 namespace roly
 {
 // This module inspects broadcasted info from external processes to sense their state.
 // It uses nety subscriber nodes for communication.
-class BodyInspector : public tuly::Module3
+class BodyAware : public tuly::Module3
 {
 private:
     static log4cxx::LoggerPtr logger;
     std::string modName;          // module name
     bool benabled;
     // logic
-    AmyTalker* pAmyTalker;
-    ComsInBodySense oComsInBodySense;     // object to transform talky sense info into bus signals
+    BodyBus* pBodyBus;      // access to body bus
+    tron::ArmListener oArmListener;
 
 public:
-    BodyInspector();
-    //~BodyInspector();
+    BodyAware();
+    //~BodyAware();
 
-    void init(BodyBus& oBodyBus, AmyTalker& oAmyTalker);
+    void init(BodyBus& oBodyBus);
     bool isEnabled() {return benabled;};
                 
 private:
     virtual void first();
     // executes the behaviour
     virtual void loop();
-    // check given subscriber for received messages and process them
-    void checkSubscriber(nety::NetNodeSubscriber& oNetySubscriber);
 };
 }		
 #endif

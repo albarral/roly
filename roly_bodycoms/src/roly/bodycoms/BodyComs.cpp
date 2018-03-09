@@ -17,7 +17,7 @@ BodyComs::~BodyComs()
 {    
 }
      
- bool BodyComs::launch(BodyBus& oBodyBus, AmyTalker& oAmyTalker)
+ bool BodyComs::launch(BodyBus& oBodyBus)
 {
     LOG4CXX_INFO(logger, "BodyComs: launch modules");
     //float freq = oAmyConfig.getModulesFreq();
@@ -25,20 +25,15 @@ BodyComs::~BodyComs()
      
     // init and start modules
     
-    oBodyCommander.init(oAmyTalker);
-    oBodyCommander.setFrequency(freq);
-    if (oBodyCommander.isEnabled())
-        oBodyCommander.on();
-
-    oBodyInspector.init(oBodyBus, oAmyTalker);
-    oBodyInspector.setFrequency(freq);
-    if (oBodyInspector.isEnabled())
-        oBodyInspector.on();
+    oBodyAware.init(oBodyBus);
+    oBodyAware.setFrequency(freq);
+    if (oBodyAware.isEnabled())
+        oBodyAware.on();
     
-    oBodyListener.init(oBodyBus);
-    oBodyListener.setFrequency(freq);
-    if (oBodyListener.isEnabled())
-        oBodyListener.on();
+//    oBodyServer.init(oBodyBus);
+//    oBodyServer.setFrequency(freq);
+//    if (oBodyServer.isEnabled())
+//        oBodyServer.on();
 
     return true;
 }
@@ -48,24 +43,18 @@ bool BodyComs::end()
     LOG4CXX_INFO(logger, "BodyComs: end modules");
 
     // finish modules
-    
-    if (oBodyCommander.isOn())
+
+    if (oBodyAware.isOn())
     {
-        oBodyCommander.off();
-        oBodyCommander.wait();      
+        oBodyAware.off();
+        oBodyAware.wait();      
     }
 
-    if (oBodyInspector.isOn())
-    {
-        oBodyInspector.off();
-        oBodyInspector.wait();      
-    }
-
-    if (oBodyListener.isOn())
-    {
-        oBodyListener.off();
-        oBodyListener.wait();      
-    }
+//    if (oBodyServer.isOn())
+//    {
+//        oBodyServer.off();
+//        oBodyServer.wait();      
+//    }
 }
 
 bool BodyComs::checkEndRequested()
@@ -73,10 +62,10 @@ bool BodyComs::checkEndRequested()
     bool byes = false;
 
     // if pending special actions
-    if (oBodyListener.checkSpecialActions())
-    {
-        byes = oBodyListener.getBodyEndRequested();
-    }
+//    if (oBodyServer.checkSpecialActions())
+//    {
+//        byes = oBodyServer.getBodyEndRequested();
+//    }
     return byes;    
 }
 

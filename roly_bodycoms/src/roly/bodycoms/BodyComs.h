@@ -9,11 +9,9 @@
 #include <log4cxx/logger.h>
 
 #include "roly/bodycore/BodyBus.h"
-#include "roly/bodycore/AmyTalker.h"
 //#include "roly/bodycore/config/AmyConfig.h"
-#include "roly/bodycoms/modules/BodyCommander.h"
-#include "roly/bodycoms/modules/BodyInspector.h"
-#include "roly/bodycoms/modules/BodyListener.h"
+#include "roly/bodycoms/modules/BodyAware.h"
+//#include "roly/bodycoms/modules/BodyServer.h"
 
 namespace roly
 {
@@ -22,16 +20,15 @@ class BodyComs
 private:    
     static log4cxx::LoggerPtr logger;      
     //AmyConfig oAmyConfig;
-    BodyCommander oBodyCommander;   // communications module to send control commands to external nodes
-    BodyInspector oBodyInspector;            // communications module to inspect sensor info from external nodes
-    BodyListener oBodyListener;        // communications module to listen to control commands from external nodes
+    BodyAware oBodyAware;            // communications module to inspect sensor info from external nodes
+//    BodyServer oBodyServer;        // communications module to listen to control commands from external nodes
 
 public:
   BodyComs();
   ~BodyComs();
 
    // launches the coms modules
-   bool launch(BodyBus& oBodyBus, AmyTalker& oAmyTalker);
+   bool launch(BodyBus& oBodyBus);
    // ends the coms modules
    bool end();
    

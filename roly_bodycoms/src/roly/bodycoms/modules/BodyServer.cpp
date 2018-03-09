@@ -5,7 +5,7 @@
 
 #include "log4cxx/ndc.h"
 
-#include "roly/bodycoms/modules/BodyListener.h"
+#include "roly/bodycoms/modules/BodyServer.h"
 #include "talky/Topics.h"
 #include "talky/topics/BodyTopic.h"
 
@@ -13,16 +13,16 @@ using namespace log4cxx;
 
 namespace roly
 {
-LoggerPtr BodyListener::logger(Logger::getLogger("roly.body.coms"));
+LoggerPtr BodyServer::logger(Logger::getLogger("roly.body.coms"));
 
 // Constructor 
-BodyListener::BodyListener()
+BodyServer::BodyServer()
 {    
-    modName = "BodyListener";
+    modName = "BodyServer";
     benabled = false;
  }
 
-void BodyListener::init(BodyBus& oBodyBus)
+void BodyServer::init(BodyBus& oBodyBus)
 {
     int topic = talky::Topics::eTOPIC_BODYROLE;
     // prepare communication servers
@@ -44,12 +44,12 @@ void BodyListener::init(BodyBus& oBodyBus)
         LOG4CXX_ERROR(logger, modName + ": failed initialization, server nodes not connected!");                        
 }
 
-void BodyListener::first()
+void BodyServer::first()
 {    
     log4cxx::NDC::push(modName);   	
 }
 
-void BodyListener::loop()
+void BodyServer::loop()
 {
     // listen to expressive messages
     checkServer(oBodyServer4Expressive);
@@ -59,7 +59,7 @@ void BodyListener::loop()
     checkServer(oBodyServer4Extra);
 }
 
-void BodyListener::checkServer(nety::NetNodeServer& oNetyServer)
+void BodyServer::checkServer(nety::NetNodeServer& oNetyServer)
 {
     talky::Command oCommand;
 
@@ -79,7 +79,7 @@ void BodyListener::checkServer(nety::NetNodeServer& oNetyServer)
     }                
 }
 
-bool BodyListener::checkSpecialActions()
+bool BodyServer::checkSpecialActions()
 {
     // clear all flags
     brequestedBodyEnd = false;

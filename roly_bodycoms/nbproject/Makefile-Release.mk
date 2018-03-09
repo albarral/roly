@@ -38,9 +38,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/roly/bodycoms/BodyComs.o \
 	${OBJECTDIR}/src/roly/bodycoms/in/ComsInBodyControl.o \
 	${OBJECTDIR}/src/roly/bodycoms/in/ComsInBodySense.o \
-	${OBJECTDIR}/src/roly/bodycoms/modules/BodyCommander.o \
-	${OBJECTDIR}/src/roly/bodycoms/modules/BodyInspector.o \
-	${OBJECTDIR}/src/roly/bodycoms/modules/BodyListener.o
+	${OBJECTDIR}/src/roly/bodycoms/modules/BodyAware.o
 
 
 # C Compiler Flags
@@ -82,20 +80,10 @@ ${OBJECTDIR}/src/roly/bodycoms/in/ComsInBodySense.o: src/roly/bodycoms/in/ComsIn
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycoms/in/ComsInBodySense.o src/roly/bodycoms/in/ComsInBodySense.cpp
 
-${OBJECTDIR}/src/roly/bodycoms/modules/BodyCommander.o: src/roly/bodycoms/modules/BodyCommander.cpp 
+${OBJECTDIR}/src/roly/bodycoms/modules/BodyAware.o: src/roly/bodycoms/modules/BodyAware.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/roly/bodycoms/modules
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycoms/modules/BodyCommander.o src/roly/bodycoms/modules/BodyCommander.cpp
-
-${OBJECTDIR}/src/roly/bodycoms/modules/BodyInspector.o: src/roly/bodycoms/modules/BodyInspector.cpp 
-	${MKDIR} -p ${OBJECTDIR}/src/roly/bodycoms/modules
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycoms/modules/BodyInspector.o src/roly/bodycoms/modules/BodyInspector.cpp
-
-${OBJECTDIR}/src/roly/bodycoms/modules/BodyListener.o: src/roly/bodycoms/modules/BodyListener.cpp 
-	${MKDIR} -p ${OBJECTDIR}/src/roly/bodycoms/modules
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycoms/modules/BodyListener.o src/roly/bodycoms/modules/BodyListener.cpp
+	$(COMPILE.cc) -O2 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycoms/modules/BodyAware.o src/roly/bodycoms/modules/BodyAware.cpp
 
 # Subprojects
 .build-subprojects:

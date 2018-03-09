@@ -9,7 +9,6 @@
 #include <log4cxx/logger.h>
 
 #include "roly/bodycore/BodyBus.h"
-#include "roly/bodycore/AmyTalker.h"
 #include "roly/body/BodyManager.h"
 #include "roly/bodycoms/BodyComs.h"
 
@@ -22,7 +21,6 @@ class BodyControl
     private:
         static log4cxx::LoggerPtr logger;
         BodyBus oBodyBus;                            
-        AmyTalker oAmyTalker;                             
         BodyManager oBodyManager;
         BodyComs oBodyComs;
 

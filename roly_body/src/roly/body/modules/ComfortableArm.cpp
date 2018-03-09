@@ -7,8 +7,6 @@
 #include "log4cxx/ndc.h"
 
 #include "roly/body/modules/ComfortableArm.h"
-#include "talky/topics/ArmTopic.h"
-
 
 using namespace log4cxx;
 
@@ -143,10 +141,9 @@ void ComfortableArm::enterSTILL()
 void ComfortableArm::requestComfortPosture()
 {
     // request arm relaxed posture
-    nety::NetNodeClient& oAxisClient = pAmyTalker->getArmAxisClient();
-    oAxisClient.addCommand(talky::ArmTopic::eAXIS_PAN_POS, relaxPosture[0]);
-    oAxisClient.addCommand(talky::ArmTopic::eAXIS_TILT_POS, relaxPosture[1]);
-    oAxisClient.addCommand(talky::ArmTopic::eAXIS_RAD_POS, relaxPosture[2]);
+    oArmClient.setPan(relaxPosture[0]);
+    oArmClient.setTilt(relaxPosture[1]);
+    oArmClient.setRadial(relaxPosture[2]);
 }
 
 void ComfortableArm::checkComfortZone()

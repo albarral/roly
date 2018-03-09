@@ -1,5 +1,5 @@
-#ifndef __ROLY_BODYCOMS_BODYLISTENER_H
-#define __ROLY_BODYCOMS_BODYLISTENER_H
+#ifndef __ROLY_BODYCOMS_BODYSERVER_H
+#define __ROLY_BODYCOMS_BODYSERVER_H
 
 /***************************************************************************
  *   Copyright (C) 2017 by Migtron Robotics   *
@@ -16,9 +16,8 @@
 
 namespace roly
 {
-// This module listens to external control requests for body control and processes them.
-// It uses nety server nodes for communications.
-class BodyListener : public tuly::Module3
+// This module acts as body server. It receives external control requests for body roles and processes them.
+class BodyServer : public tuly::Module3
 {
 private:
     static log4cxx::LoggerPtr logger;
@@ -32,8 +31,8 @@ private:
     bool brequestedBodyEnd;
 
 public:
-    BodyListener();
-    //~BodyListener();
+    BodyServer();
+    //~BodyServer();
 
     void init(BodyBus& oBodyBus);       
     bool isEnabled() {return benabled;};

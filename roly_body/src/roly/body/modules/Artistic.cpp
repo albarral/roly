@@ -7,8 +7,6 @@
 
 #include "roly/body/modules/Artistic.h"
 #include "roly/body/moves/MoveFactory.h"
-#include "talky/topics/ArmTopic.h"
-
 
 using namespace log4cxx;
 
@@ -199,20 +197,19 @@ void Artistic::triggerMove()
     // get cyclic movement for requested figure
     oCyclicMove = MoveFactory::createMove(oArmFigure);
     
-     nety::NetNodeClient& oCyclerClient = pAmyTalker->getArmCyclerClient();
     // sets cycler components
     // first cycler 
-    oCyclerClient.addCommand(talky::ArmTopic::eCYCLIC_FRONT1_FREQ, oCyclicMove.getFreq1());
-    oCyclerClient.addCommand(talky::ArmTopic::eCYCLIC_FRONT1_ANGLE, oCyclicMove.getAngle1());
-    oCyclerClient.addCommand(talky::ArmTopic::eCYCLIC_FRONT1_AMP, oCyclicMove.getAmp1());
+    oArmClient.setFrontCyclerAmp1(oCyclicMove.getAmp1());
+    oArmClient.setFrontCyclerAngle1(oCyclicMove.getAngle1());
+    oArmClient.setFrontCyclerFreq1(oCyclicMove.getFreq1());
     // second cycler
-    oCyclerClient.addCommand(talky::ArmTopic::eCYCLIC_FRONT2_FREQ, oCyclicMove.getFreq2());
-    oCyclerClient.addCommand(talky::ArmTopic::eCYCLIC_FRONT2_ANGLE, oCyclicMove.getAngle2());
-    oCyclerClient.addCommand(talky::ArmTopic::eCYCLIC_FRONT2_AMP, oCyclicMove.getAmp2());
+    oArmClient.setFrontCyclerAmp2(oCyclicMove.getAmp2());
+    oArmClient.setFrontCyclerAngle2(oCyclicMove.getAngle2());
+    oArmClient.setFrontCyclerFreq2(oCyclicMove.getFreq2());
     // phase
-    oCyclerClient.addCommand(talky::ArmTopic::eCYCLIC_FRONT_PHASE, oCyclicMove.getPhase());
+    oArmClient.setFrontCyclerPhase(oCyclicMove.getPhase());
     // start movement
-    oCyclerClient.addCommand(talky::ArmTopic::eCYCLIC_FRONT_ACTION, 1);
+    oArmClient.setFrontCyclerAction(1);
 }
 
 void Artistic::updateMove()
@@ -220,24 +217,22 @@ void Artistic::updateMove()
     // update cyclic movement for requested figure changes
     oCyclicMove = MoveFactory::createMove(oArmFigure);
 
-    nety::NetNodeClient& oCyclerClient = pAmyTalker->getArmCyclerClient();
     // update cycler components
-    // first cycler component        
-    oCyclerClient.addCommand(talky::ArmTopic::eCYCLIC_FRONT1_FREQ, oCyclicMove.getFreq1());
-    oCyclerClient.addCommand(talky::ArmTopic::eCYCLIC_FRONT1_ANGLE, oCyclicMove.getAngle1());
-    oCyclerClient.addCommand(talky::ArmTopic::eCYCLIC_FRONT1_AMP, oCyclicMove.getAmp1());
-    // second cycler component        
-    oCyclerClient.addCommand(talky::ArmTopic::eCYCLIC_FRONT2_FREQ, oCyclicMove.getFreq2());
-    oCyclerClient.addCommand(talky::ArmTopic::eCYCLIC_FRONT2_ANGLE, oCyclicMove.getAngle2());
-    oCyclerClient.addCommand(talky::ArmTopic::eCYCLIC_FRONT2_AMP, oCyclicMove.getAmp2());
+    oArmClient.setFrontCyclerAmp1(oCyclicMove.getAmp1());
+    oArmClient.setFrontCyclerAngle1(oCyclicMove.getAngle1());
+    oArmClient.setFrontCyclerFreq1(oCyclicMove.getFreq1());
+    // second cycler
+    oArmClient.setFrontCyclerAmp2(oCyclicMove.getAmp2());
+    oArmClient.setFrontCyclerAngle2(oCyclicMove.getAngle2());
+    oArmClient.setFrontCyclerFreq2(oCyclicMove.getFreq2());
     // phase
-    oCyclerClient.addCommand(talky::ArmTopic::eCYCLIC_FRONT_PHASE, oCyclicMove.getPhase());
+    oArmClient.setFrontCyclerPhase(oCyclicMove.getPhase());
 }
 
 void Artistic::stopMove()
 {    
     // stop movement
-    pAmyTalker->getArmCyclerClient().addCommand(talky::ArmTopic::eCYCLIC_FRONT_ACTION, 0);
+    oArmClient.setFrontCyclerAction(0);
 }
 
 void Artistic::writeBus()

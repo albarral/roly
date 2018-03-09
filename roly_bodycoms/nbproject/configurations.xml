@@ -20,12 +20,8 @@
           <itemPath>src/roly/bodycoms/in/ComsInBodySense.h</itemPath>
         </logicalFolder>
         <logicalFolder name="modules" displayName="modules" projectFiles="true">
-          <itemPath>src/roly/bodycoms/modules/BodyCommander.cpp</itemPath>
-          <itemPath>src/roly/bodycoms/modules/BodyCommander.h</itemPath>
-          <itemPath>src/roly/bodycoms/modules/BodyInspector.cpp</itemPath>
-          <itemPath>src/roly/bodycoms/modules/BodyInspector.h</itemPath>
-          <itemPath>src/roly/bodycoms/modules/BodyListener.cpp</itemPath>
-          <itemPath>src/roly/bodycoms/modules/BodyListener.h</itemPath>
+          <itemPath>src/roly/bodycoms/modules/BodyAware.cpp</itemPath>
+          <itemPath>src/roly/bodycoms/modules/BodyAware.h</itemPath>
         </logicalFolder>
         <itemPath>src/roly/bodycoms/BodyComs.cpp</itemPath>
         <itemPath>src/roly/bodycoms/BodyComs.h</itemPath>
@@ -72,10 +68,11 @@
           <incDir>
             <pElem>src</pElem>
             <pElem>../roly_bodycore/src</pElem>
+            <pElem>../../tron/robot/src</pElem>
+            <pElem>../../tron/talky2/src</pElem>
             <pElem>../../tron/tuly/src</pElem>
-            <pElem>../../tron/nety/src</pElem>
-            <pElem>../../tron/talky/src</pElem>
-            <pElem>../../tron/comy/src</pElem>
+            <pElem>../../tron/wire/src</pElem>
+            <pElem>../../tron/wire2/src</pElem>
           </incDir>
         </ccTool>
         <linkerTool>
@@ -94,6 +91,30 @@
               </makeArtifact>
             </linkerLibProjectItem>
             <linkerLibProjectItem>
+              <makeArtifact PL="../../tron/robot"
+                            CT="2"
+                            CN="Debug"
+                            AC="true"
+                            BL="true"
+                            WD="../../tron/robot"
+                            BC="${MAKE}  -f Makefile CONF=Debug"
+                            CC="${MAKE}  -f Makefile CONF=Debug clean"
+                            OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libtron_robot.${CND_DLIB_EXT}">
+              </makeArtifact>
+            </linkerLibProjectItem>
+            <linkerLibProjectItem>
+              <makeArtifact PL="../../tron/talky2"
+                            CT="2"
+                            CN="Debug"
+                            AC="true"
+                            BL="true"
+                            WD="../../tron/talky2"
+                            BC="${MAKE}  -f Makefile CONF=Debug"
+                            CC="${MAKE}  -f Makefile CONF=Debug clean"
+                            OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libtron_talky2.${CND_DLIB_EXT}">
+              </makeArtifact>
+            </linkerLibProjectItem>
+            <linkerLibProjectItem>
               <makeArtifact PL="../../tron/tuly"
                             CT="2"
                             CN="Debug"
@@ -106,39 +127,27 @@
               </makeArtifact>
             </linkerLibProjectItem>
             <linkerLibProjectItem>
-              <makeArtifact PL="../../tron/nety"
+              <makeArtifact PL="../../tron/wire"
                             CT="2"
                             CN="Debug"
                             AC="true"
                             BL="true"
-                            WD="../../tron/nety"
+                            WD="../../tron/wire"
                             BC="${MAKE}  -f Makefile CONF=Debug"
                             CC="${MAKE}  -f Makefile CONF=Debug clean"
-                            OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libtron_nety.${CND_DLIB_EXT}">
+                            OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libtron_wire.${CND_DLIB_EXT}">
               </makeArtifact>
             </linkerLibProjectItem>
             <linkerLibProjectItem>
-              <makeArtifact PL="../../tron/talky"
+              <makeArtifact PL="../../tron/wire2"
                             CT="2"
                             CN="Debug"
                             AC="true"
                             BL="true"
-                            WD="../../tron/talky"
+                            WD="../../tron/wire2"
                             BC="${MAKE}  -f Makefile CONF=Debug"
                             CC="${MAKE}  -f Makefile CONF=Debug clean"
-                            OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libtron_talky.${CND_DLIB_EXT}">
-              </makeArtifact>
-            </linkerLibProjectItem>
-            <linkerLibProjectItem>
-              <makeArtifact PL="../../tron/comy"
-                            CT="2"
-                            CN="Debug"
-                            AC="true"
-                            BL="true"
-                            WD="../../tron/comy"
-                            BC="${MAKE}  -f Makefile CONF=Debug"
-                            CC="${MAKE}  -f Makefile CONF=Debug clean"
-                            OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libtron_comy.${CND_DLIB_EXT}">
+                            OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libtron_wire2.${CND_DLIB_EXT}">
               </makeArtifact>
             </linkerLibProjectItem>
           </linkerLibItems>
@@ -168,32 +177,12 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="src/roly/bodycoms/modules/BodyCommander.cpp"
+      <item path="src/roly/bodycoms/modules/BodyAware.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
-      <item path="src/roly/bodycoms/modules/BodyCommander.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/roly/bodycoms/modules/BodyInspector.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/roly/bodycoms/modules/BodyInspector.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/roly/bodycoms/modules/BodyListener.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/roly/bodycoms/modules/BodyListener.h"
+      <item path="src/roly/bodycoms/modules/BodyAware.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -243,32 +232,12 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="src/roly/bodycoms/modules/BodyCommander.cpp"
+      <item path="src/roly/bodycoms/modules/BodyAware.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
-      <item path="src/roly/bodycoms/modules/BodyCommander.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/roly/bodycoms/modules/BodyInspector.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/roly/bodycoms/modules/BodyInspector.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/roly/bodycoms/modules/BodyListener.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/roly/bodycoms/modules/BodyListener.h"
+      <item path="src/roly/bodycoms/modules/BodyAware.h"
             ex="false"
             tool="3"
             flavor2="0">
