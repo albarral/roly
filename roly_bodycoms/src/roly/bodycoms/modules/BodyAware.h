@@ -15,8 +15,7 @@
 
 namespace roly
 {
-// This module inspects broadcasted info from external processes to sense their state.
-// It uses nety subscriber nodes for communication.
+// This module is aware of broadcasted info from other robotic nodes.
 class BodyAware : public tuly::Module3
 {
 private:

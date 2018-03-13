@@ -13,18 +13,24 @@
                    displayName="Source Files"
                    projectFiles="true">
       <logicalFolder name="bodycoms" displayName="bodycoms" projectFiles="true">
-        <logicalFolder name="in" displayName="in" projectFiles="true">
-          <itemPath>src/roly/bodycoms/in/ComsInBodyControl.cpp</itemPath>
-          <itemPath>src/roly/bodycoms/in/ComsInBodyControl.h</itemPath>
-          <itemPath>src/roly/bodycoms/in/ComsInBodySense.cpp</itemPath>
-          <itemPath>src/roly/bodycoms/in/ComsInBodySense.h</itemPath>
-        </logicalFolder>
         <logicalFolder name="modules" displayName="modules" projectFiles="true">
           <itemPath>src/roly/bodycoms/modules/BodyAware.cpp</itemPath>
           <itemPath>src/roly/bodycoms/modules/BodyAware.h</itemPath>
+          <itemPath>src/roly/bodycoms/modules/BodyServer.cpp</itemPath>
+          <itemPath>src/roly/bodycoms/modules/BodyServer.h</itemPath>
+        </logicalFolder>
+        <logicalFolder name="server" displayName="server" projectFiles="true">
+          <itemPath>src/roly/bodycoms/server/ArtisticChannelServer.cpp</itemPath>
+          <itemPath>src/roly/bodycoms/server/ArtisticChannelServer.h</itemPath>
+          <itemPath>src/roly/bodycoms/server/ExpressiveChannelServer.cpp</itemPath>
+          <itemPath>src/roly/bodycoms/server/ExpressiveChannelServer.h</itemPath>
+          <itemPath>src/roly/bodycoms/server/ExtraChannelServer.cpp</itemPath>
+          <itemPath>src/roly/bodycoms/server/ExtraChannelServer.h</itemPath>
         </logicalFolder>
         <itemPath>src/roly/bodycoms/BodyComs.cpp</itemPath>
         <itemPath>src/roly/bodycoms/BodyComs.h</itemPath>
+        <itemPath>src/roly/bodycoms/BodyConnector.cpp</itemPath>
+        <itemPath>src/roly/bodycoms/BodyConnector.h</itemPath>
       </logicalFolder>
     </logicalFolder>
     <logicalFolder name="TestFiles"
@@ -157,25 +163,12 @@
       </item>
       <item path="src/roly/bodycoms/BodyComs.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/roly/bodycoms/in/ComsInBodyControl.cpp"
+      <item path="src/roly/bodycoms/BodyConnector.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
-      <item path="src/roly/bodycoms/in/ComsInBodyControl.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/roly/bodycoms/in/ComsInBodySense.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/roly/bodycoms/in/ComsInBodySense.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
+      <item path="src/roly/bodycoms/BodyConnector.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/roly/bodycoms/modules/BodyAware.cpp"
             ex="false"
@@ -183,6 +176,46 @@
             flavor2="0">
       </item>
       <item path="src/roly/bodycoms/modules/BodyAware.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/roly/bodycoms/modules/BodyServer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/roly/bodycoms/modules/BodyServer.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/roly/bodycoms/server/ArtisticChannelServer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/roly/bodycoms/server/ArtisticChannelServer.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/roly/bodycoms/server/ExpressiveChannelServer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/roly/bodycoms/server/ExpressiveChannelServer.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/roly/bodycoms/server/ExtraChannelServer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/roly/bodycoms/server/ExtraChannelServer.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -212,25 +245,12 @@
       </item>
       <item path="src/roly/bodycoms/BodyComs.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/roly/bodycoms/in/ComsInBodyControl.cpp"
+      <item path="src/roly/bodycoms/BodyConnector.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
-      <item path="src/roly/bodycoms/in/ComsInBodyControl.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/roly/bodycoms/in/ComsInBodySense.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/roly/bodycoms/in/ComsInBodySense.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
+      <item path="src/roly/bodycoms/BodyConnector.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/roly/bodycoms/modules/BodyAware.cpp"
             ex="false"
@@ -238,6 +258,46 @@
             flavor2="0">
       </item>
       <item path="src/roly/bodycoms/modules/BodyAware.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/roly/bodycoms/modules/BodyServer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/roly/bodycoms/modules/BodyServer.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/roly/bodycoms/server/ArtisticChannelServer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/roly/bodycoms/server/ArtisticChannelServer.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/roly/bodycoms/server/ExpressiveChannelServer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/roly/bodycoms/server/ExpressiveChannelServer.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/roly/bodycoms/server/ExtraChannelServer.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/roly/bodycoms/server/ExtraChannelServer.h"
             ex="false"
             tool="3"
             flavor2="0">

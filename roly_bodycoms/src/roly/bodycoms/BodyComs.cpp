@@ -21,7 +21,7 @@ BodyComs::~BodyComs()
 {
     LOG4CXX_INFO(logger, "BodyComs: launch modules");
     //float freq = oAmyConfig.getModulesFreq();
-    float freq = 10; // TEMP to get from config
+    float freq = 1; // TEMP to get from config
      
     // init and start modules
     
@@ -30,10 +30,10 @@ BodyComs::~BodyComs()
     if (oBodyAware.isEnabled())
         oBodyAware.on();
     
-//    oBodyServer.init(oBodyBus);
-//    oBodyServer.setFrequency(freq);
-//    if (oBodyServer.isEnabled())
-//        oBodyServer.on();
+    oBodyServer.init(oBodyBus);
+    oBodyServer.setFrequency(freq);
+    if (oBodyServer.isEnabled())
+        oBodyServer.on();
 
     return true;
 }
@@ -50,23 +50,16 @@ bool BodyComs::end()
         oBodyAware.wait();      
     }
 
-//    if (oBodyServer.isOn())
-//    {
-//        oBodyServer.off();
-//        oBodyServer.wait();      
-//    }
+    if (oBodyServer.isOn())
+    {
+        oBodyServer.off();
+        oBodyServer.wait();      
+    }
 }
 
 bool BodyComs::checkEndRequested()
 {
-    bool byes = false;
-
-    // if pending special actions
-//    if (oBodyServer.checkSpecialActions())
-//    {
-//        byes = oBodyServer.getBodyEndRequested();
-//    }
-    return byes;    
+    return oBodyServer.getBodyEndRequested();    
 }
 
 }		

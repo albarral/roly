@@ -36,9 +36,12 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/src/roly/bodycoms/BodyComs.o \
-	${OBJECTDIR}/src/roly/bodycoms/in/ComsInBodyControl.o \
-	${OBJECTDIR}/src/roly/bodycoms/in/ComsInBodySense.o \
-	${OBJECTDIR}/src/roly/bodycoms/modules/BodyAware.o
+	${OBJECTDIR}/src/roly/bodycoms/BodyConnector.o \
+	${OBJECTDIR}/src/roly/bodycoms/modules/BodyAware.o \
+	${OBJECTDIR}/src/roly/bodycoms/modules/BodyServer.o \
+	${OBJECTDIR}/src/roly/bodycoms/server/ArtisticChannelServer.o \
+	${OBJECTDIR}/src/roly/bodycoms/server/ExpressiveChannelServer.o \
+	${OBJECTDIR}/src/roly/bodycoms/server/ExtraChannelServer.o
 
 
 # C Compiler Flags
@@ -82,20 +85,35 @@ ${OBJECTDIR}/src/roly/bodycoms/BodyComs.o: src/roly/bodycoms/BodyComs.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -Isrc -I../roly_bodycore/src -I../../tron/robot/src -I../../tron/talky2/src -I../../tron/tuly/src -I../../tron/wire/src -I../../tron/wire2/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycoms/BodyComs.o src/roly/bodycoms/BodyComs.cpp
 
-${OBJECTDIR}/src/roly/bodycoms/in/ComsInBodyControl.o: src/roly/bodycoms/in/ComsInBodyControl.cpp 
-	${MKDIR} -p ${OBJECTDIR}/src/roly/bodycoms/in
+${OBJECTDIR}/src/roly/bodycoms/BodyConnector.o: src/roly/bodycoms/BodyConnector.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/roly/bodycoms
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Isrc -I../roly_bodycore/src -I../../tron/robot/src -I../../tron/talky2/src -I../../tron/tuly/src -I../../tron/wire/src -I../../tron/wire2/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycoms/in/ComsInBodyControl.o src/roly/bodycoms/in/ComsInBodyControl.cpp
-
-${OBJECTDIR}/src/roly/bodycoms/in/ComsInBodySense.o: src/roly/bodycoms/in/ComsInBodySense.cpp 
-	${MKDIR} -p ${OBJECTDIR}/src/roly/bodycoms/in
-	${RM} "$@.d"
-	$(COMPILE.cc) -g -Isrc -I../roly_bodycore/src -I../../tron/robot/src -I../../tron/talky2/src -I../../tron/tuly/src -I../../tron/wire/src -I../../tron/wire2/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycoms/in/ComsInBodySense.o src/roly/bodycoms/in/ComsInBodySense.cpp
+	$(COMPILE.cc) -g -Isrc -I../roly_bodycore/src -I../../tron/robot/src -I../../tron/talky2/src -I../../tron/tuly/src -I../../tron/wire/src -I../../tron/wire2/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycoms/BodyConnector.o src/roly/bodycoms/BodyConnector.cpp
 
 ${OBJECTDIR}/src/roly/bodycoms/modules/BodyAware.o: src/roly/bodycoms/modules/BodyAware.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/roly/bodycoms/modules
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -Isrc -I../roly_bodycore/src -I../../tron/robot/src -I../../tron/talky2/src -I../../tron/tuly/src -I../../tron/wire/src -I../../tron/wire2/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycoms/modules/BodyAware.o src/roly/bodycoms/modules/BodyAware.cpp
+
+${OBJECTDIR}/src/roly/bodycoms/modules/BodyServer.o: src/roly/bodycoms/modules/BodyServer.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/roly/bodycoms/modules
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -Isrc -I../roly_bodycore/src -I../../tron/robot/src -I../../tron/talky2/src -I../../tron/tuly/src -I../../tron/wire/src -I../../tron/wire2/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycoms/modules/BodyServer.o src/roly/bodycoms/modules/BodyServer.cpp
+
+${OBJECTDIR}/src/roly/bodycoms/server/ArtisticChannelServer.o: src/roly/bodycoms/server/ArtisticChannelServer.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/roly/bodycoms/server
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -Isrc -I../roly_bodycore/src -I../../tron/robot/src -I../../tron/talky2/src -I../../tron/tuly/src -I../../tron/wire/src -I../../tron/wire2/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycoms/server/ArtisticChannelServer.o src/roly/bodycoms/server/ArtisticChannelServer.cpp
+
+${OBJECTDIR}/src/roly/bodycoms/server/ExpressiveChannelServer.o: src/roly/bodycoms/server/ExpressiveChannelServer.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/roly/bodycoms/server
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -Isrc -I../roly_bodycore/src -I../../tron/robot/src -I../../tron/talky2/src -I../../tron/tuly/src -I../../tron/wire/src -I../../tron/wire2/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycoms/server/ExpressiveChannelServer.o src/roly/bodycoms/server/ExpressiveChannelServer.cpp
+
+${OBJECTDIR}/src/roly/bodycoms/server/ExtraChannelServer.o: src/roly/bodycoms/server/ExtraChannelServer.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/roly/bodycoms/server
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -Isrc -I../roly_bodycore/src -I../../tron/robot/src -I../../tron/talky2/src -I../../tron/tuly/src -I../../tron/wire/src -I../../tron/wire2/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycoms/server/ExtraChannelServer.o src/roly/bodycoms/server/ExtraChannelServer.cpp
 
 # Subprojects
 .build-subprojects:

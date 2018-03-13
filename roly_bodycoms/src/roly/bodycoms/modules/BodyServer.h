@@ -2,21 +2,25 @@
 #define __ROLY_BODYCOMS_BODYSERVER_H
 
 /***************************************************************************
- *   Copyright (C) 2017 by Migtron Robotics   *
+ *   Copyright (C) 2018 by Migtron Robotics   *
  *   albarral@migtron.com   *
  ***************************************************************************/
 
 #include <string>
 #include <log4cxx/logger.h>
 
+
+#include "roly/bodycoms/server/ArtisticChannelServer.h"
+#include "roly/bodycoms/server/ExpressiveChannelServer.h"
+#include "roly/bodycoms/server/ExtraChannelServer.h"
+#include "tron/talky2/channel/ChannelServer.h"
 #include "roly/bodycore/BodyBus.h"
-#include "roly/bodycoms/in/ComsInBodyControl.h"
-#include "nety/NetNodeServer.h"
 #include "tuly/control/module3.h"
 
 namespace roly
 {
-// This module acts as body server. It receives external control requests for body roles and processes them.
+// This module serves external control request for body control. 
+// It uses a dedicated channel server for each communications channel (one for each topic).
 class BodyServer : public tuly::Module3
 {
 private:
@@ -24,11 +28,9 @@ private:
     std::string modName;          // module name
     bool benabled;
     // logic
-    nety::NetNodeServer oBodyServer4Expressive;      // server for expressive category
-    nety::NetNodeServer oBodyServer4Artistic;      // server for arm mover category
-    nety::NetNodeServer oBodyServer4Extra;             // server for extra category
-    ComsInBodyControl oComsInBodyControl;         // object that gets talky commands and transforms them to bus control values
-    bool brequestedBodyEnd;
+    ExpressiveChannelServer oExpressiveChannelServer;     // communications server for expressive channel
+    ArtisticChannelServer oArtisticChannelServer;   // communications server for artistic channel
+    ExtraChannelServer oExtraChannelServer;    // communications server for extra channel
 
 public:
     BodyServer();
@@ -37,15 +39,14 @@ public:
     void init(BodyBus& oBodyBus);       
     bool isEnabled() {return benabled;};
         
-    bool checkSpecialActions();
-    bool getBodyEndRequested() {return brequestedBodyEnd;};
-        
+    bool getBodyEndRequested();        
+
 private:
     virtual void first();
     // executes the behaviour
     virtual void loop();
-    // check given server for received messages and process them
-    void checkServer(nety::NetNodeServer& oNetyServer);
+    // check given channel server for received messages and process them
+    bool checkChannelServer(tron::ChannelServer& oChannelServer);
 };
 }		
 #endif

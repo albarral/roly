@@ -1,13 +1,11 @@
 /***************************************************************************
- *   Copyright (C) 2017 by Migtron Robotics   *
+ *   Copyright (C) 2018 by Migtron Robotics   *
  *   albarral@migtron.com   *
  ***************************************************************************/
 
 #include "log4cxx/ndc.h"
 
 #include "roly/bodycoms/modules/BodyServer.h"
-#include "talky/Topics.h"
-#include "talky/topics/BodyTopic.h"
 
 using namespace log4cxx;
 
@@ -24,24 +22,21 @@ BodyServer::BodyServer()
 
 void BodyServer::init(BodyBus& oBodyBus)
 {
-    int topic = talky::Topics::eTOPIC_BODYROLE;
     // prepare communication servers
-    oBodyServer4Expressive.init(topic, talky::BodyTopic::eCAT_BODY_EXPRESSIVE);
-    oBodyServer4Artistic.init(topic, talky::BodyTopic::eCAT_BODY_ARTISTIC);
-    oBodyServer4Extra.init(topic, talky::BodyTopic::eCAT_BODY_EXTRA);    
-    
-    oComsInBodyControl.connect2Bus(oBodyBus);
+    oExpressiveChannelServer.connect2Bus(oBodyBus);    
+    oArtisticChannelServer.connect2Bus(oBodyBus);    
+    oExtraChannelServer.connect2Bus(oBodyBus);    
     
     // if servers enabled
-    if (oBodyServer4Expressive.isConnected() &&            
-        oBodyServer4Artistic.isConnected() &&
-        oBodyServer4Extra.isConnected())
+    if (oExpressiveChannelServer.isTuned() && 
+        oArtisticChannelServer.isTuned() && 
+        oExtraChannelServer.isTuned())
     {
         benabled = true;
         LOG4CXX_INFO(logger, modName + " initialized");                                
     }
     else
-        LOG4CXX_ERROR(logger, modName + ": failed initialization, server nodes not connected!");                        
+        LOG4CXX_ERROR(logger, modName + ": failed initialization, channel servers not tuned!");                        
 }
 
 void BodyServer::first()
@@ -51,56 +46,31 @@ void BodyServer::first()
 
 void BodyServer::loop()
 {
-    // listen to expressive messages
-    checkServer(oBodyServer4Expressive);
-    // listen to artistic messages
-    checkServer(oBodyServer4Artistic);
-    // listen to extra messages
-    checkServer(oBodyServer4Extra);
+    // check expressive channel
+    checkChannelServer(oExpressiveChannelServer);        
+    // check artistic channel
+    checkChannelServer(oArtisticChannelServer);        
+    // check extra channel
+    checkChannelServer(oExtraChannelServer);        
 }
 
-void BodyServer::checkServer(nety::NetNodeServer& oNetyServer)
-{
-    talky::Command oCommand;
-
-    // get received messages
-    oNetyServer.absorb();
-    // process them to commands
-    oNetyServer.process();
-    // consume commands queue
-    while (oNetyServer.hasCommands())
-    {                    
-        // process each command to a proper bus action
-        if (oNetyServer.fetchCommand(oCommand))
-        {
-            LOG4CXX_INFO(logger, modName + ": cmd received - " + oCommand.toString());        
-            oComsInBodyControl.processCommand(oCommand);
-        }
-    }                
-}
-
-bool BodyServer::checkSpecialActions()
-{
-    // clear all flags
-    brequestedBodyEnd = false;
-
-    tuly::IntegerQueue& oQueue = oComsInBodyControl.getQueueSpecialActions();
-    int numActions = oQueue.getSize();
-    int action; 
-    // consume queue of special actions
-    while (oQueue.isFilled())
+bool BodyServer::checkChannelServer(tron::ChannelServer& oChannelServer)
+{    
+    // receive messages from the given channel
+    if (oChannelServer.senseChannel())
     {
-         oQueue.fetch(action);
-         // set flags proper to requested actions    
-         switch (action)
-         {
-             case ComsInBodyControl::eACTION_BODY_END:
-                 brequestedBodyEnd = true;
-                 break;
-         }
+        // and process them
+        oChannelServer.processCommands();
+        return true;
     }
-        
-    return (numActions > 0);    
+    // if no messages could be read
+    else
+        return false;
+}
+
+bool BodyServer::getBodyEndRequested()
+{
+    return oExtraChannelServer.getEndRequested();
 }
 
 }
