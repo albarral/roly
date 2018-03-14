@@ -101,7 +101,8 @@ void Artistic::senseBus()
     // TO DO ... get from BUS
     bcontinuous = true;
     // control flags
-    bool bnewFigure = false;
+    bool bnewMove = false;
+    bool bmoveChanged = false;
         
      // check inhibition
     binhibited = pBodyBus->getCO_INHIBIT_ARTISTIC().isRequested();
@@ -110,12 +111,10 @@ void Artistic::senseBus()
     if (pBodyBus->getCO_ARTISTIC_FIGURE().checkRequested())
     {
         int figure = pBodyBus->getCO_ARTISTIC_FIGURE().getValue();
-        // if figure valid -> LAUNCH movement
         if (figure > ArmFigure::eFIGURE_UNDEFINED && figure < ArmFigure::eFIGURE_DIM)
         {
             oArmFigure.setFigure(figure);
-            bnewFigure = true;
-            setState(eSTATE_LAUNCH);                       
+            bnewMove = true;
         }
         else
             LOG4CXX_WARN(logger, modName << " invalid figure requested " + std::to_string(figure));                     
@@ -128,9 +127,7 @@ void Artistic::senseBus()
         if (freq > 0)
         {
             oArmFigure.setFreq(freq);    
-            // if not new figure -> UPDATE movement
-            if (!bnewFigure)
-                setState(eSTATE_UPDATE);                                       
+            bmoveChanged = true;
         }
         else
             LOG4CXX_WARN(logger, modName << " invalid freq requested " + std::to_string(freq));                     
@@ -143,9 +140,7 @@ void Artistic::senseBus()
         if (size > 0)
         {
             oArmFigure.setSize(size);    
-            // if not new figure -> UPDATE movement
-            if (!bnewFigure)
-                setState(eSTATE_UPDATE);                                       
+            bmoveChanged = true;
         }
         else
             LOG4CXX_WARN(logger, modName << " invalid size requested " + std::to_string(size));                     
@@ -157,9 +152,7 @@ void Artistic::senseBus()
         float orientation = pBodyBus->getCO_ARTISTIC_ORIENTATION().getValue();
         // all orientations are valid
         oArmFigure.setOrientation(orientation);    
-        // if not new figure -> UPDATE movement
-        if (!bnewFigure)
-            setState(eSTATE_UPDATE);                                       
+        bmoveChanged = true;
     }
 
     // check relative factor requests
@@ -169,15 +162,20 @@ void Artistic::senseBus()
         if (relFactor > 0.0)
         {
             oArmFigure.setRelativeFactor(relFactor);    
-            // if not new figure -> UPDATE movement
-            if (!bnewFigure)
-                setState(eSTATE_UPDATE);                                       
+            bmoveChanged = true;
         }
         else
             LOG4CXX_WARN(logger, modName << " invalid relative factor requested " + std::to_string(relFactor));                     
     }
 
-    // if halt requested -> STOP
+    // if new figure requested -> LAUNCH movement
+    if (bnewMove)
+        setState(eSTATE_LAUNCH);                                       
+    // otherwise if movement change requested -> UPDATE movement
+    else if (bmoveChanged)
+        setState(eSTATE_UPDATE);                                       
+    
+    // anyway, if halt requested -> STOP
     if (pBodyBus->getCO_ARTISTIC_HALT().checkRequested())
     {
         setState(eSTATE_STOP);
