@@ -40,9 +40,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/roly/body/modules/BodyModule.o \
 	${OBJECTDIR}/src/roly/body/modules/ComfortableArm.o \
 	${OBJECTDIR}/src/roly/body/modules/Expressive.o \
-	${OBJECTDIR}/src/roly/body/moves/ArmFigure.o \
 	${OBJECTDIR}/src/roly/body/moves/ArmMovement.o \
-	${OBJECTDIR}/src/roly/body/moves/CyclicMove.o \
 	${OBJECTDIR}/src/roly/body/moves/MoveFactory.o
 
 
@@ -95,20 +93,10 @@ ${OBJECTDIR}/src/roly/body/modules/Expressive.o: src/roly/body/modules/Expressiv
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/body/modules/Expressive.o src/roly/body/modules/Expressive.cpp
 
-${OBJECTDIR}/src/roly/body/moves/ArmFigure.o: src/roly/body/moves/ArmFigure.cpp 
-	${MKDIR} -p ${OBJECTDIR}/src/roly/body/moves
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/body/moves/ArmFigure.o src/roly/body/moves/ArmFigure.cpp
-
 ${OBJECTDIR}/src/roly/body/moves/ArmMovement.o: src/roly/body/moves/ArmMovement.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/roly/body/moves
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/body/moves/ArmMovement.o src/roly/body/moves/ArmMovement.cpp
-
-${OBJECTDIR}/src/roly/body/moves/CyclicMove.o: src/roly/body/moves/CyclicMove.cpp 
-	${MKDIR} -p ${OBJECTDIR}/src/roly/body/moves
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/body/moves/CyclicMove.o src/roly/body/moves/CyclicMove.cpp
 
 ${OBJECTDIR}/src/roly/body/moves/MoveFactory.o: src/roly/body/moves/MoveFactory.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/roly/body/moves

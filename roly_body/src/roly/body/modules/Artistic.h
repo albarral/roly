@@ -10,9 +10,7 @@
 #include <log4cxx/logger.h>
 
 #include "roly/body/modules/BodyModule.h"
-#include "roly/body/moves/ArmFigure.h"
-#include "roly/body/moves/CyclicMove.h"
-#include "tuly/utils/IntegerQueue.h"
+#include "roly/body/moves/MoveFactory.h"
 #include "tron/talky2/arm/ArmClient.h"
 
 namespace roly
@@ -36,9 +34,13 @@ private:
     static log4cxx::LoggerPtr logger;
     // logic
     tron::ArmClient oArmClient;     // client for arm control
-    ArmFigure oArmFigure;
+    int figure;       // figure id (eFigure)
+    float freq;         // frequency of cyclic movement
+    float size;         // size of cyclic movement (degrees/s)
+    float relFactor;   // relative xy factor of cyclic movement
+    float orientation;    // orientation of cyclic movement (degrees)
     bool bcontinuous;       // continuous or simple mode
-    CyclicMove oCyclicMove;    
+    MoveFactory oMoveFactory;
 
 public:
         Artistic();
@@ -65,6 +67,8 @@ private:
         // changes a cyclic movement        
         void updateMove();
         
+        void generateMovement();
+
         // checks if ordered movement is finished (just for simple mode)
         bool checkMovementFinished();
 };

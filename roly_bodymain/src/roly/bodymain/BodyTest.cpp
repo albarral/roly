@@ -9,7 +9,7 @@
 #include <log4cxx/logger.h>
 
 #include "roly/bodymain/BodyTest.h"
-#include "roly/body/moves/ArmFigure.h"
+#include "roly/body/moves/MoveFactory.h"
 
 using namespace log4cxx;
 
@@ -61,7 +61,7 @@ void BodyTest::testArtistic()
     switch (step)
     {
         case 2:
-            pBodyBus->getCO_ARTISTIC_FIGURE().request(ArmFigure::eFIGURE_CIRCLE);
+            pBodyBus->getCO_ARTISTIC_FIGURE().request(MoveFactory::eFIGURE_CIRCLE);
             break;            
             
         case 5:

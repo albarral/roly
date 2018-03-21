@@ -24,12 +24,8 @@
           <itemPath>src/roly/body/modules/Expressive.h</itemPath>
         </logicalFolder>
         <logicalFolder name="moves" displayName="moves" projectFiles="true">
-          <itemPath>src/roly/body/moves/ArmFigure.cpp</itemPath>
-          <itemPath>src/roly/body/moves/ArmFigure.h</itemPath>
           <itemPath>src/roly/body/moves/ArmMovement.cpp</itemPath>
           <itemPath>src/roly/body/moves/ArmMovement.h</itemPath>
-          <itemPath>src/roly/body/moves/CyclicMove.cpp</itemPath>
-          <itemPath>src/roly/body/moves/CyclicMove.h</itemPath>
           <itemPath>src/roly/body/moves/MoveFactory.cpp</itemPath>
           <itemPath>src/roly/body/moves/MoveFactory.h</itemPath>
         </logicalFolder>
@@ -195,20 +191,12 @@
       </item>
       <item path="src/roly/body/modules/Expressive.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/roly/body/moves/ArmFigure.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/roly/body/moves/ArmFigure.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="src/roly/body/moves/ArmMovement.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
       <item path="src/roly/body/moves/ArmMovement.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/roly/body/moves/CyclicMove.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/roly/body/moves/CyclicMove.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/roly/body/moves/MoveFactory.cpp"
             ex="false"
@@ -270,20 +258,12 @@
       </item>
       <item path="src/roly/body/modules/Expressive.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/roly/body/moves/ArmFigure.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/roly/body/moves/ArmFigure.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="src/roly/body/moves/ArmMovement.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
       <item path="src/roly/body/moves/ArmMovement.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/roly/body/moves/CyclicMove.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/roly/body/moves/CyclicMove.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/roly/body/moves/MoveFactory.cpp"
             ex="false"

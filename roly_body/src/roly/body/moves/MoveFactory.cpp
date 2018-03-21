@@ -8,66 +8,142 @@
 
 namespace roly
 {
-//MoveFactory::MoveFactory()
-//{
-//}
-
-CyclicMove MoveFactory::createMove(ArmFigure& oArmFigure)
+MoveFactory::MoveFactory()
 {
-    // brand new cyclic move
-    CyclicMove oCyclicMove;    
+}
 
-    switch (oArmFigure.getFigure())
+MoveFactory::~MoveFactory()
+{
+    clear();
+}
+
+void MoveFactory::clear()
+{
+    listCyclicComponents.clear();        
+}
+
+maty::CyclicMove* MoveFactory::getPrimaryCyclicComponent()
+{
+    if (listCyclicComponents.size() > 0)
     {
-        case ArmFigure::eFIGURE_LINE:
-            createLineMove(oArmFigure, oCyclicMove);
-            break;            
-        case ArmFigure::eFIGURE_CIRCLE:
-            createCircularMove(oArmFigure, oCyclicMove);
-            break;
-        case ArmFigure::eFIGURE_ELLIPSE:
-            createEllipticMove(oArmFigure, oCyclicMove);
-            break;
-//        case ArmFigure::eMOV_PAJARITA:                
-//            createPajaritaMove(oCyclicMove);
-//            break;
+        return &(listCyclicComponents.at(0));
     }
+    else
+        return 0;
+}
+
+maty::CyclicMove* MoveFactory::getSecondaryCyclicComponent()
+{
+    if (listCyclicComponents.size() > 1)
+    {
+        return &(listCyclicComponents.at(1));
+    }
+    else
+        return 0;
+}
+
+void MoveFactory::createLine(float amplitude, float angle, float freq)
+{
+    clear();
     
-    return oCyclicMove;
+    maty::CyclicMove oCyclicMove;
+    oCyclicMove.setFreq(freq);
+    oCyclicMove.setAngle(angle);
+    oCyclicMove.setAmp(amplitude);
+    
+    listCyclicComponents.push_back(oCyclicMove);
 }
 
-void MoveFactory::createLineMove(ArmFigure& oArmFigure, CyclicMove& oCyclicMove)
+void MoveFactory::createCircle(float amplitude, int direction, float freq)
 {
-    oCyclicMove.setSimple();
-    oCyclicMove.setFreq1(oArmFigure.getFreq());
-    oCyclicMove.setAngle1(oArmFigure.getOrientation());
-    oCyclicMove.setAmp1(oArmFigure.getSize());
+    // a circle is an ellipse with relative factor 1.0  ... 
+    createEllipse(amplitude, amplitude, 0.0, direction, freq);
 }
 
-void MoveFactory::createCircularMove(ArmFigure& oArmFigure, CyclicMove& oCyclicMove)
+void MoveFactory::createEllipse(float amplitude, float height, float angle, int direction, float freq)
 {
-    // a circle is an ellipse ... 
-    createEllipticMove(oArmFigure, oCyclicMove);
-    // with relative factor 1.0    
-    oCyclicMove.setAmp2(oCyclicMove.getAmp1());
-}
-
-void MoveFactory::createEllipticMove(ArmFigure& oArmFigure, CyclicMove& oCyclicMove)
-{
-    oCyclicMove.setComposed();
+    clear();
+    
+    maty::CyclicMove oCyclicMove1;
+    maty::CyclicMove oCyclicMove2;
     // same freq
-    oCyclicMove.setFreq1(oArmFigure.getFreq());
-    oCyclicMove.setFreq2(oArmFigure.getFreq());
+    oCyclicMove1.setFreq(freq);
+    oCyclicMove2.setFreq(freq);
     // orthogonal relationship
     // keep angles inside limits [0, 360)    
-    float angle2 = maty::Angle::inLimits(oArmFigure.getOrientation() + 90.0);
-    oCyclicMove.setAngle1(oArmFigure.getOrientation());
-    oCyclicMove.setAngle2(angle2);
-    // take into account the figure's relative factor
-    float amp2 = oArmFigure.getSize() * oArmFigure.getRelativeFactor();
-    oCyclicMove.setAmp1(oArmFigure.getSize());
-    oCyclicMove.setAmp2(amp2);
+    float angle2 = maty::Angle::inLimits(angle + 90.0);
+    oCyclicMove1.setAngle(angle);
+    oCyclicMove2.setAngle(angle2);
+    oCyclicMove1.setAmp(amplitude);
+    oCyclicMove2.setAmp(height);
     // 90 degrees phase difference
-    oCyclicMove.setPhase(90);
+    oCyclicMove1.setPhase(0);
+    oCyclicMove2.setPhase(90);
+
+    listCyclicComponents.push_back(oCyclicMove1);
+    listCyclicComponents.push_back(oCyclicMove2);    
 }
+
+void MoveFactory::updateFreq(float freq)
+{
+    // if two components
+    if (listCyclicComponents.size() == 2)
+    {
+        maty::CyclicMove& oCyclicMove1 = listCyclicComponents.at(0);
+        maty::CyclicMove& oCyclicMove2 = listCyclicComponents.at(1);
+        if (oCyclicMove1.getFreq() != 0 && oCyclicMove2.getFreq() != 0)
+        {
+            // keep relative frequency
+            float relFreq = oCyclicMove2.getFreq() / oCyclicMove1.getFreq();
+            oCyclicMove1.setFreq(freq);
+            oCyclicMove2.setFreq(freq * relFreq);
+        }
+    }
+    else if (listCyclicComponents.size() == 1)
+    {
+        listCyclicComponents.at(0).setFreq(freq);
+    }    
+}
+
+void MoveFactory::updateAmplitude(float amplitude)
+{
+    // if two components
+    if (listCyclicComponents.size() == 2)
+    {
+        maty::CyclicMove& oCyclicMove1 = listCyclicComponents.at(0);
+        maty::CyclicMove& oCyclicMove2 = listCyclicComponents.at(1);
+        if (oCyclicMove1.getAmp() != 0 && oCyclicMove2.getAmp() != 0)
+        {
+            // keep relative factor
+            float relFactor = oCyclicMove2.getAmp() / oCyclicMove1.getAmp();
+            oCyclicMove1.setAmp(amplitude);
+            oCyclicMove2.setAmp(amplitude * relFactor);
+        }
+    }
+    else if (listCyclicComponents.size() == 1)
+    {
+        listCyclicComponents.at(0).setAmp(amplitude);        
+    }    
+}
+
+void MoveFactory::updateAngle(float angle)
+{
+    // if two components
+    if (listCyclicComponents.size() == 2)
+    {
+        maty::CyclicMove& oCyclicMove1 = listCyclicComponents.at(0);
+        maty::CyclicMove& oCyclicMove2 = listCyclicComponents.at(1);
+        // keep relative angle
+        float relAngle = oCyclicMove2.getAngle() - oCyclicMove1.getAngle();
+        oCyclicMove1.setAngle(angle);
+        // keep angles inside limits [0, 360)    
+        float angle2 = maty::Angle::inLimits(angle + relAngle);
+        oCyclicMove2.setAngle(angle2);       
+    }
+    else if (listCyclicComponents.size() == 1)
+    {
+        listCyclicComponents.at(0).setAngle(angle);
+    }    
+}
+
 }

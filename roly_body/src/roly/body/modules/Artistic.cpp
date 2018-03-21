@@ -6,7 +6,7 @@
 #include "log4cxx/ndc.h"
 
 #include "roly/body/modules/Artistic.h"
-#include "roly/body/moves/MoveFactory.h"
+#include "maty/moves/CyclicMove.h"
 
 using namespace log4cxx;
 
@@ -32,10 +32,10 @@ void Artistic::showInitialized()
 void Artistic::first()
 {
     // set default figure values
-    oArmFigure.setFreq(0.5);
-    oArmFigure.setSize(40.0);
-    oArmFigure.setRelativeFactor(0.5);
-    oArmFigure.setOrientation(0.0);
+    freq = 0.5;
+    size = 40.0;
+    relFactor = 0.5;
+    orientation = 0.0;
     
     // start at WAIT
     setState(eSTATE_IDLE);
@@ -103,6 +103,7 @@ void Artistic::senseBus()
     // control flags
     bool bnewMove = false;
     bool bmoveChanged = false;
+    float value;
         
      // check inhibition
     binhibited = pBodyBus->getCO_INHIBIT_ARTISTIC().isRequested();
@@ -110,62 +111,65 @@ void Artistic::senseBus()
     // check figure requests
     if (pBodyBus->getCO_ARTISTIC_FIGURE().checkRequested())
     {
-        int figure = pBodyBus->getCO_ARTISTIC_FIGURE().getValue();
-        if (figure > ArmFigure::eFIGURE_UNDEFINED && figure < ArmFigure::eFIGURE_DIM)
+        value = pBodyBus->getCO_ARTISTIC_FIGURE().getValue();
+        if (value > MoveFactory::eFIGURE_UNDEFINED && value < MoveFactory::eFIGURE_DIM)
         {
-            oArmFigure.setFigure(figure);
+            figure = value;
             bnewMove = true;
         }
         else
-            LOG4CXX_WARN(logger, modName << " invalid figure requested " + std::to_string(figure));                     
+            LOG4CXX_WARN(logger, modName << " invalid figure requested " + std::to_string(value));                     
     }
         
     // check freq requests
     if (pBodyBus->getCO_ARTISTIC_FREQ().checkRequested())
     {  
-        float freq = pBodyBus->getCO_ARTISTIC_FREQ().getValue();
-        if (freq > 0)
+        value = pBodyBus->getCO_ARTISTIC_FREQ().getValue();
+        if (value > 0)
         {
-            oArmFigure.setFreq(freq);    
+            freq = value;
             bmoveChanged = true;
+            oMoveFactory.updateFreq(freq);
         }
         else
-            LOG4CXX_WARN(logger, modName << " invalid freq requested " + std::to_string(freq));                     
+            LOG4CXX_WARN(logger, modName << " invalid freq requested " + std::to_string(value));                     
     }
 
     // check size requests
     if (pBodyBus->getCO_ARTISTIC_SIZE().checkRequested())
     {  
-        float size = pBodyBus->getCO_ARTISTIC_SIZE().getValue();
-        if (size > 0)
+        value = pBodyBus->getCO_ARTISTIC_SIZE().getValue();
+        if (value > 0)
         {
-            oArmFigure.setSize(size);    
+            size = value;
             bmoveChanged = true;
+            oMoveFactory.updateAmplitude(size);
         }
         else
-            LOG4CXX_WARN(logger, modName << " invalid size requested " + std::to_string(size));                     
+            LOG4CXX_WARN(logger, modName << " invalid size requested " + std::to_string(value));                     
     }
 
     // check orientation requests
     if (pBodyBus->getCO_ARTISTIC_ORIENTATION().checkRequested())
     {  
-        float orientation = pBodyBus->getCO_ARTISTIC_ORIENTATION().getValue();
+        orientation = pBodyBus->getCO_ARTISTIC_ORIENTATION().getValue();
         // all orientations are valid
-        oArmFigure.setOrientation(orientation);    
         bmoveChanged = true;
+        oMoveFactory.updateAngle(orientation);
     }
 
     // check relative factor requests
     if (pBodyBus->getCO_ARTISTIC_RELFACTOR().checkRequested())
     {  
-        float relFactor = pBodyBus->getCO_ARTISTIC_RELFACTOR().getValue();
-        if (relFactor > 0.0)
+        float value = pBodyBus->getCO_ARTISTIC_RELFACTOR().getValue();
+        if (value > 0.0)
         {
-            oArmFigure.setRelativeFactor(relFactor);    
+            relFactor = value;
             bmoveChanged = true;
+            //oMoveFactory.updateRelFactor(relFactor);  // TO DO ...
         }
         else
-            LOG4CXX_WARN(logger, modName << " invalid relative factor requested " + std::to_string(relFactor));                     
+            LOG4CXX_WARN(logger, modName << " invalid relative factor requested " + std::to_string(value));                     
     }
 
     // if new figure requested -> LAUNCH movement
@@ -193,38 +197,55 @@ bool Artistic::checkMovementFinished()
 void Artistic::triggerMove()
 {    
     // get cyclic movement for requested figure
-    oCyclicMove = MoveFactory::createMove(oArmFigure);
+    generateMovement();
     
-    // sets cycler components
+    maty::CyclicMove* pCyclicMove1 = oMoveFactory.getPrimaryCyclicComponent();
+    maty::CyclicMove* pCyclicMove2 = oMoveFactory.getSecondaryCyclicComponent();
+    
     // first cycler 
-    oArmClient.setFrontCyclerAmp1(oCyclicMove.getAmp1());
-    oArmClient.setFrontCyclerAngle1(oCyclicMove.getAngle1());
-    oArmClient.setFrontCyclerFreq1(oCyclicMove.getFreq1());
+    if (pCyclicMove1 != 0)
+    {
+        oArmClient.setFrontCyclerAmp1(pCyclicMove1->getAmp());
+        oArmClient.setFrontCyclerAngle1(pCyclicMove1->getAngle());
+        oArmClient.setFrontCyclerFreq1(pCyclicMove1->getFreq());
+        oArmClient.setFrontCyclerPhase1(pCyclicMove1->getPhase());
+    }
+    
     // second cycler
-    oArmClient.setFrontCyclerAmp2(oCyclicMove.getAmp2());
-    oArmClient.setFrontCyclerAngle2(oCyclicMove.getAngle2());
-    oArmClient.setFrontCyclerFreq2(oCyclicMove.getFreq2());
-    // phase
-    oArmClient.setFrontCyclerPhase(oCyclicMove.getPhase());
+    if (pCyclicMove2 != 0)
+    {
+        oArmClient.setFrontCyclerAmp2(pCyclicMove2->getAmp());
+        oArmClient.setFrontCyclerAngle2(pCyclicMove2->getAngle());
+        oArmClient.setFrontCyclerFreq2(pCyclicMove2->getFreq());
+        oArmClient.setFrontCyclerPhase2(pCyclicMove2->getPhase());
+    }
+    
     // start movement
     oArmClient.setFrontCyclerAction(1);
 }
 
 void Artistic::updateMove()
 {        
-    // update cyclic movement for requested figure changes
-    oCyclicMove = MoveFactory::createMove(oArmFigure);
-
-    // update cycler components
-    oArmClient.setFrontCyclerAmp1(oCyclicMove.getAmp1());
-    oArmClient.setFrontCyclerAngle1(oCyclicMove.getAngle1());
-    oArmClient.setFrontCyclerFreq1(oCyclicMove.getFreq1());
+    maty::CyclicMove* pCyclicMove1 = oMoveFactory.getPrimaryCyclicComponent();
+    maty::CyclicMove* pCyclicMove2 = oMoveFactory.getSecondaryCyclicComponent();
+    
+    // first cycler 
+    if (pCyclicMove1 != 0)
+    {
+        oArmClient.setFrontCyclerAmp1(pCyclicMove1->getAmp());
+        oArmClient.setFrontCyclerAngle1(pCyclicMove1->getAngle());
+        oArmClient.setFrontCyclerFreq1(pCyclicMove1->getFreq());
+        oArmClient.setFrontCyclerPhase1(pCyclicMove1->getPhase());
+    }
+    
     // second cycler
-    oArmClient.setFrontCyclerAmp2(oCyclicMove.getAmp2());
-    oArmClient.setFrontCyclerAngle2(oCyclicMove.getAngle2());
-    oArmClient.setFrontCyclerFreq2(oCyclicMove.getFreq2());
-    // phase
-    oArmClient.setFrontCyclerPhase(oCyclicMove.getPhase());
+    if (pCyclicMove2 != 0)
+    {
+        oArmClient.setFrontCyclerAmp2(pCyclicMove2->getAmp());
+        oArmClient.setFrontCyclerAngle2(pCyclicMove2->getAngle());
+        oArmClient.setFrontCyclerFreq2(pCyclicMove2->getFreq());
+        oArmClient.setFrontCyclerPhase2(pCyclicMove2->getPhase());
+    }
 }
 
 void Artistic::stopMove()
@@ -237,6 +258,27 @@ void Artistic::writeBus()
 {
     // nothing to do here    
     // control already done by triggerMove, stopMove & updateMove methods
+}
+
+void Artistic::generateMovement()
+{
+    int direction = 0;  // TO SPECIFY (n, s, e, w, ne, nw, se, sw)
+
+    switch (figure)
+    {
+        case MoveFactory::eFIGURE_LINE:
+            oMoveFactory.createLine(size, orientation, freq);
+            break;            
+        case MoveFactory::eFIGURE_CIRCLE:
+            oMoveFactory.createCircle(size, direction, freq);
+            break;
+        case MoveFactory::eFIGURE_ELLIPSE:
+            oMoveFactory.createEllipse(size, size*relFactor, orientation, direction, freq);
+            break;            
+        default: 
+            oMoveFactory.clear();
+            break;
+    }    
 }
 
 void Artistic::showState()
