@@ -6,8 +6,7 @@
  *   albarral@migtron.com   *
  ***************************************************************************/
 
-#include <vector>
-#include "maty/moves/CyclicMove.h"
+#include "maty/moves/CyclicComponent.h"
  
 namespace roly
 {
@@ -22,21 +21,21 @@ public:
         eFIGURE_LINE,
         eFIGURE_CIRCLE,
         eFIGURE_ELLIPSE,
-      //  eFIGURE_PAJARITA,                
-        eFIGURE_DIM,                
+        eFIGURE_DIM                
     };
-
 private: 
-    std::vector<maty::CyclicMove> listCyclicComponents;  // cyclic components for requested movement
+    bool bdual;                                 // both components informed
+    maty::CyclicComponent oCyclicMove1;     // primary cyclic component
+    maty::CyclicComponent oCyclicMove2;     // secondary cyclic component
     
 public:  
     MoveFactory();
-    ~MoveFactory();
+    //~MoveFactory();
 
-    maty::CyclicMove* getPrimaryCyclicComponent();
-    maty::CyclicMove* getSecondaryCyclicComponent();
+    bool isDual() {return bdual;}
+    maty::CyclicComponent& getPrimaryCyclicComponent() {return oCyclicMove1;}
+    maty::CyclicComponent& getSecondaryCyclicComponent() {return oCyclicMove2;};
     
-    void clear();
     // create linear movement
     void createLine(float amplitude, float angle, float freq); 
     // create circular movement

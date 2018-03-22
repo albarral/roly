@@ -12,6 +12,7 @@
 #include "roly/body/modules/BodyModule.h"
 #include "roly/body/moves/MoveFactory.h"
 #include "tron/talky2/arm/ArmClient.h"
+#include "maty/moves/CircularMovement.h"
 
 namespace roly
 {
@@ -41,6 +42,7 @@ private:
     float orientation;    // orientation of cyclic movement (degrees)
     bool bcontinuous;       // continuous or simple mode
     MoveFactory oMoveFactory;
+    maty::CircularMovement oCircularMovement;
 
 public:
         Artistic();
@@ -67,7 +69,7 @@ private:
         // changes a cyclic movement        
         void updateMove();
         
-        void generateMovement();
+        bool generateMovement();
 
         // checks if ordered movement is finished (just for simple mode)
         bool checkMovementFinished();

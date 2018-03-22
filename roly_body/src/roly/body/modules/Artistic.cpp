@@ -6,7 +6,7 @@
 #include "log4cxx/ndc.h"
 
 #include "roly/body/modules/Artistic.h"
-#include "maty/moves/CyclicMove.h"
+#include "maty/moves/CyclicComponent.h"
 
 using namespace log4cxx;
 
@@ -129,7 +129,7 @@ void Artistic::senseBus()
         {
             freq = value;
             bmoveChanged = true;
-            oMoveFactory.updateFreq(freq);
+            oCircularMovement.updateFreq(freq);
         }
         else
             LOG4CXX_WARN(logger, modName << " invalid freq requested " + std::to_string(value));                     
@@ -143,7 +143,7 @@ void Artistic::senseBus()
         {
             size = value;
             bmoveChanged = true;
-            oMoveFactory.updateAmplitude(size);
+            oCircularMovement.updateAmplitude(size);
         }
         else
             LOG4CXX_WARN(logger, modName << " invalid size requested " + std::to_string(value));                     
@@ -155,7 +155,7 @@ void Artistic::senseBus()
         orientation = pBodyBus->getCO_ARTISTIC_ORIENTATION().getValue();
         // all orientations are valid
         bmoveChanged = true;
-        oMoveFactory.updateAngle(orientation);
+        oCircularMovement.updateAngle(orientation);
     }
 
     // check relative factor requests
@@ -166,7 +166,7 @@ void Artistic::senseBus()
         {
             relFactor = value;
             bmoveChanged = true;
-            //oMoveFactory.updateRelFactor(relFactor);  // TO DO ...
+            oCircularMovement.updateRelFactor(relFactor); 
         }
         else
             LOG4CXX_WARN(logger, modName << " invalid relative factor requested " + std::to_string(value));                     
@@ -197,27 +197,29 @@ bool Artistic::checkMovementFinished()
 void Artistic::triggerMove()
 {    
     // get cyclic movement for requested figure
-    generateMovement();
-    
-    maty::CyclicMove* pCyclicMove1 = oMoveFactory.getPrimaryCyclicComponent();
-    maty::CyclicMove* pCyclicMove2 = oMoveFactory.getSecondaryCyclicComponent();
+    if (!generateMovement())
+        return;    
     
     // first cycler 
-    if (pCyclicMove1 != 0)
-    {
-        oArmClient.setFrontCyclerAmp1(pCyclicMove1->getAmp());
-        oArmClient.setFrontCyclerAngle1(pCyclicMove1->getAngle());
-        oArmClient.setFrontCyclerFreq1(pCyclicMove1->getFreq());
-        oArmClient.setFrontCyclerPhase1(pCyclicMove1->getPhase());
-    }
+    maty::CyclicComponent& oCyclicComponent1 = oCircularMovement.getPrimaryComponent();
+    oArmClient.setFrontCyclerAmp1(oCyclicComponent1.getAmp());
+    oArmClient.setFrontCyclerAngle1(oCyclicComponent1.getAngle());
+    oArmClient.setFrontCyclerFreq1(oCyclicComponent1.getFreq());
+    oArmClient.setFrontCyclerPhase1(oCyclicComponent1.getPhase());
     
     // second cycler
-    if (pCyclicMove2 != 0)
+    if (oCircularMovement.isDual())
     {
-        oArmClient.setFrontCyclerAmp2(pCyclicMove2->getAmp());
-        oArmClient.setFrontCyclerAngle2(pCyclicMove2->getAngle());
-        oArmClient.setFrontCyclerFreq2(pCyclicMove2->getFreq());
-        oArmClient.setFrontCyclerPhase2(pCyclicMove2->getPhase());
+        maty::CyclicComponent& oCyclicComponent2 = oCircularMovement.getSecondaryComponent();
+        oArmClient.setFrontCyclerAmp2(oCyclicComponent2.getAmp());
+        oArmClient.setFrontCyclerAngle2(oCyclicComponent2.getAngle());
+        oArmClient.setFrontCyclerFreq2(oCyclicComponent2.getFreq());
+        oArmClient.setFrontCyclerPhase2(oCyclicComponent2.getPhase());
+    }
+    else
+    {
+        oArmClient.setFrontCyclerFreq2(0.0);
+        oArmClient.setFrontCyclerAmp2(0.0);        
     }
     
     // start movement
@@ -226,25 +228,21 @@ void Artistic::triggerMove()
 
 void Artistic::updateMove()
 {        
-    maty::CyclicMove* pCyclicMove1 = oMoveFactory.getPrimaryCyclicComponent();
-    maty::CyclicMove* pCyclicMove2 = oMoveFactory.getSecondaryCyclicComponent();
-    
     // first cycler 
-    if (pCyclicMove1 != 0)
-    {
-        oArmClient.setFrontCyclerAmp1(pCyclicMove1->getAmp());
-        oArmClient.setFrontCyclerAngle1(pCyclicMove1->getAngle());
-        oArmClient.setFrontCyclerFreq1(pCyclicMove1->getFreq());
-        oArmClient.setFrontCyclerPhase1(pCyclicMove1->getPhase());
-    }
+    maty::CyclicComponent& oCyclicComponent1 = oCircularMovement.getPrimaryComponent();
+    oArmClient.setFrontCyclerAmp1(oCyclicComponent1.getAmp());
+    oArmClient.setFrontCyclerAngle1(oCyclicComponent1.getAngle());
+    oArmClient.setFrontCyclerFreq1(oCyclicComponent1.getFreq());
+    oArmClient.setFrontCyclerPhase1(oCyclicComponent1.getPhase());
     
     // second cycler
-    if (pCyclicMove2 != 0)
+    if (oCircularMovement.isDual())
     {
-        oArmClient.setFrontCyclerAmp2(pCyclicMove2->getAmp());
-        oArmClient.setFrontCyclerAngle2(pCyclicMove2->getAngle());
-        oArmClient.setFrontCyclerFreq2(pCyclicMove2->getFreq());
-        oArmClient.setFrontCyclerPhase2(pCyclicMove2->getPhase());
+        maty::CyclicComponent& oCyclicComponent2 = oCircularMovement.getSecondaryComponent();
+        oArmClient.setFrontCyclerAmp2(oCyclicComponent2.getAmp());
+        oArmClient.setFrontCyclerAngle2(oCyclicComponent2.getAngle());
+        oArmClient.setFrontCyclerFreq2(oCyclicComponent2.getFreq());
+        oArmClient.setFrontCyclerPhase2(oCyclicComponent2.getPhase());
     }
 }
 
@@ -260,25 +258,25 @@ void Artistic::writeBus()
     // control already done by triggerMove, stopMove & updateMove methods
 }
 
-void Artistic::generateMovement()
+bool Artistic::generateMovement()
 {
-    int direction = 0;  // TO SPECIFY (n, s, e, w, ne, nw, se, sw)
-
+    bool bok = true;
     switch (figure)
     {
-        case MoveFactory::eFIGURE_LINE:
-            oMoveFactory.createLine(size, orientation, freq);
-            break;            
+//        case MoveFactory::eFIGURE_LINE:
+//            oMoveFactory.createLine(size, orientation, freq);
+//            break;            
         case MoveFactory::eFIGURE_CIRCLE:
-            oMoveFactory.createCircle(size, direction, freq);
+            oCircularMovement.createCircle(freq, size, orientation, true);
             break;
         case MoveFactory::eFIGURE_ELLIPSE:
-            oMoveFactory.createEllipse(size, size*relFactor, orientation, direction, freq);
+            oCircularMovement.createEllipse(freq, size, relFactor, orientation, true);
             break;            
         default: 
-            oMoveFactory.clear();
+            bok = false;
             break;
-    }    
+    }
+    return bok;
 }
 
 void Artistic::showState()
