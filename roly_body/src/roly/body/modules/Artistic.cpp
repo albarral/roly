@@ -7,6 +7,7 @@
 
 #include "roly/body/modules/Artistic.h"
 #include "maty/moves/CyclicComponent.h"
+#include "tron/language/objects/FiguresTheme.h"
 
 using namespace log4cxx;
 
@@ -17,6 +18,7 @@ LoggerPtr Artistic::logger(Logger::getLogger("roly.body"));
 Artistic::Artistic()
 {
     modName = "Artistic";
+    pActiveCyclicMovement = 0;
 }
 
 //Artistic::~Artistic()
@@ -112,7 +114,7 @@ void Artistic::senseBus()
     if (pBodyBus->getCO_ARTISTIC_FIGURE().checkRequested())
     {
         value = pBodyBus->getCO_ARTISTIC_FIGURE().getValue();
-        if (value > MoveFactory::eFIGURE_UNDEFINED && value < MoveFactory::eFIGURE_DIM)
+        if (value >= 0)
         {
             figure = value;
             bnewMove = true;
@@ -129,7 +131,8 @@ void Artistic::senseBus()
         {
             freq = value;
             bmoveChanged = true;
-            oCircularMovement.updateFreq(freq);
+            if (pActiveCyclicMovement != 0)
+                pActiveCyclicMovement->updateFreq(freq);
         }
         else
             LOG4CXX_WARN(logger, modName << " invalid freq requested " + std::to_string(value));                     
@@ -143,7 +146,8 @@ void Artistic::senseBus()
         {
             size = value;
             bmoveChanged = true;
-            oCircularMovement.updateAmplitude(size);
+            if (pActiveCyclicMovement != 0)
+                pActiveCyclicMovement->updateAmplitude(size);
         }
         else
             LOG4CXX_WARN(logger, modName << " invalid size requested " + std::to_string(value));                     
@@ -155,7 +159,8 @@ void Artistic::senseBus()
         orientation = pBodyBus->getCO_ARTISTIC_ORIENTATION().getValue();
         // all orientations are valid
         bmoveChanged = true;
-        oCircularMovement.updateAngle(orientation);
+        if (pActiveCyclicMovement != 0)
+            pActiveCyclicMovement->updateAngle(orientation);
     }
 
     // check relative factor requests
@@ -166,7 +171,8 @@ void Artistic::senseBus()
         {
             relFactor = value;
             bmoveChanged = true;
-            oCircularMovement.updateRelFactor(relFactor); 
+            if (pActiveCyclicMovement != 0)
+                pActiveCyclicMovement->updateRelFactor(relFactor); 
         }
         else
             LOG4CXX_WARN(logger, modName << " invalid relative factor requested " + std::to_string(value));                     
@@ -201,16 +207,16 @@ void Artistic::triggerMove()
         return;    
     
     // first cycler 
-    maty::CyclicComponent& oCyclicComponent1 = oCircularMovement.getPrimaryComponent();
+    maty::CyclicComponent& oCyclicComponent1 = pActiveCyclicMovement->getPrimaryComponent();
     oArmClient.setFrontCyclerAmp1(oCyclicComponent1.getAmp());
     oArmClient.setFrontCyclerAngle1(oCyclicComponent1.getAngle());
     oArmClient.setFrontCyclerFreq1(oCyclicComponent1.getFreq());
     oArmClient.setFrontCyclerPhase1(oCyclicComponent1.getPhase());
     
     // second cycler
-    if (oCircularMovement.isDual())
+    if (pActiveCyclicMovement->isDual())
     {
-        maty::CyclicComponent& oCyclicComponent2 = oCircularMovement.getSecondaryComponent();
+        maty::CyclicComponent& oCyclicComponent2 = pActiveCyclicMovement->getSecondaryComponent();
         oArmClient.setFrontCyclerAmp2(oCyclicComponent2.getAmp());
         oArmClient.setFrontCyclerAngle2(oCyclicComponent2.getAngle());
         oArmClient.setFrontCyclerFreq2(oCyclicComponent2.getFreq());
@@ -228,17 +234,20 @@ void Artistic::triggerMove()
 
 void Artistic::updateMove()
 {        
+    if (pActiveCyclicMovement == 0)
+        return;
+    
     // first cycler 
-    maty::CyclicComponent& oCyclicComponent1 = oCircularMovement.getPrimaryComponent();
+    maty::CyclicComponent& oCyclicComponent1 = pActiveCyclicMovement->getPrimaryComponent();
     oArmClient.setFrontCyclerAmp1(oCyclicComponent1.getAmp());
     oArmClient.setFrontCyclerAngle1(oCyclicComponent1.getAngle());
     oArmClient.setFrontCyclerFreq1(oCyclicComponent1.getFreq());
     oArmClient.setFrontCyclerPhase1(oCyclicComponent1.getPhase());
     
     // second cycler
-    if (oCircularMovement.isDual())
+    if (pActiveCyclicMovement->isDual())
     {
-        maty::CyclicComponent& oCyclicComponent2 = oCircularMovement.getSecondaryComponent();
+        maty::CyclicComponent& oCyclicComponent2 = pActiveCyclicMovement->getSecondaryComponent();
         oArmClient.setFrontCyclerAmp2(oCyclicComponent2.getAmp());
         oArmClient.setFrontCyclerAngle2(oCyclicComponent2.getAngle());
         oArmClient.setFrontCyclerFreq2(oCyclicComponent2.getFreq());
@@ -263,16 +272,20 @@ bool Artistic::generateMovement()
     bool bok = true;
     switch (figure)
     {
-//        case MoveFactory::eFIGURE_LINE:
-//            oMoveFactory.createLine(size, orientation, freq);
-//            break;            
-        case MoveFactory::eFIGURE_CIRCLE:
+        case tron::FiguresTheme::eFIGURE_LINE:
+            oWaveMovement.createLine(freq, size, orientation);
+            pActiveCyclicMovement = &oWaveMovement;
+            break;            
+        case tron::FiguresTheme::eFIGURE_CIRCLE:
             oCircularMovement.createCircle(freq, size, orientation, true);
+            pActiveCyclicMovement = &oCircularMovement;
             break;
-        case MoveFactory::eFIGURE_ELLIPSE:
+        case tron::FiguresTheme::eFIGURE_ELLIPSE:
             oCircularMovement.createEllipse(freq, size, relFactor, orientation, true);
+            pActiveCyclicMovement = &oCircularMovement;
             break;            
         default: 
+            pActiveCyclicMovement = 0;
             bok = false;
             break;
     }

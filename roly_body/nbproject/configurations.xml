@@ -26,8 +26,6 @@
         <logicalFolder name="moves" displayName="moves" projectFiles="true">
           <itemPath>src/roly/body/moves/ArmMovement.cpp</itemPath>
           <itemPath>src/roly/body/moves/ArmMovement.h</itemPath>
-          <itemPath>src/roly/body/moves/MoveFactory.cpp</itemPath>
-          <itemPath>src/roly/body/moves/MoveFactory.h</itemPath>
         </logicalFolder>
         <itemPath>src/roly/body/BodyManager.cpp</itemPath>
         <itemPath>src/roly/body/BodyManager.h</itemPath>
@@ -68,6 +66,7 @@
             <pElem>../../tron/tuly/src</pElem>
             <pElem>../../tron/wire/src</pElem>
             <pElem>../../tron/wire2/src</pElem>
+            <pElem>../../tron/language/src</pElem>
           </incDir>
         </ccTool>
         <linkerTool>
@@ -198,13 +197,6 @@
       </item>
       <item path="src/roly/body/moves/ArmMovement.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/roly/body/moves/MoveFactory.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/roly/body/moves/MoveFactory.h" ex="false" tool="3" flavor2="0">
-      </item>
     </conf>
     <conf name="Release" type="2">
       <toolsSet>
@@ -264,13 +256,6 @@
             flavor2="0">
       </item>
       <item path="src/roly/body/moves/ArmMovement.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/roly/body/moves/MoveFactory.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/roly/body/moves/MoveFactory.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
   </confs>

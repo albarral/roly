@@ -10,9 +10,11 @@
 #include <log4cxx/logger.h>
 
 #include "roly/body/modules/BodyModule.h"
-#include "roly/body/moves/MoveFactory.h"
+//#include "roly/body/moves/MoveFactory.h"
 #include "tron/talky2/arm/ArmClient.h"
+#include "maty/moves/CyclicMovement.h"
 #include "maty/moves/CircularMovement.h"
+#include "maty/moves/WaveMovement.h"
 
 namespace roly
 {
@@ -41,8 +43,9 @@ private:
     float relFactor;   // relative xy factor of cyclic movement
     float orientation;    // orientation of cyclic movement (degrees)
     bool bcontinuous;       // continuous or simple mode
-    MoveFactory oMoveFactory;
     maty::CircularMovement oCircularMovement;
+    maty::WaveMovement oWaveMovement;
+    maty::CyclicMovement* pActiveCyclicMovement;
 
 public:
         Artistic();

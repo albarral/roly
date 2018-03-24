@@ -40,8 +40,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/roly/body/modules/BodyModule.o \
 	${OBJECTDIR}/src/roly/body/modules/ComfortableArm.o \
 	${OBJECTDIR}/src/roly/body/modules/Expressive.o \
-	${OBJECTDIR}/src/roly/body/moves/ArmMovement.o \
-	${OBJECTDIR}/src/roly/body/moves/MoveFactory.o
+	${OBJECTDIR}/src/roly/body/moves/ArmMovement.o
 
 
 # C Compiler Flags
@@ -85,37 +84,32 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libroly_body.${CND_DLIB_EXT}: ${OBJEC
 ${OBJECTDIR}/src/roly/body/BodyManager.o: src/roly/body/BodyManager.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/roly/body
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Isrc -I../roly_bodycore/src -I../../tron/maty/src -I../../tron/robot/src -I../../tron/talky2/src -I../../tron/tuly/src -I../../tron/wire/src -I../../tron/wire2/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/body/BodyManager.o src/roly/body/BodyManager.cpp
+	$(COMPILE.cc) -g -Isrc -I../roly_bodycore/src -I../../tron/maty/src -I../../tron/robot/src -I../../tron/talky2/src -I../../tron/tuly/src -I../../tron/wire/src -I../../tron/wire2/src -I../../tron/language/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/body/BodyManager.o src/roly/body/BodyManager.cpp
 
 ${OBJECTDIR}/src/roly/body/modules/Artistic.o: src/roly/body/modules/Artistic.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/roly/body/modules
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Isrc -I../roly_bodycore/src -I../../tron/maty/src -I../../tron/robot/src -I../../tron/talky2/src -I../../tron/tuly/src -I../../tron/wire/src -I../../tron/wire2/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/body/modules/Artistic.o src/roly/body/modules/Artistic.cpp
+	$(COMPILE.cc) -g -Isrc -I../roly_bodycore/src -I../../tron/maty/src -I../../tron/robot/src -I../../tron/talky2/src -I../../tron/tuly/src -I../../tron/wire/src -I../../tron/wire2/src -I../../tron/language/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/body/modules/Artistic.o src/roly/body/modules/Artistic.cpp
 
 ${OBJECTDIR}/src/roly/body/modules/BodyModule.o: src/roly/body/modules/BodyModule.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/roly/body/modules
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Isrc -I../roly_bodycore/src -I../../tron/maty/src -I../../tron/robot/src -I../../tron/talky2/src -I../../tron/tuly/src -I../../tron/wire/src -I../../tron/wire2/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/body/modules/BodyModule.o src/roly/body/modules/BodyModule.cpp
+	$(COMPILE.cc) -g -Isrc -I../roly_bodycore/src -I../../tron/maty/src -I../../tron/robot/src -I../../tron/talky2/src -I../../tron/tuly/src -I../../tron/wire/src -I../../tron/wire2/src -I../../tron/language/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/body/modules/BodyModule.o src/roly/body/modules/BodyModule.cpp
 
 ${OBJECTDIR}/src/roly/body/modules/ComfortableArm.o: src/roly/body/modules/ComfortableArm.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/roly/body/modules
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Isrc -I../roly_bodycore/src -I../../tron/maty/src -I../../tron/robot/src -I../../tron/talky2/src -I../../tron/tuly/src -I../../tron/wire/src -I../../tron/wire2/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/body/modules/ComfortableArm.o src/roly/body/modules/ComfortableArm.cpp
+	$(COMPILE.cc) -g -Isrc -I../roly_bodycore/src -I../../tron/maty/src -I../../tron/robot/src -I../../tron/talky2/src -I../../tron/tuly/src -I../../tron/wire/src -I../../tron/wire2/src -I../../tron/language/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/body/modules/ComfortableArm.o src/roly/body/modules/ComfortableArm.cpp
 
 ${OBJECTDIR}/src/roly/body/modules/Expressive.o: src/roly/body/modules/Expressive.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/roly/body/modules
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Isrc -I../roly_bodycore/src -I../../tron/maty/src -I../../tron/robot/src -I../../tron/talky2/src -I../../tron/tuly/src -I../../tron/wire/src -I../../tron/wire2/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/body/modules/Expressive.o src/roly/body/modules/Expressive.cpp
+	$(COMPILE.cc) -g -Isrc -I../roly_bodycore/src -I../../tron/maty/src -I../../tron/robot/src -I../../tron/talky2/src -I../../tron/tuly/src -I../../tron/wire/src -I../../tron/wire2/src -I../../tron/language/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/body/modules/Expressive.o src/roly/body/modules/Expressive.cpp
 
 ${OBJECTDIR}/src/roly/body/moves/ArmMovement.o: src/roly/body/moves/ArmMovement.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/roly/body/moves
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Isrc -I../roly_bodycore/src -I../../tron/maty/src -I../../tron/robot/src -I../../tron/talky2/src -I../../tron/tuly/src -I../../tron/wire/src -I../../tron/wire2/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/body/moves/ArmMovement.o src/roly/body/moves/ArmMovement.cpp
-
-${OBJECTDIR}/src/roly/body/moves/MoveFactory.o: src/roly/body/moves/MoveFactory.cpp 
-	${MKDIR} -p ${OBJECTDIR}/src/roly/body/moves
-	${RM} "$@.d"
-	$(COMPILE.cc) -g -Isrc -I../roly_bodycore/src -I../../tron/maty/src -I../../tron/robot/src -I../../tron/talky2/src -I../../tron/tuly/src -I../../tron/wire/src -I../../tron/wire2/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/body/moves/MoveFactory.o src/roly/body/moves/MoveFactory.cpp
+	$(COMPILE.cc) -g -Isrc -I../roly_bodycore/src -I../../tron/maty/src -I../../tron/robot/src -I../../tron/talky2/src -I../../tron/tuly/src -I../../tron/wire/src -I../../tron/wire2/src -I../../tron/language/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/body/moves/ArmMovement.o src/roly/body/moves/ArmMovement.cpp
 
 # Subprojects
 .build-subprojects:

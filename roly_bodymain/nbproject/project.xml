@@ -18,6 +18,7 @@
                 <make-dep-project>../../tron/wire2</make-dep-project>
                 <make-dep-project>../../tron/talky2</make-dep-project>
                 <make-dep-project>../roly_bodycoms</make-dep-project>
+                <make-dep-project>../../tron/language</make-dep-project>
             </make-dep-projects>
             <sourceRootList>
                 <sourceRootElem>src/roly/main</sourceRootElem>
