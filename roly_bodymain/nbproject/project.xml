@@ -15,6 +15,7 @@
                 <make-dep-project>../../tron/maty</make-dep-project>
                 <make-dep-project>../../tron/robot</make-dep-project>
                 <make-dep-project>../roly_body</make-dep-project>
+                <make-dep-project>../../tron/moves</make-dep-project>
                 <make-dep-project>../../tron/wire2</make-dep-project>
                 <make-dep-project>../../tron/talky2</make-dep-project>
                 <make-dep-project>../roly_bodycoms</make-dep-project>

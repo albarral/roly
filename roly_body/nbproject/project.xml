@@ -14,8 +14,10 @@
                 <make-dep-project>../../tron/wire</make-dep-project>
                 <make-dep-project>../../tron/maty</make-dep-project>
                 <make-dep-project>../../tron/robot</make-dep-project>
+                <make-dep-project>../../tron/moves</make-dep-project>
                 <make-dep-project>../../tron/wire2</make-dep-project>
                 <make-dep-project>../../tron/talky2</make-dep-project>
+                <make-dep-project>../../tron/language</make-dep-project>
             </make-dep-projects>
             <sourceRootList>
                 <sourceRootElem>src/roly/body</sourceRootElem>
