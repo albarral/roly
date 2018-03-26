@@ -4,6 +4,7 @@
  ***************************************************************************/
 
 #include "roly/bodycoms/BodyComs.h"
+#include "roly/bodycore/BodyConfig.h"
 
 namespace roly
 {
@@ -20,8 +21,8 @@ BodyComs::~BodyComs()
  bool BodyComs::launch(BodyBus& oBodyBus)
 {
     LOG4CXX_INFO(logger, "BodyComs: launch modules");
-    //float freq = oAmyConfig.getModulesFreq();
-    float freq = 1; // TEMP to get from config
+    BodyConfig oBodyConfig;
+    float freq = oBodyConfig.getModulesFreq();
      
     // init and start modules
     

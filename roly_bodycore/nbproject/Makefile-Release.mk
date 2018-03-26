@@ -35,7 +35,9 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/src/roly/bodycore/BodyBus.o
+	${OBJECTDIR}/src/roly/bodycore/ArtisticConfig.o \
+	${OBJECTDIR}/src/roly/bodycore/BodyBus.o \
+	${OBJECTDIR}/src/roly/bodycore/BodyConfig.o
 
 
 # C Compiler Flags
@@ -62,10 +64,20 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libroly_bodycore.${CND_DLIB_EXT}: ${O
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libroly_bodycore.${CND_DLIB_EXT} ${OBJECTFILES} ${LDLIBSOPTIONS} -shared -fPIC
 
+${OBJECTDIR}/src/roly/bodycore/ArtisticConfig.o: src/roly/bodycore/ArtisticConfig.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/roly/bodycore
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycore/ArtisticConfig.o src/roly/bodycore/ArtisticConfig.cpp
+
 ${OBJECTDIR}/src/roly/bodycore/BodyBus.o: src/roly/bodycore/BodyBus.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/roly/bodycore
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycore/BodyBus.o src/roly/bodycore/BodyBus.cpp
+
+${OBJECTDIR}/src/roly/bodycore/BodyConfig.o: src/roly/bodycore/BodyConfig.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/roly/bodycore
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycore/BodyConfig.o src/roly/bodycore/BodyConfig.cpp
 
 # Subprojects
 .build-subprojects:

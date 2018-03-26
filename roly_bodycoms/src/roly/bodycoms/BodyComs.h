@@ -9,7 +9,6 @@
 #include <log4cxx/logger.h>
 
 #include "roly/bodycore/BodyBus.h"
-//#include "roly/bodycore/config/AmyConfig.h"
 #include "roly/bodycoms/modules/BodyAware.h"
 #include "roly/bodycoms/modules/BodyServer.h"
 
@@ -19,7 +18,6 @@ class BodyComs
 {
 private:    
     static log4cxx::LoggerPtr logger;      
-    //AmyConfig oAmyConfig;
     BodyAware oBodyAware;            // communications module to listen to data published by external nodes
     BodyServer oBodyServer;        // communications module to server control requests sent by external nodes
 

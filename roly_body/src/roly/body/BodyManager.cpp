@@ -7,6 +7,7 @@
 #include "log4cxx/ndc.h"
 
 #include "roly/body/BodyManager.h"
+#include "roly/bodycore/BodyConfig.h"
 
 using namespace log4cxx;
 
@@ -43,15 +44,17 @@ bool BodyManager::launch(BodyBus& oBodyBus)
             return false;
         }
         
-        // store pointers to external objects
-        pBodyBus = &oBodyBus;        
+        // read configuration
+        BodyConfig oBodyConfig;
+        float freq = oBodyConfig.getModulesFreq();
                 
         LOG4CXX_INFO(logger, "top level: " << topLevel);
         // organize control architecture in levels
         initArchitecture();
         showArchitecture();
+
         // init modules & start them
-        initModules();
+        initModules(oBodyBus, freq);
         startModules();
         
         blaunched = true;    
@@ -96,13 +99,13 @@ void BodyManager::showArchitecture()
     }        
 }
 
-void BodyManager::initModules()
+void BodyManager::initModules(BodyBus& oBodyBus, float freq)
 {    
     LOG4CXX_INFO(logger, "INIT MODULES ...");
 
     for (int i=0; i<=topLevel; i++)
     {
-        initLevel(i);
+        initLevel(i, oBodyBus, freq);
     }
 }
 
@@ -131,15 +134,10 @@ void BodyManager::stopModules()
     }
 }
 
-void BodyManager::initLevel(int num)
+void BodyManager::initLevel(int num, BodyBus& oBodyBus, float freq)
 {    
     LOG4CXX_INFO(logger, ">> INIT level " << num);       
 
-    //float freq = pAmyConfig->getModulesFreq();
-    float freq = 10; // TEMP to get from config
-
-    BodyBus& oBodyBus = *pBodyBus;
-    
     // init BodyModule's
     for (BodyModule* pModule : listModules)
     {

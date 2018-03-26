@@ -13,8 +13,12 @@
                    displayName="Source Files"
                    projectFiles="true">
       <logicalFolder name="bodycore" displayName="bodycore" projectFiles="true">
+        <itemPath>src/roly/bodycore/ArtisticConfig.cpp</itemPath>
+        <itemPath>src/roly/bodycore/ArtisticConfig.h</itemPath>
         <itemPath>src/roly/bodycore/BodyBus.cpp</itemPath>
         <itemPath>src/roly/bodycore/BodyBus.h</itemPath>
+        <itemPath>src/roly/bodycore/BodyConfig.cpp</itemPath>
+        <itemPath>src/roly/bodycore/BodyConfig.h</itemPath>
       </logicalFolder>
     </logicalFolder>
     <logicalFolder name="TestFiles"
@@ -68,9 +72,20 @@
           </linkerLibItems>
         </linkerTool>
       </compileType>
+      <item path="src/roly/bodycore/ArtisticConfig.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/roly/bodycore/ArtisticConfig.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/roly/bodycore/BodyBus.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/roly/bodycore/BodyBus.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/roly/bodycore/BodyConfig.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/roly/bodycore/BodyConfig.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
     <conf name="Release" type="2">
@@ -93,9 +108,20 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
+      <item path="src/roly/bodycore/ArtisticConfig.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/roly/bodycore/ArtisticConfig.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/roly/bodycore/BodyBus.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/roly/bodycore/BodyBus.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/roly/bodycore/BodyConfig.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/roly/bodycore/BodyConfig.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
   </confs>

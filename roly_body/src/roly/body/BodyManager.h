@@ -11,7 +11,6 @@
 #include <log4cxx/logger.h>
 
 #include "roly/bodycore/BodyBus.h"
-//#include "amy/arm/config/ArmConfig.h"
 #include "roly/body/modules/Artistic.h"
 #include "roly/body/modules/Expressive.h"
 #include "roly/body/modules/ComfortableArm.h"
@@ -19,16 +18,14 @@
 
 namespace roly
 {
-// This class manages a robot's arm.
+// This class manages a robot's body role.
 // It is composed of various modules, each running its own thread. 
-// Modules are distributed on levels.     
+// Modules are distributed in levels.     
 class BodyManager
 {
     private:
         static log4cxx::LoggerPtr logger;
         bool blaunched;     // indicates when the manager has been launched   
-        //AmyConfig oAmyConfig;        
-        BodyBus* pBodyBus;        // access to body bus
         int topLevel; // allow activation of modules until this level
         // modules ...
         // level 3
@@ -43,14 +40,12 @@ class BodyManager
         BodyManager();
         ~BodyManager();
 
-       // launches the arm manager to handle the specified robot arm (returns false if something fails)
+       // launches the body manager (returns false if something fails)
        bool launch(BodyBus& oBodyBus);
-       // ends the arm manager
+       // ends the body manager
        bool end();
        bool isLaunched() {return blaunched;};                
-       
-       friend class ArmTest;
-       
+              
 private:
     // initialize control architecture (organize in levels)
     void initArchitecture();
@@ -58,7 +53,7 @@ private:
     void showArchitecture();
 
     // initialize modules
-    void initModules();
+    void initModules(BodyBus& oBodyBus, float freq);
     // starts the task's modules 
     void startModules();        
     // stops the tasks' modules
@@ -66,7 +61,7 @@ private:
     
     
    // init the modules of a level
-    void initLevel(int level);        
+    void initLevel(int level, BodyBus& oBodyBus, float freq);        
    // start the modules of a level
     void startLevel(int level);        
    // stop the modules of a level
