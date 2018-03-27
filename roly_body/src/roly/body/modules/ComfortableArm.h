@@ -10,17 +10,15 @@
 #include <log4cxx/logger.h>
 
 #include "roly/body/modules/BodyModule.h"
-#include "maty/math/Click.h"
 #include "tron/talky2/arm/ArmClient.h"
 
 namespace roly
 {
 // Module used to have a comfortable arm posture.
 // States: 
-// RELAXED: motionless arm in comfort zone
-// STILL: motionless arm out of comfort zone
+// STILL: motionless arm 
 // MOVING: arm moving
-// TIRED: motionless arm out of comfort zone for long time (command relax posture)
+// RELAX: command relax posture
 // Output: 
 // arm position (pan, tilt, radius)
 class ComfortableArm : public BodyModule
@@ -29,26 +27,27 @@ public:
     // states of the module
     enum eState
     {
-         eSTATE_RELAXED,           
          eSTATE_STILL, 
          eSTATE_MOVING, 
-         eSTATE_TIRED 
+         eSTATE_RELAX 
     };
     
 private:    
     static log4cxx::LoggerPtr logger;
     tron::ArmClient oArmClient;         // client for arm control
+    // config
+    int relaxPosture[3];            // arm's relax posture (pan, tilt, radius)
+    float tolAngle;                   // allowed (pan, tilt) tolerance of relax posture (degrees)
+    float tolRadius;                 // allowed radial tolerance of relax posture (cm)
+    float tiredChange4Still;           // tired change for still arm (units)
+    float tiredChange4Moving;      // tired change for moving arm (units)    
     // logic
     int armPosture[3];            // measured arm posture (pan, tilt, radius)
     int armSpeed[3];              // measured arm speed (vpan, vtilt, vradius)
     bool barmMoving;    
     bool bcomfortZone;
-    maty::Click oClickTired;
-    // config
-    int relaxPosture[3];            // arm's relax posture (pan, tilt, radius)
-    float tolAngle;                   // allowed (pan, tilt) tolerance of relax posture (degrees)
-    float tolRadius;                 // allowed radial tolerance of relax posture (cm)
-    int maxTiredMillis;            // max allowed time for a tired arm  (motionless & out of comfort) (milliseconds)
+    float tired;                       // tired quantity
+    int relaxCounter;
 
 public:
         ComfortableArm();
@@ -68,12 +67,10 @@ private:
         // shows the present state name
         void showState();
                 
-        // checks if arm is moving 
-        void checkArmMovement();
-        // check if arm is in the comfort zone (near the relax posture)
-        void checkComfortZone();
-        // enters still state
-        void enterSTILL();
+        // checks if arm is moving and if it's in the comfort zone (near the relax posture)
+        void senseArm();
+        // update tired state
+        void updateTired(float change);        
         // sends message to arm system
         void requestComfortPosture();
 };

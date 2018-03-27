@@ -37,7 +37,8 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 OBJECTFILES= \
 	${OBJECTDIR}/src/roly/bodycore/ArtisticConfig.o \
 	${OBJECTDIR}/src/roly/bodycore/BodyBus.o \
-	${OBJECTDIR}/src/roly/bodycore/BodyConfig.o
+	${OBJECTDIR}/src/roly/bodycore/BodyConfig.o \
+	${OBJECTDIR}/src/roly/bodycore/ComfortableConfig.o
 
 
 # C Compiler Flags
@@ -80,6 +81,11 @@ ${OBJECTDIR}/src/roly/bodycore/BodyConfig.o: src/roly/bodycore/BodyConfig.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/roly/bodycore
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -Isrc -I../../tron/tuly/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycore/BodyConfig.o src/roly/bodycore/BodyConfig.cpp
+
+${OBJECTDIR}/src/roly/bodycore/ComfortableConfig.o: src/roly/bodycore/ComfortableConfig.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/roly/bodycore
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -Isrc -I../../tron/tuly/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycore/ComfortableConfig.o src/roly/bodycore/ComfortableConfig.cpp
 
 # Subprojects
 .build-subprojects:
