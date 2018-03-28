@@ -18,14 +18,6 @@ LoggerPtr ComfortableArm::logger(Logger::getLogger("roly.body"));
 ComfortableArm::ComfortableArm()
 {
     modName = "Comfortable";
-    ComfortableConfig oComfortableConfig;
-    int* pPosture = oComfortableConfig.getRelaxPosture();
-    for (int i=0; i<3; i++)
-        relaxPosture[i] = pPosture[i];    
-    tolAngle = oComfortableConfig.getAngleTolerance();
-    tolRadius = oComfortableConfig.getRadialTolerance();
-    tiredChange4Still = getFrequency() * oComfortableConfig.getTiredSensitivity4Still();
-    tiredChange4Moving = getFrequency() * oComfortableConfig.getTiredSensitivity4Moving();
 }
 
 //ComfortableArm::~ComfortableArm()
@@ -40,6 +32,16 @@ void ComfortableArm::showInitialized()
 
 void ComfortableArm::first()
 {
+    // config
+    ComfortableConfig oComfortableConfig;
+    int* pPosture = oComfortableConfig.getRelaxPosture();
+    for (int i=0; i<3; i++)
+        relaxPosture[i] = pPosture[i];    
+    tolAngle = oComfortableConfig.getAngleTolerance();
+    tolRadius = oComfortableConfig.getRadialTolerance();
+    tiredChange4Still = oComfortableConfig.getTiredSensitivity4Still() / getFrequency();
+    tiredChange4Moving = oComfortableConfig.getTiredSensitivity4Moving() / getFrequency();
+    tired = 0.0;
     // start at still state
     setState(eSTATE_STILL);    
     log4cxx::NDC::push(modName);   
@@ -53,7 +55,10 @@ void ComfortableArm::loop()
     if (binhibited)            
         return;
 
-    if (isStateChanged())
+    int stable = getStable();
+    
+    // if state changed show name
+    if (stable == 0)
         showState();
     
     senseArm();
@@ -62,45 +67,52 @@ void ComfortableArm::loop()
     {
         case eSTATE_STILL:         
             
+            // update tiredness
             updateTired(tiredChange4Still);
-            // if arm moving -> MOVING
-            if (barmMoving)
-                setState(eSTATE_MOVING);
-            // if arm still and too tired -> RELAX
-            else if (!bcomfortZone && tired > 100.0)
-            {
-                setState(eSTATE_RELAX);
-                relaxCounter = 0;
+            // if arm still
+            if (!barmMoving)
+            {                
+                // if not in comfort & too tired & stable still -> RELAX
+                if (!bcomfortZone && tired > 100.0 && stable>0)
+                    setState(eSTATE_RELAX);
             }
+            // if arm moving -> MOVING
+            else
+                setState(eSTATE_MOVING);
             break;
 
         case eSTATE_MOVING:            
 
+            // update tiredness
             updateTired(tiredChange4Moving);
-            // if arm not moving -> STILL
-            if (!barmMoving)
-                setState(eSTATE_STILL);
-            // if arm moving and too tired -> RELAX
-            else if (!bcomfortZone && tired > 100.0)
-            {
-                setState(eSTATE_RELAX);
-                relaxCounter = 0;
+            // if arm moving
+            if (barmMoving)
+            {                
+                // if not in comfort & too tired & stable moving -> RELAX
+                if (!bcomfortZone && tired > 100.0 && stable>0)
+                    setState(eSTATE_RELAX);
             }
+            // if arm not moving -> STILL
+            else
+                setState(eSTATE_STILL);
             break;
 
         case eSTATE_RELAX:            
 
-            relaxCounter++;
-            if (relaxCounter == 1)
-                // request relax posture once
+            // on relax request relax posture and reduce tiredness to the half
+            if (stable == 0)
+            {
                 requestComfortPosture();
-            else if (relaxCounter == 10)
+                tired = 0.5*tired;
+            }
+            // then stay for a while before exiting this state
+            else if (stable > 5)
             {
                 if (barmMoving)
                     setState(eSTATE_MOVING);
                 else
                     setState(eSTATE_STILL);
-            }    
+            }
             break;
     }  
     
@@ -124,6 +136,7 @@ void ComfortableArm::senseBus()
 
 void ComfortableArm::updateTired(float change)
 {
+    // if arm in comfort zone, decrease tiredness
     if (bcomfortZone)
     {
         if (tired > 0.0)
@@ -133,10 +146,11 @@ void ComfortableArm::updateTired(float change)
                 tired = 0.0;
         }
     }
+    // otherwise, increase tiredness
     else
     {
         tired += change;
-    }    
+    }
 }
 
 

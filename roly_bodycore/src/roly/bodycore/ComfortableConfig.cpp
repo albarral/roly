@@ -12,8 +12,8 @@ ComfortableConfig::ComfortableConfig ()
 {    
     angleTol = 5.0;
     radiusTol = 5.0;
-    tiredSensitivity4Still  = 300;        // 300 units/s
-    tiredSensitivity4Moving = 5;        // 5 units/s
+    tiredSensitivity4Still  = 20.0;        // 20 units/s
+    tiredSensitivity4Moving = 2.0;        // 2 units/s
     relaxPosture[0] = 10;            // relax posture (pan = 10, tilt = 20, radius = 40)
     relaxPosture[1] = 20; 
     relaxPosture[2] = 40; 

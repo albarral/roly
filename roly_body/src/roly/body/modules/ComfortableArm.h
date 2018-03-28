@@ -46,8 +46,7 @@ private:
     int armSpeed[3];              // measured arm speed (vpan, vtilt, vradius)
     bool barmMoving;    
     bool bcomfortZone;
-    float tired;                       // tired quantity
-    int relaxCounter;
+    float tired;                       // tiredness 
 
 public:
         ComfortableArm();

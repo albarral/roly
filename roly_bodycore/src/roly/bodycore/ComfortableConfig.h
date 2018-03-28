@@ -13,8 +13,8 @@ class ComfortableConfig
 private:                
     float angleTol;         // allowed (pan, tilt) tolerance of relax posture (degrees)
     float radiusTol;         // allowed radial tolerance of relax posture (cm)
-    int tiredSensitivity4Still;              // tired sensitivity for still arm (units/second)
-    int tiredSensitivity4Moving;          // tired sensitivity for moving arm (units/second)
+    float tiredSensitivity4Still;              // tired sensitivity for still arm (units/second)
+    float tiredSensitivity4Moving;          // tired sensitivity for moving arm (units/second)
     int relaxPosture[3];            // arm's relax posture (pan, tilt, radius)
             
     public:
@@ -23,8 +23,8 @@ private:
 
     float getAngleTolerance() {return angleTol;}; 
     float getRadialTolerance() {return radiusTol;}; 
-    int getTiredSensitivity4Still() {return tiredSensitivity4Still;}; 
-    int getTiredSensitivity4Moving() {return tiredSensitivity4Moving;};
+    float getTiredSensitivity4Still() {return tiredSensitivity4Still;}; 
+    float getTiredSensitivity4Moving() {return tiredSensitivity4Moving;};
     int* getRelaxPosture() {return relaxPosture;};
 };
 

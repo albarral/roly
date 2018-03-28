@@ -43,7 +43,7 @@ void Expressive::loop()
     if (binhibited)            
         return;
 
-    if (isStateChanged())
+    if (getStable() == 0)
         showState();
     
     switch (getState())
