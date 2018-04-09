@@ -1,0 +1,64 @@
+
+*** HOW TO INSTALL ROLY
+
+(last update: albarral 9/4/2018)
+
+This document explains how to install roly for robotic control.
+
+Software requirements:
+- Linux environment
+- Netbeans 8.1 for C++
+- git
+
+Components to be installed:
+- tron libs	(libraries used for robotic communication & control)
+- tron2 libs	(libraries used for robotic communication & control)
+- dady		(program to externally control amy from CLI)
+
+
+
+*** INSTALL REQUIREMENTS ***
+
+> log4cxx:
+
+sudo apt-get install liblog4cxx10-dev
+
+
+
+*** INSTALL TRON & TRON2 LIBS ***
+
+> download tron & tron2 repos:
+
+git clone https://github.com/albarral/tron.git
+git clone https://github.com/albarral/tron2.git
+
+> build tron & tron2 libs
+
+follow instructions in howto_install_tron 
+follow instructions in howto_install_tron2 
+
+
+
+*** INSTALL ROLY ***
+
+> download roly repo:
+
+git clone https://github.com/albarral/roly.git
+
+> build roly:
+
+(Netbeans)
+- roly_bodymain project 	
+
+
+
+*** PREPARE ENVIRONMENT ***
+
+
+1. Prepare config files for roly logging:
+
+see instructions in path_to_roly/logging/README_roly_logging file
+(note: path_to_roly = roly installation path)
+
+
+
