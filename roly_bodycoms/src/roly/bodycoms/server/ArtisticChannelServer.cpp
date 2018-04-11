@@ -4,15 +4,15 @@
  ***************************************************************************/
 
 #include "roly/bodycoms/server/ArtisticChannelServer.h"
-#include "tron/talky2/body/ArtisticTalker.h"
-#include "tron/robot/RobotNodes.h"
-#include "tron/robot/topics/BodyTopics.h"
+#include "tron2/talky/body/ArtisticTalker.h"
+#include "tron2/robot/RobotNodes.h"
+#include "tron2/robot/topics/BodyTopics.h"
 
 using namespace log4cxx;
 
 namespace roly
 {
-ArtisticChannelServer::ArtisticChannelServer() : ChannelServer(tron::RobotNodes::eNODE_BODYROLE, tron::BodyTopics::eBODY_ARTISTIC)
+ArtisticChannelServer::ArtisticChannelServer() : ChannelServer(tron2::RobotNodes::eNODE_BODYROLE, tron2::BodyTopics::eBODY_ARTISTIC)
 {    
 }
 
@@ -42,32 +42,32 @@ void ArtisticChannelServer::processCommands()
             {
                 switch (code)
                 {
-                    case tron::ArtisticTalker::eARTISTIC_FIGURE:
+                    case tron2::ArtisticTalker::eARTISTIC_FIGURE:
                         LOG4CXX_INFO(logger, "> artistic figure " << (int)value);                        
                         pBodyBus->getCO_ARTISTIC_FIGURE().request((int)value);
                         break;
 
-                    case tron::ArtisticTalker::eARTISTIC_FREQ:
+                    case tron2::ArtisticTalker::eARTISTIC_FREQ:
                         LOG4CXX_INFO(logger, "> artistic freq " << value); 
                         pBodyBus->getCO_ARTISTIC_FREQ().request(value);
                         break;
 
-                    case tron::ArtisticTalker::eARTISTIC_SIZE:
+                    case tron2::ArtisticTalker::eARTISTIC_SIZE:
                         LOG4CXX_INFO(logger, "> artistic size " << value);                        
                         pBodyBus->getCO_ARTISTIC_SIZE().request(value);
                         break;
 
-                    case tron::ArtisticTalker::eARTISTIC_ORIENTATION:
+                    case tron2::ArtisticTalker::eARTISTIC_ORIENTATION:
                         LOG4CXX_INFO(logger, "> artistic orientation " << value);                     
                         pBodyBus->getCO_ARTISTIC_ORIENTATION().request(value);
                         break;
 
-                    case tron::ArtisticTalker::eARTISTIC_RELFACTOR:
+                    case tron2::ArtisticTalker::eARTISTIC_RELFACTOR:
                         LOG4CXX_INFO(logger, "> artistic relative factor " << value);                     
                         pBodyBus->getCO_ARTISTIC_RELFACTOR().request(value);
                         break;
 
-                    case tron::ArtisticTalker::eARTISTIC_HALT:
+                    case tron2::ArtisticTalker::eARTISTIC_HALT:
                         LOG4CXX_INFO(logger, "> artistic halt");                     
                         pBodyBus->getCO_ARTISTIC_HALT().request();
                         break;

@@ -6,13 +6,13 @@
  *   albarral@migtron.com   *
  ***************************************************************************/
 
-#include "tron/talky2/channel/ChannelServer.h"
+#include "tron2/talky/channel/ChannelServer.h"
 #include "roly/bodycoms/BodyConnector.h"
 
 namespace roly
 {
 // Channel server implementation for body artistic topic.
-class ArtisticChannelServer : public tron::ChannelServer, public BodyConnector
+class ArtisticChannelServer : public tron2::ChannelServer, public BodyConnector
 {            
 public:
     ArtisticChannelServer();

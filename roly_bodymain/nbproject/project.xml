@@ -9,21 +9,21 @@
             <header-extensions>h</header-extensions>
             <sourceEncoding>UTF-8</sourceEncoding>
             <make-dep-projects>
-                <make-dep-project>../../tron/tuly</make-dep-project>
-                <make-dep-project>../roly_bodycore</make-dep-project>
-                <make-dep-project>../../tron/wire</make-dep-project>
-                <make-dep-project>../../tron/maty</make-dep-project>
-                <make-dep-project>../../tron/robot</make-dep-project>
-                <make-dep-project>../roly_body</make-dep-project>
-                <make-dep-project>../../tron/moves</make-dep-project>
-                <make-dep-project>../../tron/wire2</make-dep-project>
-                <make-dep-project>../../tron/talky2</make-dep-project>
+                <make-dep-project>../../tron2/tron2_moves</make-dep-project>
+                <make-dep-project>../../tron/tron_control</make-dep-project>
+                <make-dep-project>../../tron/tron_wire2</make-dep-project>
+                <make-dep-project>../../tron/tron_math</make-dep-project>
+                <make-dep-project>../../tron2/tron2_robot</make-dep-project>
+                <make-dep-project>../../tron2/tron2_language</make-dep-project>
                 <make-dep-project>../roly_bodycoms</make-dep-project>
-                <make-dep-project>../../tron/language</make-dep-project>
+                <make-dep-project>../../tron2/tron2_talky</make-dep-project>
+                <make-dep-project>../roly_bodycore</make-dep-project>
+                <make-dep-project>../../tron/tron_util</make-dep-project>
+                <make-dep-project>../../tron/tron_wire</make-dep-project>
+                <make-dep-project>../roly_body</make-dep-project>
+                <make-dep-project>../../tron/tron_tools</make-dep-project>
             </make-dep-projects>
             <sourceRootList>
-                <sourceRootElem>src/roly/main</sourceRootElem>
-                <sourceRootElem>src/roly/body/main</sourceRootElem>
                 <sourceRootElem>src/roly/bodymain</sourceRootElem>
             </sourceRootList>
             <confList>

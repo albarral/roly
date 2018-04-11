@@ -54,7 +54,7 @@ void BodyServer::loop()
     checkChannelServer(oExtraChannelServer);        
 }
 
-bool BodyServer::checkChannelServer(tron::ChannelServer& oChannelServer)
+bool BodyServer::checkChannelServer(tron2::ChannelServer& oChannelServer)
 {    
     // receive messages from the given channel
     if (oChannelServer.senseChannel())

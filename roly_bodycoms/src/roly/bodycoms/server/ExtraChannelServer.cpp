@@ -4,15 +4,15 @@
  ***************************************************************************/
 
 #include "roly/bodycoms/server/ExtraChannelServer.h"
-#include "tron/talky2/BasicTalker.h"
-#include "tron/robot/RobotNodes.h"
-#include "tron/robot/topics/BodyTopics.h"
+#include "tron2/talky/BasicTalker.h"
+#include "tron2/robot/RobotNodes.h"
+#include "tron2/robot/topics/BodyTopics.h"
 
 using namespace log4cxx;
 
 namespace roly
 {
-ExtraChannelServer::ExtraChannelServer() : ChannelServer(tron::RobotNodes::eNODE_BODYROLE, tron::BodyTopics::eBODY_EXTRA)
+ExtraChannelServer::ExtraChannelServer() : ChannelServer(tron2::RobotNodes::eNODE_BODYROLE, tron2::BodyTopics::eBODY_EXTRA)
 {    
     bEndRequested = false;
 }
@@ -43,11 +43,11 @@ void ExtraChannelServer::processCommands()
             {
                 switch (code)
                 {
-                    case tron::BasicTalker::eBASIC_FULL_STOP:
+                    case tron2::BasicTalker::eBASIC_FULL_STOP:
                         LOG4CXX_INFO(logger, "> body stop ... TO DO");                        
                         break;
 
-                    case tron::BasicTalker::eBASIC_CONTROL_END:
+                    case tron2::BasicTalker::eBASIC_CONTROL_END:
                         LOG4CXX_INFO(logger, "> end body");  
                         bEndRequested = true;
                         break;
