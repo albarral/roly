@@ -6,13 +6,13 @@
  *   albarral@migtron.com   *
  ***************************************************************************/
 
-#include "tron/talky2/channel/ChannelServer.h"
+#include "tron2/talky/channel/ChannelServer.h"
 #include "roly/bodycoms/BodyConnector.h"
 
 namespace roly
 {
 // Channel server implementation for body extra topic.
-class ExtraChannelServer : public tron::ChannelServer, public BodyConnector
+class ExtraChannelServer : public tron2::ChannelServer, public BodyConnector
 {       
 private:
     bool bEndRequested;         // end of body process requested

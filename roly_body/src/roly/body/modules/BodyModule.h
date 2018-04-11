@@ -6,7 +6,7 @@
  *   albarral@migtron.com   *
  ***************************************************************************/
 
-#include "tuly/control/module3.h"
+#include "tron/control/module3.h"
 #include "roly/bodycore/BodyBus.h"
 
 namespace roly
@@ -17,7 +17,7 @@ namespace roly
 // - init
 // - on (now it works)
 // - off    
-class BodyModule : public tuly::Module3
+class BodyModule : public tron::Module3
 {
 protected:
     bool benabled;

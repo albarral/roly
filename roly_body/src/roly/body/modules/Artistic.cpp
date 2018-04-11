@@ -7,8 +7,9 @@
 
 #include "roly/body/modules/Artistic.h"
 #include "roly/bodycore/ArtisticConfig.h"
-#include "maty/math/CyclicComponent.h"
-#include "tron/moves/CyclicMovement.h"
+#include "tron/math/CyclicComponent.h"
+#include "tron2/moves/CyclicMovement.h"
+#include "tron2/language/objects/FiguresTheme.h"
 
 using namespace log4cxx;
 
@@ -206,13 +207,16 @@ bool Artistic::checkMovementFinished()
 
 void Artistic::triggerMove()
 {    
-    // get cyclic movement for requested figure
-    if (!oMoveFactory.generateMovement(figure))
+    // get movement code for requested figure
+    int movement = translateFigure2Movement(figure); 
+    
+    // generate cyclic movement 
+    if (!oMoveFactory.generateMovement(movement))
         return;    
     
-    tron::CyclicMovement* pCyclicMovement = oMoveFactory.getCyclicMovement();
+    tron2::CyclicMovement* pCyclicMovement = oMoveFactory.getCyclicMovement();
     // first cycler 
-    maty::CyclicComponent& oCyclicComponent1 = pCyclicMovement->getPrimaryComponent();
+    tron::CyclicComponent& oCyclicComponent1 = pCyclicMovement->getPrimaryComponent();
     oArmClient.setFrontCyclerAmp1(oCyclicComponent1.getAmp());
     oArmClient.setFrontCyclerAngle1(oCyclicComponent1.getAngle());
     oArmClient.setFrontCyclerFreq1(oCyclicComponent1.getFreq());
@@ -221,7 +225,7 @@ void Artistic::triggerMove()
     // second cycler
     if (pCyclicMovement->isDual())
     {
-        maty::CyclicComponent& oCyclicComponent2 = pCyclicMovement->getSecondaryComponent();
+        tron::CyclicComponent& oCyclicComponent2 = pCyclicMovement->getSecondaryComponent();
         oArmClient.setFrontCyclerAmp2(oCyclicComponent2.getAmp());
         oArmClient.setFrontCyclerAngle2(oCyclicComponent2.getAngle());
         oArmClient.setFrontCyclerFreq2(oCyclicComponent2.getFreq());
@@ -239,13 +243,13 @@ void Artistic::triggerMove()
 
 void Artistic::updateMove()
 {        
-    tron::CyclicMovement* pCyclicMovement = oMoveFactory.getCyclicMovement();
+    tron2::CyclicMovement* pCyclicMovement = oMoveFactory.getCyclicMovement();
 
     if (pCyclicMovement == 0)
         return;
     
     // first cycler 
-    maty::CyclicComponent& oCyclicComponent1 = pCyclicMovement->getPrimaryComponent();
+    tron::CyclicComponent& oCyclicComponent1 = pCyclicMovement->getPrimaryComponent();
     oArmClient.setFrontCyclerAmp1(oCyclicComponent1.getAmp());
     oArmClient.setFrontCyclerAngle1(oCyclicComponent1.getAngle());
     oArmClient.setFrontCyclerFreq1(oCyclicComponent1.getFreq());
@@ -254,7 +258,7 @@ void Artistic::updateMove()
     // second cycler
     if (pCyclicMovement->isDual())
     {
-        maty::CyclicComponent& oCyclicComponent2 = pCyclicMovement->getSecondaryComponent();
+        tron::CyclicComponent& oCyclicComponent2 = pCyclicMovement->getSecondaryComponent();
         oArmClient.setFrontCyclerAmp2(oCyclicComponent2.getAmp());
         oArmClient.setFrontCyclerAngle2(oCyclicComponent2.getAngle());
         oArmClient.setFrontCyclerFreq2(oCyclicComponent2.getFreq());
@@ -266,6 +270,37 @@ void Artistic::stopMove()
 {    
     // stop movement
     oArmClient.setFrontCyclerAction(0);
+}
+
+// convert a generic figure code (from tron2 language) to a corresponding movement code (from tron2 moves)
+int Artistic::translateFigure2Movement(int value)
+{
+    int movement = -1;
+    switch (value)
+    {
+        case tron2::FiguresTheme::eFIGURE_CIRCLE:                 
+            movement = tron2::MoveFactory::eMOVEMENT_CIRCLE;
+            break;
+        case tron2::FiguresTheme::eFIGURE_ELLIPSE:                       
+            movement = tron2::MoveFactory::eMOVEMENT_ELLIPSE;
+            break;
+        case tron2::FiguresTheme::eFIGURE_SQUARE:                       
+            movement = tron2::MoveFactory::eMOVEMENT_SQUARE;
+            break;
+        case tron2::FiguresTheme::eFIGURE_RECTANGLE:                    
+            movement = tron2::MoveFactory::eMOVEMENT_RECTANGLE;
+            break;
+        case tron2::FiguresTheme::eFIGURE_TRIANGLE:                    
+            movement = tron2::MoveFactory::eMOVEMENT_TRIANGLE;
+            break;
+        case tron2::FiguresTheme::eFIGURE_LINE:                    
+            movement = tron2::MoveFactory::eMOVEMENT_LINE;
+            break;
+        case tron2::FiguresTheme::eFIGURE_WAVE:
+            movement = tron2::MoveFactory::eMOVEMENT_WAVE;
+            break;
+    }
+    return movement;
 }
 
 void Artistic::writeBus()

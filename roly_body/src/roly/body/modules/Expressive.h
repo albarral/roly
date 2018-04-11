@@ -11,8 +11,8 @@
 
 #include "roly/body/modules/BodyModule.h"
 #include "roly/body/moves/ArmMovement.h"
-#include "maty/math/Click.h"
-#include "tron/talky2/arm/ArmClient.h"
+#include "tron/util/Click.h"
+#include "tron2/talky/arm/ArmClient.h"
 
 namespace roly
 {
@@ -48,11 +48,11 @@ public:
 private:    
     static log4cxx::LoggerPtr logger;
     // logic
-    tron::ArmClient oArmClient;     // client for arm control
+    tron2::ArmClient oArmClient;     // client for arm control
     std::vector<ArmMovement> listMovements;
     int step;       // present step of arm movement sequence
     int stepDuration;  // duration of present step
-    maty::Click oClickTired;
+    tron::Click oClickTired;
 
 public:
         Expressive();

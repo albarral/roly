@@ -13,15 +13,15 @@
 #include "roly/bodycoms/server/ArtisticChannelServer.h"
 #include "roly/bodycoms/server/ExpressiveChannelServer.h"
 #include "roly/bodycoms/server/ExtraChannelServer.h"
-#include "tron/talky2/channel/ChannelServer.h"
+#include "tron2/talky/channel/ChannelServer.h"
 #include "roly/bodycore/BodyBus.h"
-#include "tuly/control/module3.h"
+#include "tron/control/module3.h"
 
 namespace roly
 {
 // This module serves external control request for body control. 
 // It uses a dedicated channel server for each communications channel (one for each topic).
-class BodyServer : public tuly::Module3
+class BodyServer : public tron::Module3
 {
 private:
     static log4cxx::LoggerPtr logger;
@@ -46,7 +46,7 @@ private:
     // executes the behaviour
     virtual void loop();
     // check given channel server for received messages and process them
-    bool checkChannelServer(tron::ChannelServer& oChannelServer);
+    bool checkChannelServer(tron2::ChannelServer& oChannelServer);
 };
 }		
 #endif

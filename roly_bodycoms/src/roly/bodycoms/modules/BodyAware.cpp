@@ -6,7 +6,7 @@
 #include "log4cxx/ndc.h"
 
 #include "roly/bodycoms/modules/BodyAware.h"
-#include "tron/robot/sensors/ArmSensors.h"
+#include "tron2/robot/sensors/ArmSensors.h"
 
 using namespace log4cxx;
 
@@ -39,8 +39,8 @@ void BodyAware::loop()
     // sense arm data
     if (oArmListener.senseChannels())
     {
-        tron::AxesData& axesPositions = oArmListener.getAxesPositions();
-        tron::AxesData& axesSpeeds = oArmListener.getAxesSpeeds();
+        tron2::AxesData& axesPositions = oArmListener.getAxesPositions();
+        tron2::AxesData& axesSpeeds = oArmListener.getAxesSpeeds();
         // inform bus with arm axes positions
         pBodyBus->getSI_ARM_PAN().setValue(axesPositions.pan);
         pBodyBus->getSI_ARM_TILT().setValue(axesPositions.tilt);

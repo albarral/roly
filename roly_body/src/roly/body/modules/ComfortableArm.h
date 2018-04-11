@@ -10,7 +10,7 @@
 #include <log4cxx/logger.h>
 
 #include "roly/body/modules/BodyModule.h"
-#include "tron/talky2/arm/ArmClient.h"
+#include "tron2/talky/arm/ArmClient.h"
 
 namespace roly
 {
@@ -34,7 +34,7 @@ public:
     
 private:    
     static log4cxx::LoggerPtr logger;
-    tron::ArmClient oArmClient;         // client for arm control
+    tron2::ArmClient oArmClient;         // client for arm control
     // config
     int relaxPosture[3];            // arm's relax posture (pan, tilt, radius)
     float tolAngle;                   // allowed (pan, tilt) tolerance of relax posture (degrees)

@@ -10,13 +10,13 @@
 #include <log4cxx/logger.h>
 
 #include "roly/bodycore/BodyBus.h"
-#include "tron/talky2/arm/ArmListener.h"
-#include "tuly/control/module3.h"
+#include "tron2/talky/arm/ArmListener.h"
+#include "tron/control/module3.h"
 
 namespace roly
 {
 // This module is aware of broadcasted info from other robotic nodes.
-class BodyAware : public tuly::Module3
+class BodyAware : public tron::Module3
 {
 private:
     static log4cxx::LoggerPtr logger;
@@ -24,7 +24,7 @@ private:
     bool benabled;
     // logic
     BodyBus* pBodyBus;      // access to body bus
-    tron::ArmListener oArmListener;
+    tron2::ArmListener oArmListener;
 
 public:
     BodyAware();

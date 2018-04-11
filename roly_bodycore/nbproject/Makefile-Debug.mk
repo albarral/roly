@@ -55,13 +55,13 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=-Wl,-rpath,../../tron/tuly/dist/Debug/GNU-Linux -L../../tron/tuly/dist/Debug/GNU-Linux -ltron_tuly
+LDLIBSOPTIONS=-Wl,-rpath,../../tron/tron_control/dist/Debug/GNU-Linux -L../../tron/tron_control/dist/Debug/GNU-Linux -ltron_control
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
 	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libroly_bodycore.${CND_DLIB_EXT}
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libroly_bodycore.${CND_DLIB_EXT}: ../../tron/tuly/dist/Debug/GNU-Linux/libtron_tuly.so
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libroly_bodycore.${CND_DLIB_EXT}: ../../tron/tron_control/dist/Debug/GNU-Linux/libtron_control.so
 
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libroly_bodycore.${CND_DLIB_EXT}: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
@@ -70,26 +70,26 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libroly_bodycore.${CND_DLIB_EXT}: ${O
 ${OBJECTDIR}/src/roly/bodycore/ArtisticConfig.o: src/roly/bodycore/ArtisticConfig.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/roly/bodycore
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Isrc -I../../tron/tuly/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycore/ArtisticConfig.o src/roly/bodycore/ArtisticConfig.cpp
+	$(COMPILE.cc) -g -Isrc -I../../tron/tron_control/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycore/ArtisticConfig.o src/roly/bodycore/ArtisticConfig.cpp
 
 ${OBJECTDIR}/src/roly/bodycore/BodyBus.o: src/roly/bodycore/BodyBus.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/roly/bodycore
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Isrc -I../../tron/tuly/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycore/BodyBus.o src/roly/bodycore/BodyBus.cpp
+	$(COMPILE.cc) -g -Isrc -I../../tron/tron_control/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycore/BodyBus.o src/roly/bodycore/BodyBus.cpp
 
 ${OBJECTDIR}/src/roly/bodycore/BodyConfig.o: src/roly/bodycore/BodyConfig.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/roly/bodycore
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Isrc -I../../tron/tuly/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycore/BodyConfig.o src/roly/bodycore/BodyConfig.cpp
+	$(COMPILE.cc) -g -Isrc -I../../tron/tron_control/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycore/BodyConfig.o src/roly/bodycore/BodyConfig.cpp
 
 ${OBJECTDIR}/src/roly/bodycore/ComfortableConfig.o: src/roly/bodycore/ComfortableConfig.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/roly/bodycore
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Isrc -I../../tron/tuly/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycore/ComfortableConfig.o src/roly/bodycore/ComfortableConfig.cpp
+	$(COMPILE.cc) -g -Isrc -I../../tron/tron_control/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycore/ComfortableConfig.o src/roly/bodycore/ComfortableConfig.cpp
 
 # Subprojects
 .build-subprojects:
-	cd ../../tron/tuly && ${MAKE}  -f Makefile CONF=Debug
+	cd ../../tron/tron_control && ${MAKE}  -f Makefile CONF=Debug
 
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
@@ -98,7 +98,7 @@ ${OBJECTDIR}/src/roly/bodycore/ComfortableConfig.o: src/roly/bodycore/Comfortabl
 
 # Subprojects
 .clean-subprojects:
-	cd ../../tron/tuly && ${MAKE}  -f Makefile CONF=Debug clean
+	cd ../../tron/tron_control && ${MAKE}  -f Makefile CONF=Debug clean
 
 # Enable dependency checking
 .dep.inc: .depcheck-impl

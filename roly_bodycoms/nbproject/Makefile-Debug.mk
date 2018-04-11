@@ -58,7 +58,7 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=-Wl,-rpath,../roly_bodycore/dist/Debug/GNU-Linux -L../roly_bodycore/dist/Debug/GNU-Linux -lroly_bodycore -Wl,-rpath,../../tron/robot/dist/Debug/GNU-Linux -L../../tron/robot/dist/Debug/GNU-Linux -ltron_robot -Wl,-rpath,../../tron/talky2/dist/Debug/GNU-Linux -L../../tron/talky2/dist/Debug/GNU-Linux -ltron_talky2 -Wl,-rpath,../../tron/tuly/dist/Debug/GNU-Linux -L../../tron/tuly/dist/Debug/GNU-Linux -ltron_tuly -Wl,-rpath,../../tron/wire/dist/Debug/GNU-Linux -L../../tron/wire/dist/Debug/GNU-Linux -ltron_wire -Wl,-rpath,../../tron/wire2/dist/Debug/GNU-Linux -L../../tron/wire2/dist/Debug/GNU-Linux -ltron_wire2
+LDLIBSOPTIONS=-Wl,-rpath,../roly_bodycore/dist/Debug/GNU-Linux -L../roly_bodycore/dist/Debug/GNU-Linux -lroly_bodycore -Wl,-rpath,../../tron2/tron2_robot/dist/Debug/GNU-Linux -L../../tron2/tron2_robot/dist/Debug/GNU-Linux -ltron2_robot -Wl,-rpath,../../tron2/tron2_talky/dist/Debug/GNU-Linux -L../../tron2/tron2_talky/dist/Debug/GNU-Linux -ltron2_talky -Wl,-rpath,../../tron/tron_control/dist/Debug/GNU-Linux -L../../tron/tron_control/dist/Debug/GNU-Linux -ltron_control -Wl,-rpath,../../tron/tron_tools/dist/Debug/GNU-Linux -L../../tron/tron_tools/dist/Debug/GNU-Linux -ltron_tools -Wl,-rpath,../../tron/tron_util/dist/Debug/GNU-Linux -L../../tron/tron_util/dist/Debug/GNU-Linux -ltron_util -Wl,-rpath,../../tron/tron_wire/dist/Debug/GNU-Linux -L../../tron/tron_wire/dist/Debug/GNU-Linux -ltron_wire -Wl,-rpath,../../tron/tron_wire2/dist/Debug/GNU-Linux -L../../tron/tron_wire2/dist/Debug/GNU-Linux -ltron_wire2
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
@@ -66,15 +66,19 @@ LDLIBSOPTIONS=-Wl,-rpath,../roly_bodycore/dist/Debug/GNU-Linux -L../roly_bodycor
 
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libroly_bodycoms.${CND_DLIB_EXT}: ../roly_bodycore/dist/Debug/GNU-Linux/libroly_bodycore.so
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libroly_bodycoms.${CND_DLIB_EXT}: ../../tron/robot/dist/Debug/GNU-Linux/libtron_robot.so
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libroly_bodycoms.${CND_DLIB_EXT}: ../../tron2/tron2_robot/dist/Debug/GNU-Linux/libtron2_robot.so
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libroly_bodycoms.${CND_DLIB_EXT}: ../../tron/talky2/dist/Debug/GNU-Linux/libtron_talky2.so
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libroly_bodycoms.${CND_DLIB_EXT}: ../../tron2/tron2_talky/dist/Debug/GNU-Linux/libtron2_talky.so
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libroly_bodycoms.${CND_DLIB_EXT}: ../../tron/tuly/dist/Debug/GNU-Linux/libtron_tuly.so
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libroly_bodycoms.${CND_DLIB_EXT}: ../../tron/tron_control/dist/Debug/GNU-Linux/libtron_control.so
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libroly_bodycoms.${CND_DLIB_EXT}: ../../tron/wire/dist/Debug/GNU-Linux/libtron_wire.so
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libroly_bodycoms.${CND_DLIB_EXT}: ../../tron/tron_tools/dist/Debug/GNU-Linux/libtron_tools.so
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libroly_bodycoms.${CND_DLIB_EXT}: ../../tron/wire2/dist/Debug/GNU-Linux/libtron_wire2.so
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libroly_bodycoms.${CND_DLIB_EXT}: ../../tron/tron_util/dist/Debug/GNU-Linux/libtron_util.so
+
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libroly_bodycoms.${CND_DLIB_EXT}: ../../tron/tron_wire/dist/Debug/GNU-Linux/libtron_wire.so
+
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libroly_bodycoms.${CND_DLIB_EXT}: ../../tron/tron_wire2/dist/Debug/GNU-Linux/libtron_wire2.so
 
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libroly_bodycoms.${CND_DLIB_EXT}: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
@@ -83,46 +87,48 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libroly_bodycoms.${CND_DLIB_EXT}: ${O
 ${OBJECTDIR}/src/roly/bodycoms/BodyComs.o: src/roly/bodycoms/BodyComs.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/roly/bodycoms
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Isrc -I../roly_bodycore/src -I../../tron/robot/src -I../../tron/talky2/src -I../../tron/tuly/src -I../../tron/wire/src -I../../tron/wire2/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycoms/BodyComs.o src/roly/bodycoms/BodyComs.cpp
+	$(COMPILE.cc) -g -Isrc -I../roly_bodycore/src -I../../tron2/tron2_robot/src -I../../tron2/tron2_talky/src -I../../tron/tron_control/src -I../../tron/tron_tools/src -I../../tron/tron_util/src -I../../tron/tron_wire/src -I../../tron/tron_wire2/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycoms/BodyComs.o src/roly/bodycoms/BodyComs.cpp
 
 ${OBJECTDIR}/src/roly/bodycoms/BodyConnector.o: src/roly/bodycoms/BodyConnector.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/roly/bodycoms
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Isrc -I../roly_bodycore/src -I../../tron/robot/src -I../../tron/talky2/src -I../../tron/tuly/src -I../../tron/wire/src -I../../tron/wire2/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycoms/BodyConnector.o src/roly/bodycoms/BodyConnector.cpp
+	$(COMPILE.cc) -g -Isrc -I../roly_bodycore/src -I../../tron2/tron2_robot/src -I../../tron2/tron2_talky/src -I../../tron/tron_control/src -I../../tron/tron_tools/src -I../../tron/tron_util/src -I../../tron/tron_wire/src -I../../tron/tron_wire2/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycoms/BodyConnector.o src/roly/bodycoms/BodyConnector.cpp
 
 ${OBJECTDIR}/src/roly/bodycoms/modules/BodyAware.o: src/roly/bodycoms/modules/BodyAware.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/roly/bodycoms/modules
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Isrc -I../roly_bodycore/src -I../../tron/robot/src -I../../tron/talky2/src -I../../tron/tuly/src -I../../tron/wire/src -I../../tron/wire2/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycoms/modules/BodyAware.o src/roly/bodycoms/modules/BodyAware.cpp
+	$(COMPILE.cc) -g -Isrc -I../roly_bodycore/src -I../../tron2/tron2_robot/src -I../../tron2/tron2_talky/src -I../../tron/tron_control/src -I../../tron/tron_tools/src -I../../tron/tron_util/src -I../../tron/tron_wire/src -I../../tron/tron_wire2/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycoms/modules/BodyAware.o src/roly/bodycoms/modules/BodyAware.cpp
 
 ${OBJECTDIR}/src/roly/bodycoms/modules/BodyServer.o: src/roly/bodycoms/modules/BodyServer.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/roly/bodycoms/modules
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Isrc -I../roly_bodycore/src -I../../tron/robot/src -I../../tron/talky2/src -I../../tron/tuly/src -I../../tron/wire/src -I../../tron/wire2/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycoms/modules/BodyServer.o src/roly/bodycoms/modules/BodyServer.cpp
+	$(COMPILE.cc) -g -Isrc -I../roly_bodycore/src -I../../tron2/tron2_robot/src -I../../tron2/tron2_talky/src -I../../tron/tron_control/src -I../../tron/tron_tools/src -I../../tron/tron_util/src -I../../tron/tron_wire/src -I../../tron/tron_wire2/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycoms/modules/BodyServer.o src/roly/bodycoms/modules/BodyServer.cpp
 
 ${OBJECTDIR}/src/roly/bodycoms/server/ArtisticChannelServer.o: src/roly/bodycoms/server/ArtisticChannelServer.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/roly/bodycoms/server
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Isrc -I../roly_bodycore/src -I../../tron/robot/src -I../../tron/talky2/src -I../../tron/tuly/src -I../../tron/wire/src -I../../tron/wire2/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycoms/server/ArtisticChannelServer.o src/roly/bodycoms/server/ArtisticChannelServer.cpp
+	$(COMPILE.cc) -g -Isrc -I../roly_bodycore/src -I../../tron2/tron2_robot/src -I../../tron2/tron2_talky/src -I../../tron/tron_control/src -I../../tron/tron_tools/src -I../../tron/tron_util/src -I../../tron/tron_wire/src -I../../tron/tron_wire2/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycoms/server/ArtisticChannelServer.o src/roly/bodycoms/server/ArtisticChannelServer.cpp
 
 ${OBJECTDIR}/src/roly/bodycoms/server/ExpressiveChannelServer.o: src/roly/bodycoms/server/ExpressiveChannelServer.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/roly/bodycoms/server
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Isrc -I../roly_bodycore/src -I../../tron/robot/src -I../../tron/talky2/src -I../../tron/tuly/src -I../../tron/wire/src -I../../tron/wire2/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycoms/server/ExpressiveChannelServer.o src/roly/bodycoms/server/ExpressiveChannelServer.cpp
+	$(COMPILE.cc) -g -Isrc -I../roly_bodycore/src -I../../tron2/tron2_robot/src -I../../tron2/tron2_talky/src -I../../tron/tron_control/src -I../../tron/tron_tools/src -I../../tron/tron_util/src -I../../tron/tron_wire/src -I../../tron/tron_wire2/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycoms/server/ExpressiveChannelServer.o src/roly/bodycoms/server/ExpressiveChannelServer.cpp
 
 ${OBJECTDIR}/src/roly/bodycoms/server/ExtraChannelServer.o: src/roly/bodycoms/server/ExtraChannelServer.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/roly/bodycoms/server
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Isrc -I../roly_bodycore/src -I../../tron/robot/src -I../../tron/talky2/src -I../../tron/tuly/src -I../../tron/wire/src -I../../tron/wire2/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycoms/server/ExtraChannelServer.o src/roly/bodycoms/server/ExtraChannelServer.cpp
+	$(COMPILE.cc) -g -Isrc -I../roly_bodycore/src -I../../tron2/tron2_robot/src -I../../tron2/tron2_talky/src -I../../tron/tron_control/src -I../../tron/tron_tools/src -I../../tron/tron_util/src -I../../tron/tron_wire/src -I../../tron/tron_wire2/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycoms/server/ExtraChannelServer.o src/roly/bodycoms/server/ExtraChannelServer.cpp
 
 # Subprojects
 .build-subprojects:
 	cd ../roly_bodycore && ${MAKE}  -f Makefile CONF=Debug
-	cd ../../tron/robot && ${MAKE}  -f Makefile CONF=Debug
-	cd ../../tron/talky2 && ${MAKE}  -f Makefile CONF=Debug
-	cd ../../tron/tuly && ${MAKE}  -f Makefile CONF=Debug
-	cd ../../tron/wire && ${MAKE}  -f Makefile CONF=Debug
-	cd ../../tron/wire2 && ${MAKE}  -f Makefile CONF=Debug
+	cd ../../tron2/tron2_robot && ${MAKE}  -f Makefile CONF=Debug
+	cd ../../tron2/tron2_talky && ${MAKE}  -f Makefile CONF=Debug
+	cd ../../tron/tron_control && ${MAKE}  -f Makefile CONF=Debug
+	cd ../../tron/tron_tools && ${MAKE}  -f Makefile CONF=Debug
+	cd ../../tron/tron_util && ${MAKE}  -f Makefile CONF=Debug
+	cd ../../tron/tron_wire && ${MAKE}  -f Makefile CONF=Debug
+	cd ../../tron/tron_wire2 && ${MAKE}  -f Makefile CONF=Debug
 
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
@@ -132,11 +138,13 @@ ${OBJECTDIR}/src/roly/bodycoms/server/ExtraChannelServer.o: src/roly/bodycoms/se
 # Subprojects
 .clean-subprojects:
 	cd ../roly_bodycore && ${MAKE}  -f Makefile CONF=Debug clean
-	cd ../../tron/robot && ${MAKE}  -f Makefile CONF=Debug clean
-	cd ../../tron/talky2 && ${MAKE}  -f Makefile CONF=Debug clean
-	cd ../../tron/tuly && ${MAKE}  -f Makefile CONF=Debug clean
-	cd ../../tron/wire && ${MAKE}  -f Makefile CONF=Debug clean
-	cd ../../tron/wire2 && ${MAKE}  -f Makefile CONF=Debug clean
+	cd ../../tron2/tron2_robot && ${MAKE}  -f Makefile CONF=Debug clean
+	cd ../../tron2/tron2_talky && ${MAKE}  -f Makefile CONF=Debug clean
+	cd ../../tron/tron_control && ${MAKE}  -f Makefile CONF=Debug clean
+	cd ../../tron/tron_tools && ${MAKE}  -f Makefile CONF=Debug clean
+	cd ../../tron/tron_util && ${MAKE}  -f Makefile CONF=Debug clean
+	cd ../../tron/tron_wire && ${MAKE}  -f Makefile CONF=Debug clean
+	cd ../../tron/tron_wire2 && ${MAKE}  -f Makefile CONF=Debug clean
 
 # Enable dependency checking
 .dep.inc: .depcheck-impl
