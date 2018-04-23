@@ -12,9 +12,10 @@ using namespace log4cxx;
 
 namespace roly
 {
-ExtraChannelServer::ExtraChannelServer() : ChannelServer(tron2::RobotNodes::eNODE_BODYROLE, tron2::BodyTopics::eBODY_EXTRA)
+ExtraChannelServer::ExtraChannelServer()
 {    
     bEndRequested = false;
+    tron2::ChannelServer::tune4NodeAndTopic(tron2::RobotNodes::eNODE_BODYROLE, tron2::BodyTopics::eBODY_EXTRA);    
 }
 
 //ExtraChannelServer::~ExtraChannelServer()

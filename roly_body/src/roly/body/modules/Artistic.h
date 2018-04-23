@@ -10,8 +10,10 @@
 #include <log4cxx/logger.h>
 
 #include "roly/body/modules/BodyModule.h"
+#include "tron2/moves/CyclicMovement.h"
 #include "tron2/moves/MoveFactory.h"
 #include "tron2/talky/arm/ArmClient.h"
+#include "tron/math/CyclicComponent.h"
 
 namespace roly
 {
@@ -36,6 +38,7 @@ private:
     tron2::ArmClient oArmClient;     // client for arm control
     bool bcontinuous;       // continuous or simple mode
     tron2::MoveFactory oMoveFactory; // utility class for movements creation
+    tron2::CyclicMovement oCyclicMovement;
     int figure;         // requested figure
 
 public:
@@ -64,6 +67,11 @@ private:
         void updateMove();
         
         int translateFigure2Movement(int value);
+        
+        // updates cyclic component of given cycler (main or secondary)
+        void updateCyclerComponent(int cycler, bool bmain, tron::CyclicComponent& oCyclicComponent);
+        // stop cyclic component of given cycler (main or secondary)
+        void stopCyclerComponent(int cycler, bool bmain);
 
         // checks if ordered movement is finished (just for simple mode)
         bool checkMovementFinished();

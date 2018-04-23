@@ -12,8 +12,9 @@ using namespace log4cxx;
 
 namespace roly
 {
-ExpressiveChannelServer::ExpressiveChannelServer() : ChannelServer(tron2::RobotNodes::eNODE_BODYROLE, tron2::BodyTopics::eBODY_EXPRESSIVE)
+ExpressiveChannelServer::ExpressiveChannelServer()
 {    
+    tron2::ChannelServer::tune4NodeAndTopic(tron2::RobotNodes::eNODE_BODYROLE, tron2::BodyTopics::eBODY_EXPRESSIVE);    
 }
 
 //ExpressiveChannelServer::~ExpressiveChannelServer()
