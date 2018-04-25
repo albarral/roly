@@ -3,7 +3,7 @@
  *   albarral@migtron.com   *
  ***************************************************************************/
 
-#include "roly/bodycore/ComfortableConfig.h"
+#include "roly/bodycore/config/ComfortableConfig.h"
 
 namespace roly
 {    

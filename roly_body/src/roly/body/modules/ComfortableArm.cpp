@@ -7,7 +7,7 @@
 #include "log4cxx/ndc.h"
 
 #include "roly/body/modules/ComfortableArm.h"
-#include "roly/bodycore/ComfortableConfig.h"
+#include "roly/bodycore/config/ComfortableConfig.h"
 
 using namespace log4cxx;
 

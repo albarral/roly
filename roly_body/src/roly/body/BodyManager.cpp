@@ -7,7 +7,7 @@
 #include "log4cxx/ndc.h"
 
 #include "roly/body/BodyManager.h"
-#include "roly/bodycore/BodyConfig.h"
+#include "roly/bodycore/config/BodyConfig.h"
 
 using namespace log4cxx;
 
@@ -85,9 +85,13 @@ void BodyManager::initArchitecture()
     listModules.push_back(&oExpressive);
 
     nivel = 3;    
-    // artistic behaviour
-    oArtistic.setLevel(nivel);
-    listModules.push_back(&oArtistic);
+    // artistic behaviours
+    oArtistic1.setLevel(nivel);
+    oArtistic2.setLevel(nivel);
+    oArtistic1.setID(BodyConfig::ARTISTIC1);
+    oArtistic2.setID(BodyConfig::ARTISTIC2);
+    listModules.push_back(&oArtistic1);
+    listModules.push_back(&oArtistic2);
 }
 
 void BodyManager::showArchitecture()

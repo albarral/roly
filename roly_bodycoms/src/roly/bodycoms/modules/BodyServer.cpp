@@ -6,6 +6,7 @@
 #include "log4cxx/ndc.h"
 
 #include "roly/bodycoms/modules/BodyServer.h"
+#include "roly/bodycore/config/BodyConfig.h"
 
 using namespace log4cxx;
 
@@ -24,6 +25,7 @@ void BodyServer::init(BodyBus& oBodyBus)
 {
     // prepare communication servers
     oExpressiveChannelServer.connect2Bus(oBodyBus);    
+    oArtisticChannelServer.setTargetModule(BodyConfig::ARTISTIC1);
     oArtisticChannelServer.connect2Bus(oBodyBus);    
     oExtraChannelServer.connect2Bus(oBodyBus);    
     

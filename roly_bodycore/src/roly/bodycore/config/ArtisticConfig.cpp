@@ -3,7 +3,7 @@
  *   albarral@migtron.com   *
  ***************************************************************************/
 
-#include "roly/bodycore/ArtisticConfig.h"
+#include "roly/bodycore/config/ArtisticConfig.h"
 
 namespace roly
 {    

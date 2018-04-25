@@ -10,7 +10,11 @@ namespace roly
 {
 class BodyConfig 
 {
-    private:                
+ public: 
+    static const int ARTISTIC1 = 1; // artistic module 1
+    static const int ARTISTIC2 = 2; // artistic module 2
+
+private:                
         float modulesFreq;  // execution frequency for all modules (loops/sec)
         
     public:

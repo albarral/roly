@@ -29,7 +29,8 @@ class BodyManager
         int topLevel; // allow activation of modules until this level
         // modules ...
         // level 3
-        Artistic oArtistic;
+        Artistic oArtistic1;
+        Artistic oArtistic2;
         // level 2
         Expressive oExpressive;
         // level 1

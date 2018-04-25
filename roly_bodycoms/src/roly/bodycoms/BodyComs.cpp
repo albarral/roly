@@ -4,7 +4,7 @@
  ***************************************************************************/
 
 #include "roly/bodycoms/BodyComs.h"
-#include "roly/bodycore/BodyConfig.h"
+#include "roly/bodycore/config/BodyConfig.h"
 
 namespace roly
 {

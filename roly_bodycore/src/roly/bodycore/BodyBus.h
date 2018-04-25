@@ -8,6 +8,7 @@
 
 #include <string>
 
+#include "roly/bodycore/ArtisticBus.h"
 #include "tron/control/brooks/control.h"
 #include "tron/control/brooks/control2.h"
 #include "tron/control/brooks/control3.h"
@@ -22,18 +23,13 @@ class BodyBus
         bool benabled;
 
         // INHIBITIONS
-        tron::Inhibition CO_INHIBIT_ARTISTIC;       // inhibit artistic module
         tron::Inhibition CO_INHIBIT_EXPRESSIVE;       // inhibit expressive module
         tron::Inhibition CO_INHIBIT_COMFORTABLE;    // inhibit comfortable module
         
         // CONTROLS                
-        // Artistic module
-        tron::Control2 CO_ARTISTIC_FIGURE;       // id of artistic figure to implement
-        tron::Control3 CO_ARTISTIC_FREQ;       // frequency of cyclic figure (Hz) 
-        tron::Control3 CO_ARTISTIC_SIZE;        // size of cyclic figure (degrees)
-        tron::Control3 CO_ARTISTIC_ORIENTATION;  // orientation of cyclic figure (degrees)
-        tron::Control3 CO_ARTISTIC_RELFACTOR;    // relative xy factor of cyclic figure 
-        tron::Control CO_ARTISTIC_HALT;                // halt ongoing artistic movement
+        // Artistic modules
+        ArtisticBus oArtisticBus1;
+        ArtisticBus oArtisticBus2;
         
         // Expressive module
         tron::Control2 CO_EXPRESSIVE_ACTION;   // action to express 
@@ -55,18 +51,13 @@ class BodyBus
         bool isEnabled() {return benabled;};
         
         // INHIBITIONS
-        tron::Inhibition& getCO_INHIBIT_ARTISTIC() {return CO_INHIBIT_ARTISTIC;};
         tron::Inhibition& getCO_INHIBIT_EXPRESSIVE() {return CO_INHIBIT_EXPRESSIVE;};
         tron::Inhibition& getCO_INHIBIT_COMFORTABLE() {return CO_INHIBIT_COMFORTABLE;};
 
         // CONTROLS        
-        // Artistic module
-        tron::Control2& getCO_ARTISTIC_FIGURE() {return CO_ARTISTIC_FIGURE;};
-        tron::Control3& getCO_ARTISTIC_FREQ() {return CO_ARTISTIC_FREQ;};
-        tron::Control3& getCO_ARTISTIC_SIZE() {return CO_ARTISTIC_SIZE;};
-        tron::Control3& getCO_ARTISTIC_ORIENTATION() {return CO_ARTISTIC_ORIENTATION;};
-        tron::Control3& getCO_ARTISTIC_RELFACTOR() {return CO_ARTISTIC_RELFACTOR;};
-        tron::Control& getCO_ARTISTIC_HALT() {return CO_ARTISTIC_HALT;};
+        // Artistic modules
+        ArtisticBus& getArtisticBus1() {return oArtisticBus1;};
+        ArtisticBus& getArtisticBus2() {return oArtisticBus2;};
         
         // Expressive module
         tron::Control2& getCO_EXPRESSIVE_ACTION() {return CO_EXPRESSIVE_ACTION;};

@@ -9,6 +9,7 @@
 #include <string>
 #include <log4cxx/logger.h>
 
+#include "roly/bodycore/ArtisticBus.h"
 #include "roly/body/modules/BodyModule.h"
 #include "tron2/moves/CyclicMovement.h"
 #include "tron2/moves/MoveFactory.h"
@@ -32,19 +33,25 @@ public:
          eSTATE_UPDATE,      // updates cycler movement
          eSTATE_STOP           // stops cycler movement
     };
+
 private:    
     static log4cxx::LoggerPtr logger;
+    int id;                                // id of artistic module (defines the target cycler)
+    // bus        
+    ArtisticBus* pArtisticBus;  // bus connection for this module
     // logic
     tron2::ArmClient oArmClient;     // client for arm control
     bool bcontinuous;       // continuous or simple mode
     tron2::MoveFactory oMoveFactory; // utility class for movements creation
     tron2::CyclicMovement oCyclicMovement;
-    int figure;         // requested figure
+    int figure;         // requested figure for cycler
 
 public:
         Artistic();
         //~Artistic();
                                
+        void setID(int value);
+        int getID() {return id;};
 private:       
         // first actions when the thread begins 
         virtual void first();
@@ -68,10 +75,10 @@ private:
         
         int translateFigure2Movement(int value);
         
-        // updates cyclic component of given cycler (main or secondary)
-        void updateCyclerComponent(int cycler, bool bmain, tron::CyclicComponent& oCyclicComponent);
-        // stop cyclic component of given cycler (main or secondary)
-        void stopCyclerComponent(int cycler, bool bmain);
+        // updates cyclic component of cycler (main or secondary)
+        void updateCyclerComponent(bool bmain, tron::CyclicComponent& oCyclicComponent);
+        // stop cyclic component of cycler (main or secondary)
+        void stopCyclerComponent(bool bmain);
 
         // checks if ordered movement is finished (just for simple mode)
         bool checkMovementFinished();
