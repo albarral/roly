@@ -4,9 +4,9 @@
  ***************************************************************************/
 
 #include "roly/bodycoms/server/ExpressiveChannelServer.h"
-#include "tron2/talky/body/ExpressiveTalker.h"
-#include "tron2/robot/RobotNodes.h"
-#include "tron2/robot/topics/BodyTopics.h"
+#include "tron2/robot/RobotSystem.h"
+#include "tron2/robot/body/BodyNode.h"
+#include "tron2/robot/body/ExpressiveTopic.h"
 
 using namespace log4cxx;
 
@@ -14,7 +14,7 @@ namespace roly
 {
 ExpressiveChannelServer::ExpressiveChannelServer()
 {    
-    tron2::ChannelServer::tune4NodeAndTopic(tron2::RobotNodes::eNODE_BODYROLE, tron2::BodyTopics::eBODY_EXPRESSIVE);    
+    tron2::ChannelServer::tune4NodeAndTopic(tron2::RobotSystem::eNODE_BODYROLE, tron2::BodyNode::eBODY_EXPRESSIVE);    
 }
 
 //ExpressiveChannelServer::~ExpressiveChannelServer()
@@ -43,12 +43,12 @@ void ExpressiveChannelServer::processCommands()
             {
                 switch (code)
                 {
-                    case tron2::ExpressiveTalker::eEXPRESS_FEELING:
+                    case tron2::ExpressiveTopic::eEXPRESS_FEELING:
                         LOG4CXX_INFO(logger, "> express feeling " << (int)value);                        
                         pBodyBus->getCO_EXPRESSIVE_ACTION().request((int)value);
                         break;
 
-                    case tron2::ExpressiveTalker::eEXPRESS_HALT:
+                    case tron2::ExpressiveTopic::eEXPRESS_HALT:
                         LOG4CXX_INFO(logger, "> halt expression");                     
                         pBodyBus->getCO_EXPRESSIVE_HALT().request();
                         break;

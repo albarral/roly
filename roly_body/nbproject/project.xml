@@ -9,7 +9,6 @@
             <header-extensions>h</header-extensions>
             <sourceEncoding>UTF-8</sourceEncoding>
             <make-dep-projects>
-                <make-dep-project>../../tron2/tron2_talky</make-dep-project>
                 <make-dep-project>../roly_bodycore</make-dep-project>
                 <make-dep-project>../../tron/tron_util</make-dep-project>
                 <make-dep-project>../../tron2/tron2_moves</make-dep-project>
@@ -18,6 +17,7 @@
                 <make-dep-project>../../tron/tron_wire2</make-dep-project>
                 <make-dep-project>../../tron/tron_math</make-dep-project>
                 <make-dep-project>../../tron2/tron2_robot</make-dep-project>
+                <make-dep-project>../../tron2/tron2_coms</make-dep-project>
                 <make-dep-project>../../tron/tron_tools</make-dep-project>
                 <make-dep-project>../../tron2/tron2_language</make-dep-project>
             </make-dep-projects>

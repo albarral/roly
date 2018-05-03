@@ -13,7 +13,7 @@
 #include "roly/bodycoms/server/ArtisticChannelServer.h"
 #include "roly/bodycoms/server/ExpressiveChannelServer.h"
 #include "roly/bodycoms/server/ExtraChannelServer.h"
-#include "tron2/talky/channel/ChannelServer.h"
+#include "tron2/coms/ChannelServer.h"
 #include "roly/bodycore/BodyBus.h"
 #include "tron/control/module3.h"
 

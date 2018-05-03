@@ -13,7 +13,7 @@
 #include "roly/body/modules/BodyModule.h"
 #include "tron2/moves/CyclicMovement.h"
 #include "tron2/moves/MoveFactory.h"
-#include "tron2/talky/arm/ArmClient.h"
+#include "tron2/coms/arm/ArmClient.h"
 #include "tron/math/CyclicComponent.h"
 
 namespace roly
