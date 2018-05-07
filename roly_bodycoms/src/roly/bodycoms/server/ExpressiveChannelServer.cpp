@@ -4,6 +4,7 @@
  ***************************************************************************/
 
 #include "roly/bodycoms/server/ExpressiveChannelServer.h"
+#include "tron2/robot/RobotNetwork.h"
 #include "tron2/robot/RobotSystem.h"
 #include "tron2/robot/body/BodyNode.h"
 #include "tron2/robot/body/ExpressiveTopic.h"
@@ -14,7 +15,7 @@ namespace roly
 {
 ExpressiveChannelServer::ExpressiveChannelServer()
 {    
-    tron2::ChannelServer::tune4NodeAndTopic(tron2::RobotSystem::eNODE_BODYROLE, tron2::BodyNode::eBODY_EXPRESSIVE);    
+    tron2::ChannelServer::connect2Channel(tron2::RobotSystem::eNODE_BODYROLE, tron2::RobotNetwork::eBODY_EXPRESSIVE_CHANNEL, tron2::BodyNode::eBODY_EXPRESSIVE);    
 }
 
 //ExpressiveChannelServer::~ExpressiveChannelServer()
@@ -39,7 +40,7 @@ void ExpressiveChannelServer::processCommands()
         {
             LOG4CXX_TRACE(logger, "ExpressiveChannelServer: check msg " << message);
             // if message interpreted, call proper bus action
-            if (pTalker->interpretMessage(message, code, value))
+            if (oTalker.interpretMessage(message, code, value))
             {
                 switch (code)
                 {
