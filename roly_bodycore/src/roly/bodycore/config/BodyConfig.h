@@ -16,13 +16,14 @@ class BodyConfig
 
 private:                
         float modulesFreq;  // execution frequency for all modules (loops/sec)
+        int behaviourLevels; // num of behaviour levels used to control the body
         
     public:
         BodyConfig();
         //~BodyConfig();
                         
-        void setModulesFreq(float value) {modulesFreq = value;}
         float getModulesFreq() {return modulesFreq;}
+        float getBehaviourLevels() {return behaviourLevels;}
 };
 
 }

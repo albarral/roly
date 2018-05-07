@@ -19,7 +19,7 @@ LoggerPtr BodyManager::logger(Logger::getLogger("roly.body"));
 BodyManager::BodyManager ()
 {    
     blaunched = false;
-    topLevel = 3;       
+    topLevel = 0;       
 }
 
 // Destructor
@@ -47,6 +47,7 @@ bool BodyManager::launch(BodyBus& oBodyBus)
         // read configuration
         BodyConfig oBodyConfig;
         float freq = oBodyConfig.getModulesFreq();
+        topLevel = oBodyConfig.getBehaviourLevels();
                 
         LOG4CXX_INFO(logger, "top level: " << topLevel);
         // organize control architecture in levels

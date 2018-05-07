@@ -29,7 +29,8 @@ private:
     bool benabled;
     // logic
     ExpressiveChannelServer oExpressiveChannelServer;     // communications server for expressive channel
-    ArtisticChannelServer oArtisticChannelServer;   // communications server for artistic channel
+    ArtisticChannelServer oArtistic1ChannelServer;   // communications server for artistic 1 channel
+    ArtisticChannelServer oArtistic2ChannelServer;   // communications server for artistic 2 channel
     ExtraChannelServer oExtraChannelServer;    // communications server for extra channel
 
 public:

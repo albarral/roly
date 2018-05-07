@@ -25,13 +25,16 @@ void BodyServer::init(BodyBus& oBodyBus)
 {
     // prepare communication servers
     oExpressiveChannelServer.connect2Bus(oBodyBus);    
-    oArtisticChannelServer.setTargetModule(BodyConfig::ARTISTIC1);
-    oArtisticChannelServer.connect2Bus(oBodyBus);    
+    oArtistic1ChannelServer.setTargetModule(BodyConfig::ARTISTIC1);
+    oArtistic1ChannelServer.connect2Bus(oBodyBus);    
+    oArtistic2ChannelServer.setTargetModule(BodyConfig::ARTISTIC2);
+    oArtistic2ChannelServer.connect2Bus(oBodyBus);    
     oExtraChannelServer.connect2Bus(oBodyBus);    
     
     // if servers enabled
     if (oExpressiveChannelServer.isTuned() && 
-        oArtisticChannelServer.isTuned() && 
+        oArtistic1ChannelServer.isTuned() && 
+        oArtistic2ChannelServer.isTuned() && 
         oExtraChannelServer.isTuned())
     {
         benabled = true;
@@ -50,8 +53,10 @@ void BodyServer::loop()
 {
     // check expressive channel
     checkChannelServer(oExpressiveChannelServer);        
-    // check artistic channel
-    checkChannelServer(oArtisticChannelServer);        
+    // check artistic channel 1
+    checkChannelServer(oArtistic1ChannelServer);        
+    // check artistic channel 2
+    checkChannelServer(oArtistic2ChannelServer);        
     // check extra channel
     checkChannelServer(oExtraChannelServer);        
 }

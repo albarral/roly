@@ -9,6 +9,7 @@
 #include <log4cxx/logger.h>
 
 #include "roly/bodymain/BodyTest.h"
+#include "roly/bodycore/ArtisticBus.h"
 #include "tron2/language/objects/FiguresTheme.h"
 
 using namespace log4cxx;
@@ -57,23 +58,24 @@ void BodyTest::testArtistic()
         LOG4CXX_WARN(logger, "testArtistic: no bus connection, skip test");    
         return;
     }
-            
+      
+    ArtisticBus& oArtisticBus = pBodyBus->getArtisticBus1();
     switch (step)
     {
         case 2:
-            pBodyBus->getCO_ARTISTIC_FIGURE().request(tron2::FiguresTheme::eFIGURE_CIRCLE);
+            oArtisticBus.getCO_ARTISTIC_FIGURE().request(tron2::FiguresTheme::eFIGURE_CIRCLE);
             break;            
             
         case 5:
-            pBodyBus->getCO_ARTISTIC_FREQ().request(0.2);
+            oArtisticBus.getCO_ARTISTIC_FREQ().request(0.2);
             break;
 
         case 10:
-            pBodyBus->getCO_ARTISTIC_SIZE().request(60.0);            
+            oArtisticBus.getCO_ARTISTIC_SIZE().request(60.0);            
             break;            
 
         case 15:   
-            pBodyBus->getCO_ARTISTIC_HALT().request();            
+            oArtisticBus.getCO_ARTISTIC_HALT().request();            
             break;            
     }
     

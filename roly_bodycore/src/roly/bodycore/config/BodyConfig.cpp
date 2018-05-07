@@ -11,6 +11,7 @@ namespace roly
 BodyConfig::BodyConfig ()
 {    
     modulesFreq = 10;  // 10 Hz
+    behaviourLevels = 3;
 }
 
 //BodyConfig::~BodyConfig()
