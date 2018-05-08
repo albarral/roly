@@ -17,6 +17,8 @@ class BodyConfig
 private:                
         float modulesFreq;  // execution frequency for all modules (loops/sec)
         int behaviourLevels; // num of behaviour levels used to control the body
+        float angleTol;         // allowed (pan, tilt) tolerance for arm positions (degrees)
+        float radiusTol;        // allowed radial tolerance for arm positions (cm)
         
     public:
         BodyConfig();
@@ -24,6 +26,9 @@ private:
                         
         float getModulesFreq() {return modulesFreq;}
         float getBehaviourLevels() {return behaviourLevels;}
+        
+        float getAngleTolerance() {return angleTol;}; 
+        float getRadialTolerance() {return radiusTol;};         
 };
 
 }

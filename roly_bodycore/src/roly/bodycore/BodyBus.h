@@ -7,12 +7,15 @@
  ***************************************************************************/
 
 #include <string>
+#include <opencv2/core/core.hpp>
 
 #include "roly/bodycore/ArtisticBus.h"
 #include "tron/control/brooks/control.h"
 #include "tron/control/brooks/control2.h"
 #include "tron/control/brooks/control3.h"
+#include "tron/control/brooks/controlT.h"
 #include "tron/control/brooks/inhibition.h"
+#include "tron/control/brooks/sensor.h"
 #include "tron/control/brooks/sensor3.h"
 
 namespace roly
@@ -34,6 +37,14 @@ class BodyBus
         // Expressive module
         tron::Control2 CO_EXPRESSIVE_ACTION;   // action to express 
         tron::Control CO_EXPRESSIVE_HALT;                // halt any ongoing action expression        
+        
+        // ArmSense module
+        tron::ControlT<cv::Vec3f> CO_RELAX_POSTURE;  // relax posture (pan, tilt, radial)
+        tron::Control2 CO_RELAX_TILT;                 // relax position for pan axis
+        tron::Control2 CO_RELAX_PAN;                 // relax position for pan axis
+        tron::Sensor SO_ARM_MOVING;                // arm moving state (boolean)
+        tron::Sensor SO_ARM_COMFORT;             // arm comfort state (boolean)
+        tron::Sensor3 SO_ARM_TIRED;                 // arm tired time (secs)
                 
         // SENSORS
         tron::Sensor3 SI_ARM_PAN;                  // real pan position (degrees)
@@ -62,6 +73,12 @@ class BodyBus
         // Expressive module
         tron::Control2& getCO_EXPRESSIVE_ACTION() {return CO_EXPRESSIVE_ACTION;};
         tron::Control& getCO_EXPRESSIVE_HALT() {return CO_EXPRESSIVE_HALT;};
+
+        // ArmSense module
+        tron::ControlT<cv::Vec3f>& getCO_RELAX_POSTURE() {return CO_RELAX_POSTURE;};
+        tron::Sensor& getSO_ARM_MOVING() {return SO_ARM_MOVING;};
+        tron::Sensor& getSO_ARM_COMFORT() {return SO_ARM_COMFORT;};
+        tron::Sensor3& getSO_ARM_TIRED() {return SO_ARM_TIRED;};
         
         // SENSORS
         tron::Sensor3& getSI_ARM_PAN() {return SI_ARM_PAN;};        

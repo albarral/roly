@@ -11,7 +11,10 @@ namespace roly
 BodyConfig::BodyConfig ()
 {    
     modulesFreq = 10;  // 10 Hz
-    behaviourLevels = 3;
+    behaviourLevels = 4;
+    
+    angleTol = 5.0;     // 5 degrees
+    radiusTol = 5.0;    // 5 cm
 }
 
 //BodyConfig::~BodyConfig()

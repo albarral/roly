@@ -39,7 +39,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/roly/bodycore/BodyBus.o \
 	${OBJECTDIR}/src/roly/bodycore/config/ArtisticConfig.o \
 	${OBJECTDIR}/src/roly/bodycore/config/BodyConfig.o \
-	${OBJECTDIR}/src/roly/bodycore/config/ComfortableConfig.o
+	${OBJECTDIR}/src/roly/bodycore/config/ComfortConfig.o
 
 
 # C Compiler Flags
@@ -88,10 +88,10 @@ ${OBJECTDIR}/src/roly/bodycore/config/BodyConfig.o: src/roly/bodycore/config/Bod
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -Isrc -I../../tron/tron_control/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycore/config/BodyConfig.o src/roly/bodycore/config/BodyConfig.cpp
 
-${OBJECTDIR}/src/roly/bodycore/config/ComfortableConfig.o: src/roly/bodycore/config/ComfortableConfig.cpp 
+${OBJECTDIR}/src/roly/bodycore/config/ComfortConfig.o: src/roly/bodycore/config/ComfortConfig.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/roly/bodycore/config
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Isrc -I../../tron/tron_control/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycore/config/ComfortableConfig.o src/roly/bodycore/config/ComfortableConfig.cpp
+	$(COMPILE.cc) -g -Isrc -I../../tron/tron_control/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycore/config/ComfortConfig.o src/roly/bodycore/config/ComfortConfig.cpp
 
 # Subprojects
 .build-subprojects:

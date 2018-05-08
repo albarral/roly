@@ -3,17 +3,14 @@
  *   albarral@migtron.com   *
  ***************************************************************************/
 
-#include "roly/bodycore/config/ComfortableConfig.h"
+#include "roly/bodycore/config/ComfortConfig.h"
 
 namespace roly
 {    
 // Constructor
-ComfortableConfig::ComfortableConfig ()
+ComfortConfig::ComfortConfig ()
 {    
-    angleTol = 5.0;
-    radiusTol = 5.0;
-    tiredSensitivity4Still  = 20.0;        // 20 units/s
-    tiredSensitivity4Moving = 2.0;        // 2 units/s
+    tiredTime4Relax  = 3.0;        // 3 s
     relaxPosture[0] = 10;            // relax posture (pan = 10, tilt = 20, radius = 40)
     relaxPosture[1] = 20; 
     relaxPosture[2] = 40; 

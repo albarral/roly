@@ -74,11 +74,10 @@ bool BodyManager::end()
 
 void BodyManager::initArchitecture()
 {
-    // LEVEL 1    
     int nivel = 1;    
-    // comfortable arm behaviour
-    oComfortableArm.setLevel(nivel);
-    listModules.push_back(&oComfortableArm);
+    // arm sense behaviour
+    oArmSense.setLevel(nivel);
+    listModules.push_back(&oArmSense);
 
     nivel = 2;    
     // expressive behaviour
@@ -93,6 +92,11 @@ void BodyManager::initArchitecture()
     oArtistic2.setID(BodyConfig::ARTISTIC2);
     listModules.push_back(&oArtistic1);
     listModules.push_back(&oArtistic2);
+
+    nivel = 4;    
+    // comfortable arm behaviour
+    oComfort.setLevel(nivel);
+    listModules.push_back(&oComfort);
 }
 
 void BodyManager::showArchitecture()

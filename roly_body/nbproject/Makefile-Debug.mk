@@ -36,9 +36,10 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/src/roly/body/BodyManager.o \
+	${OBJECTDIR}/src/roly/body/modules/ArmSense.o \
 	${OBJECTDIR}/src/roly/body/modules/Artistic.o \
 	${OBJECTDIR}/src/roly/body/modules/BodyModule.o \
-	${OBJECTDIR}/src/roly/body/modules/ComfortableArm.o \
+	${OBJECTDIR}/src/roly/body/modules/Comfort.o \
 	${OBJECTDIR}/src/roly/body/modules/Expressive.o \
 	${OBJECTDIR}/src/roly/body/moves/ArmMovement.o
 
@@ -96,6 +97,11 @@ ${OBJECTDIR}/src/roly/body/BodyManager.o: src/roly/body/BodyManager.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -Isrc -I../roly_bodycore/src -I../../tron/tron_control/src -I../../tron/tron_math/src -I../../tron/tron_tools/src -I../../tron/tron_util/src -I../../tron/tron_wire/src -I../../tron/tron_wire2/src -I../../tron2/tron2_coms/src -I../../tron2/tron2_language/src -I../../tron2/tron2_moves/src -I../../tron2/tron2_robot/src -I../../tron2/tron2_talky/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/body/BodyManager.o src/roly/body/BodyManager.cpp
 
+${OBJECTDIR}/src/roly/body/modules/ArmSense.o: src/roly/body/modules/ArmSense.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/roly/body/modules
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -Isrc -I../roly_bodycore/src -I../../tron/tron_control/src -I../../tron/tron_math/src -I../../tron/tron_tools/src -I../../tron/tron_util/src -I../../tron/tron_wire/src -I../../tron/tron_wire2/src -I../../tron2/tron2_coms/src -I../../tron2/tron2_language/src -I../../tron2/tron2_moves/src -I../../tron2/tron2_robot/src -I../../tron2/tron2_talky/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/body/modules/ArmSense.o src/roly/body/modules/ArmSense.cpp
+
 ${OBJECTDIR}/src/roly/body/modules/Artistic.o: src/roly/body/modules/Artistic.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/roly/body/modules
 	${RM} "$@.d"
@@ -106,10 +112,10 @@ ${OBJECTDIR}/src/roly/body/modules/BodyModule.o: src/roly/body/modules/BodyModul
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -Isrc -I../roly_bodycore/src -I../../tron/tron_control/src -I../../tron/tron_math/src -I../../tron/tron_tools/src -I../../tron/tron_util/src -I../../tron/tron_wire/src -I../../tron/tron_wire2/src -I../../tron2/tron2_coms/src -I../../tron2/tron2_language/src -I../../tron2/tron2_moves/src -I../../tron2/tron2_robot/src -I../../tron2/tron2_talky/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/body/modules/BodyModule.o src/roly/body/modules/BodyModule.cpp
 
-${OBJECTDIR}/src/roly/body/modules/ComfortableArm.o: src/roly/body/modules/ComfortableArm.cpp 
+${OBJECTDIR}/src/roly/body/modules/Comfort.o: src/roly/body/modules/Comfort.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/roly/body/modules
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Isrc -I../roly_bodycore/src -I../../tron/tron_control/src -I../../tron/tron_math/src -I../../tron/tron_tools/src -I../../tron/tron_util/src -I../../tron/tron_wire/src -I../../tron/tron_wire2/src -I../../tron2/tron2_coms/src -I../../tron2/tron2_language/src -I../../tron2/tron2_moves/src -I../../tron2/tron2_robot/src -I../../tron2/tron2_talky/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/body/modules/ComfortableArm.o src/roly/body/modules/ComfortableArm.cpp
+	$(COMPILE.cc) -g -Isrc -I../roly_bodycore/src -I../../tron/tron_control/src -I../../tron/tron_math/src -I../../tron/tron_tools/src -I../../tron/tron_util/src -I../../tron/tron_wire/src -I../../tron/tron_wire2/src -I../../tron2/tron2_coms/src -I../../tron2/tron2_language/src -I../../tron2/tron2_moves/src -I../../tron2/tron2_robot/src -I../../tron2/tron2_talky/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/body/modules/Comfort.o src/roly/body/modules/Comfort.cpp
 
 ${OBJECTDIR}/src/roly/body/modules/Expressive.o: src/roly/body/modules/Expressive.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/roly/body/modules
