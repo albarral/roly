@@ -54,7 +54,7 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=-Wl,-rpath,../roly_body/dist/Debug/GNU-Linux -L../roly_body/dist/Debug/GNU-Linux -lroly_body -Wl,-rpath,../roly_bodycore/dist/Debug/GNU-Linux -L../roly_bodycore/dist/Debug/GNU-Linux -lroly_bodycore -Wl,-rpath,../roly_bodycoms/dist/Debug/GNU-Linux -L../roly_bodycoms/dist/Debug/GNU-Linux -lroly_bodycoms -Wl,-rpath,../../tron/tron_control/dist/Debug/GNU-Linux -L../../tron/tron_control/dist/Debug/GNU-Linux -ltron_control -Wl,-rpath,../../tron/tron_math/dist/Debug/GNU-Linux -L../../tron/tron_math/dist/Debug/GNU-Linux -ltron_math -Wl,-rpath,../../tron/tron_tools/dist/Debug/GNU-Linux -L../../tron/tron_tools/dist/Debug/GNU-Linux -ltron_tools -Wl,-rpath,../../tron/tron_util/dist/Debug/GNU-Linux -L../../tron/tron_util/dist/Debug/GNU-Linux -ltron_util -Wl,-rpath,../../tron/tron_wire/dist/Debug/GNU-Linux -L../../tron/tron_wire/dist/Debug/GNU-Linux -ltron_wire -Wl,-rpath,../../tron/tron_wire2/dist/Debug/GNU-Linux -L../../tron/tron_wire2/dist/Debug/GNU-Linux -ltron_wire2 -Wl,-rpath,../../tron2/tron2_coms/dist/Debug/GNU-Linux -L../../tron2/tron2_coms/dist/Debug/GNU-Linux -ltron2_coms -Wl,-rpath,../../tron2/tron2_language/dist/Debug/GNU-Linux -L../../tron2/tron2_language/dist/Debug/GNU-Linux -ltron2_language -Wl,-rpath,../../tron2/tron2_moves/dist/Debug/GNU-Linux -L../../tron2/tron2_moves/dist/Debug/GNU-Linux -ltron2_moves -Wl,-rpath,../../tron2/tron2_robot/dist/Debug/GNU-Linux -L../../tron2/tron2_robot/dist/Debug/GNU-Linux -ltron2_robot -Wl,-rpath,../../tron2/tron2_talky/dist/Debug/GNU-Linux -L../../tron2/tron2_talky/dist/Debug/GNU-Linux -ltron2_talky -llog4cxx
+LDLIBSOPTIONS=-Wl,-rpath,../roly_body/dist/Debug/GNU-Linux -L../roly_body/dist/Debug/GNU-Linux -lroly_body -Wl,-rpath,../roly_bodycore/dist/Debug/GNU-Linux -L../roly_bodycore/dist/Debug/GNU-Linux -lroly_bodycore -Wl,-rpath,../roly_bodycoms/dist/Debug/GNU-Linux -L../roly_bodycoms/dist/Debug/GNU-Linux -lroly_bodycoms -Wl,-rpath,../../tron/tron_control/dist/Debug/GNU-Linux -L../../tron/tron_control/dist/Debug/GNU-Linux -ltron_control -Wl,-rpath,../../tron/tron_math/dist/Debug/GNU-Linux -L../../tron/tron_math/dist/Debug/GNU-Linux -ltron_math -Wl,-rpath,../../tron/tron_tools/dist/Debug/GNU-Linux -L../../tron/tron_tools/dist/Debug/GNU-Linux -ltron_tools -Wl,-rpath,../../tron/tron_util/dist/Debug/GNU-Linux -L../../tron/tron_util/dist/Debug/GNU-Linux -ltron_util -Wl,-rpath,../../tron/tron_wire/dist/Debug/GNU-Linux -L../../tron/tron_wire/dist/Debug/GNU-Linux -ltron_wire -Wl,-rpath,../../tron/tron_wire2/dist/Debug/GNU-Linux -L../../tron/tron_wire2/dist/Debug/GNU-Linux -ltron_wire2 -Wl,-rpath,../../tron2/tron2_coms/dist/Debug/GNU-Linux -L../../tron2/tron2_coms/dist/Debug/GNU-Linux -ltron2_coms -Wl,-rpath,../../tron2/tron2_language/dist/Debug/GNU-Linux -L../../tron2/tron2_language/dist/Debug/GNU-Linux -ltron2_language -Wl,-rpath,../../tron2/tron2_moves/dist/Debug/GNU-Linux -L../../tron2/tron2_moves/dist/Debug/GNU-Linux -ltron2_moves -Wl,-rpath,../../tron2/tron2_robot/dist/Debug/GNU-Linux -L../../tron2/tron2_robot/dist/Debug/GNU-Linux -ltron2_robot -llog4cxx
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
@@ -86,8 +86,6 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/rolybody: ../../tron2/tron2_moves/dis
 
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/rolybody: ../../tron2/tron2_robot/dist/Debug/GNU-Linux/libtron2_robot.so
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/rolybody: ../../tron2/tron2_talky/dist/Debug/GNU-Linux/libtron2_talky.so
-
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/rolybody: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/rolybody ${OBJECTFILES} ${LDLIBSOPTIONS}
@@ -95,17 +93,17 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/rolybody: ${OBJECTFILES}
 ${OBJECTDIR}/src/roly/bodymain/BodyControl.o: src/roly/bodymain/BodyControl.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/roly/bodymain
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Isrc -I../roly_body/src -I../roly_bodycore/src -I../roly_bodycoms/src -I../../tron/tron_control/src -I../../tron/tron_math/src -I../../tron/tron_tools/src -I../../tron/tron_util/src -I../../tron/tron_wire/src -I../../tron/tron_wire2/src -I../../tron2/tron2_coms/src -I../../tron2/tron2_language/src -I../../tron2/tron2_moves/src -I../../tron2/tron2_robot/src -I../../tron2/tron2_talky/src -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodymain/BodyControl.o src/roly/bodymain/BodyControl.cpp
+	$(COMPILE.cc) -g -Isrc -I../roly_body/src -I../roly_bodycore/src -I../roly_bodycoms/src -I../../tron/tron_control/src -I../../tron/tron_math/src -I../../tron/tron_tools/src -I../../tron/tron_util/src -I../../tron/tron_wire/src -I../../tron/tron_wire2/src -I../../tron2/tron2_coms/src -I../../tron2/tron2_language/src -I../../tron2/tron2_moves/src -I../../tron2/tron2_robot/src -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodymain/BodyControl.o src/roly/bodymain/BodyControl.cpp
 
 ${OBJECTDIR}/src/roly/bodymain/BodyTest.o: src/roly/bodymain/BodyTest.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/roly/bodymain
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Isrc -I../roly_body/src -I../roly_bodycore/src -I../roly_bodycoms/src -I../../tron/tron_control/src -I../../tron/tron_math/src -I../../tron/tron_tools/src -I../../tron/tron_util/src -I../../tron/tron_wire/src -I../../tron/tron_wire2/src -I../../tron2/tron2_coms/src -I../../tron2/tron2_language/src -I../../tron2/tron2_moves/src -I../../tron2/tron2_robot/src -I../../tron2/tron2_talky/src -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodymain/BodyTest.o src/roly/bodymain/BodyTest.cpp
+	$(COMPILE.cc) -g -Isrc -I../roly_body/src -I../roly_bodycore/src -I../roly_bodycoms/src -I../../tron/tron_control/src -I../../tron/tron_math/src -I../../tron/tron_tools/src -I../../tron/tron_util/src -I../../tron/tron_wire/src -I../../tron/tron_wire2/src -I../../tron2/tron2_coms/src -I../../tron2/tron2_language/src -I../../tron2/tron2_moves/src -I../../tron2/tron2_robot/src -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodymain/BodyTest.o src/roly/bodymain/BodyTest.cpp
 
 ${OBJECTDIR}/src/roly/bodymain/main.o: src/roly/bodymain/main.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/roly/bodymain
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Isrc -I../roly_body/src -I../roly_bodycore/src -I../roly_bodycoms/src -I../../tron/tron_control/src -I../../tron/tron_math/src -I../../tron/tron_tools/src -I../../tron/tron_util/src -I../../tron/tron_wire/src -I../../tron/tron_wire2/src -I../../tron2/tron2_coms/src -I../../tron2/tron2_language/src -I../../tron2/tron2_moves/src -I../../tron2/tron2_robot/src -I../../tron2/tron2_talky/src -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodymain/main.o src/roly/bodymain/main.cpp
+	$(COMPILE.cc) -g -Isrc -I../roly_body/src -I../roly_bodycore/src -I../roly_bodycoms/src -I../../tron/tron_control/src -I../../tron/tron_math/src -I../../tron/tron_tools/src -I../../tron/tron_util/src -I../../tron/tron_wire/src -I../../tron/tron_wire2/src -I../../tron2/tron2_coms/src -I../../tron2/tron2_language/src -I../../tron2/tron2_moves/src -I../../tron2/tron2_robot/src -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodymain/main.o src/roly/bodymain/main.cpp
 
 # Subprojects
 .build-subprojects:
@@ -122,7 +120,6 @@ ${OBJECTDIR}/src/roly/bodymain/main.o: src/roly/bodymain/main.cpp
 	cd ../../tron2/tron2_language && ${MAKE}  -f Makefile CONF=Debug
 	cd ../../tron2/tron2_moves && ${MAKE}  -f Makefile CONF=Debug
 	cd ../../tron2/tron2_robot && ${MAKE}  -f Makefile CONF=Debug
-	cd ../../tron2/tron2_talky && ${MAKE}  -f Makefile CONF=Debug
 
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
@@ -144,7 +141,6 @@ ${OBJECTDIR}/src/roly/bodymain/main.o: src/roly/bodymain/main.cpp
 	cd ../../tron2/tron2_language && ${MAKE}  -f Makefile CONF=Debug clean
 	cd ../../tron2/tron2_moves && ${MAKE}  -f Makefile CONF=Debug clean
 	cd ../../tron2/tron2_robot && ${MAKE}  -f Makefile CONF=Debug clean
-	cd ../../tron2/tron2_talky && ${MAKE}  -f Makefile CONF=Debug clean
 
 # Enable dependency checking
 .dep.inc: .depcheck-impl
