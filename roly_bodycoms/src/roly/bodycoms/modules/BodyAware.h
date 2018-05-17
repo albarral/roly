@@ -10,7 +10,7 @@
 #include <log4cxx/logger.h>
 
 #include "roly/bodycore/BodyBus.h"
-#include "tron2/talky/arm/ArmListener.h"
+#include "tron2/coms/arm/ArmListener.h"
 #include "tron/control/module3.h"
 
 namespace roly

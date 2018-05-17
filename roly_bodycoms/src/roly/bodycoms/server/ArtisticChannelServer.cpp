@@ -4,9 +4,11 @@
  ***************************************************************************/
 
 #include "roly/bodycoms/server/ArtisticChannelServer.h"
-#include "tron2/talky/body/ArtisticTalker.h"
-#include "tron2/robot/RobotNodes.h"
-#include "tron2/robot/topics/BodyTopics.h"
+#include "roly/bodycore/config/BodyConfig.h"
+#include "tron2/robot/RobotNetwork.h"
+#include "tron2/robot/RobotSystem.h"
+#include "tron2/robot/body/BodyNode.h"
+#include "tron2/robot/body/ArtisticTopic.h"
 
 using namespace log4cxx;
 
@@ -14,12 +16,39 @@ namespace roly
 {
 ArtisticChannelServer::ArtisticChannelServer()
 {    
-    tron2::ChannelServer::tune4NodeAndTopic(tron2::RobotNodes::eNODE_BODYROLE, tron2::BodyTopics::eBODY_ARTISTIC);
+    targetModule = 0;
+    pArtisticBus = 0;    
 }
 
 //ArtisticChannelServer::~ArtisticChannelServer()
 //{    
 //}
+
+void ArtisticChannelServer::setTargetModule(int value)
+{
+    // safety check
+    if (value == BodyConfig::ARTISTIC1 || value == BodyConfig::ARTISTIC2)
+    {
+        targetModule = value;
+        if (targetModule == BodyConfig::ARTISTIC1)
+            tron2::ChannelServer::connect2Channel(tron2::RobotSystem::eNODE_BODYROLE, tron2::RobotNetwork::eBODY_ARTISTIC1_CHANNEL, tron2::BodyNode::eBODY_ARTISTIC);
+        else
+            tron2::ChannelServer::connect2Channel(tron2::RobotSystem::eNODE_BODYROLE, tron2::RobotNetwork::eBODY_ARTISTIC2_CHANNEL, tron2::BodyNode::eBODY_ARTISTIC);                    
+    }
+}
+
+void ArtisticChannelServer::connect2Bus(BodyBus& oBodyBus)
+{
+    // accept connection only if target cycler defined
+    if (targetModule != 0)
+    {
+        BodyConnector::connect2Bus(oBodyBus);
+        if (targetModule == BodyConfig::ARTISTIC1)
+            pArtisticBus = &(oBodyBus.getArtisticBus1());
+        else 
+            pArtisticBus = &(oBodyBus.getArtisticBus2());
+    }
+}
 
 void ArtisticChannelServer::processCommands()
 {    
@@ -39,38 +68,38 @@ void ArtisticChannelServer::processCommands()
         {
             LOG4CXX_TRACE(logger, "ArtisticChannelServer: check msg " << message);
             // if message interpreted, call proper bus action
-            if (pTalker->interpretMessage(message, code, value))
+            if (oTalker.interpretMessage(message, code, value))
             {
                 switch (code)
                 {
-                    case tron2::ArtisticTalker::eARTISTIC_FIGURE:
+                    case tron2::ArtisticTopic::eARTISTIC_FIGURE:
                         LOG4CXX_INFO(logger, "> artistic figure " << (int)value);                        
-                        pBodyBus->getCO_ARTISTIC_FIGURE().request((int)value);
+                        pArtisticBus->getCO_ARTISTIC_FIGURE().request((int)value);
                         break;
 
-                    case tron2::ArtisticTalker::eARTISTIC_FREQ:
+                    case tron2::ArtisticTopic::eARTISTIC_FREQ:
                         LOG4CXX_INFO(logger, "> artistic freq " << value); 
-                        pBodyBus->getCO_ARTISTIC_FREQ().request(value);
+                        pArtisticBus->getCO_ARTISTIC_FREQ().request(value);
                         break;
 
-                    case tron2::ArtisticTalker::eARTISTIC_SIZE:
+                    case tron2::ArtisticTopic::eARTISTIC_SIZE:
                         LOG4CXX_INFO(logger, "> artistic size " << value);                        
-                        pBodyBus->getCO_ARTISTIC_SIZE().request(value);
+                        pArtisticBus->getCO_ARTISTIC_SIZE().request(value);
                         break;
 
-                    case tron2::ArtisticTalker::eARTISTIC_ORIENTATION:
+                    case tron2::ArtisticTopic::eARTISTIC_ORIENTATION:
                         LOG4CXX_INFO(logger, "> artistic orientation " << value);                     
-                        pBodyBus->getCO_ARTISTIC_ORIENTATION().request(value);
+                        pArtisticBus->getCO_ARTISTIC_ORIENTATION().request(value);
                         break;
 
-                    case tron2::ArtisticTalker::eARTISTIC_RELFACTOR:
+                    case tron2::ArtisticTopic::eARTISTIC_RELFACTOR:
                         LOG4CXX_INFO(logger, "> artistic relative factor " << value);                     
-                        pBodyBus->getCO_ARTISTIC_RELFACTOR().request(value);
+                        pArtisticBus->getCO_ARTISTIC_RELFACTOR().request(value);
                         break;
 
-                    case tron2::ArtisticTalker::eARTISTIC_HALT:
+                    case tron2::ArtisticTopic::eARTISTIC_HALT:
                         LOG4CXX_INFO(logger, "> artistic halt");                     
-                        pBodyBus->getCO_ARTISTIC_HALT().request();
+                        pArtisticBus->getCO_ARTISTIC_HALT().request();
                         break;
 
                     default:

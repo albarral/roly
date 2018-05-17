@@ -1,5 +1,5 @@
-#ifndef __ROLY_BODY_COMFORTABLE_ARM_H
-#define __ROLY_BODY_COMFORTABLE_ARM_H
+#ifndef __ROLY_BODY_COMFORT_H
+#define __ROLY_BODY_COMFORT_H
 
 /***************************************************************************
  *   Copyright (C) 2017 by Migtron Robotics   *
@@ -10,7 +10,7 @@
 #include <log4cxx/logger.h>
 
 #include "roly/body/modules/BodyModule.h"
-#include "tron2/talky/arm/ArmClient.h"
+#include "tron2/coms/arm/ArmClient.h"
 
 namespace roly
 {
@@ -21,15 +21,15 @@ namespace roly
 // RELAX: command relax posture
 // Output: 
 // arm position (pan, tilt, radius)
-class ComfortableArm : public BodyModule
+class Comfort : public BodyModule
 {
 public:
     // states of the module
     enum eState
     {
-         eSTATE_STILL, 
-         eSTATE_MOVING, 
-         eSTATE_RELAX 
+         eSTATE_SENSE, 
+         eSTATE_RELAX, 
+         eSTATE_WAIT 
     };
     
 private:    
@@ -37,20 +37,15 @@ private:
     tron2::ArmClient oArmClient;         // client for arm control
     // config
     int relaxPosture[3];            // arm's relax posture (pan, tilt, radius)
-    float tolAngle;                   // allowed (pan, tilt) tolerance of relax posture (degrees)
-    float tolRadius;                 // allowed radial tolerance of relax posture (cm)
-    float tiredChange4Still;           // tired change for still arm (units)
-    float tiredChange4Moving;      // tired change for moving arm (units)    
+    float maxTiredTime;           // max allowed tired time (secs)
     // logic
-    int armPosture[3];            // measured arm posture (pan, tilt, radius)
-    int armSpeed[3];              // measured arm speed (vpan, vtilt, vradius)
-    bool barmMoving;    
-    bool bcomfortZone;
-    float tired;                       // tiredness 
+    bool barmMoving;                // arm moving state
+    bool bcomfortZone;             // arm comfort state 
+    float tiredTime;                 // measured tired time (secs)
 
 public:
-        ComfortableArm();
-        //~ComfortableArm();
+        Comfort();
+        //~Comfort();
                                
 private:       
         // first actions when the thread begins 
@@ -66,10 +61,6 @@ private:
         // shows the present state name
         void showState();
                 
-        // checks if arm is moving and if it's in the comfort zone (near the relax posture)
-        void senseArm();
-        // update tired state
-        void updateTired(float change);        
         // sends message to arm system
         void requestComfortPosture();
 };

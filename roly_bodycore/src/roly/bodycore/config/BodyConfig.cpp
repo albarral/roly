@@ -3,22 +3,21 @@
  *   albarral@migtron.com   *
  ***************************************************************************/
 
-#include "roly/bodycore/ArtisticConfig.h"
+#include "roly/bodycore/config/BodyConfig.h"
 
 namespace roly
 {    
 // Constructor
-ArtisticConfig::ArtisticConfig ()
+BodyConfig::BodyConfig ()
 {    
-    freq = 0.5;
-    size = 30.0;
-    angle  = 0.0 ; 
-    relFactor = 0.5; 
-    relFreq = 2.0;
-    brotation = true;   // positive (anticlockwise)
+    modulesFreq = 10;  // 10 Hz
+    behaviourLevels = 4;
+    
+    angleTol = 5.0;     // 5 degrees
+    radiusTol = 5.0;    // 5 cm
 }
 
-//ArtisticConfig::~ArtisticConfig()
+//BodyConfig::~BodyConfig()
 //{
 //}
 }

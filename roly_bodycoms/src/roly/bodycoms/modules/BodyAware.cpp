@@ -6,7 +6,7 @@
 #include "log4cxx/ndc.h"
 
 #include "roly/bodycoms/modules/BodyAware.h"
-#include "tron2/robot/sensors/ArmSensors.h"
+#include "tron2/robot/arm/ArmSensors.h"
 
 using namespace log4cxx;
 

@@ -13,7 +13,7 @@
 #include "roly/bodycoms/server/ArtisticChannelServer.h"
 #include "roly/bodycoms/server/ExpressiveChannelServer.h"
 #include "roly/bodycoms/server/ExtraChannelServer.h"
-#include "tron2/talky/channel/ChannelServer.h"
+#include "tron2/coms/ChannelServer.h"
 #include "roly/bodycore/BodyBus.h"
 #include "tron/control/module3.h"
 
@@ -29,7 +29,8 @@ private:
     bool benabled;
     // logic
     ExpressiveChannelServer oExpressiveChannelServer;     // communications server for expressive channel
-    ArtisticChannelServer oArtisticChannelServer;   // communications server for artistic channel
+    ArtisticChannelServer oArtistic1ChannelServer;   // communications server for artistic 1 channel
+    ArtisticChannelServer oArtistic2ChannelServer;   // communications server for artistic 2 channel
     ExtraChannelServer oExtraChannelServer;    // communications server for extra channel
 
 public:

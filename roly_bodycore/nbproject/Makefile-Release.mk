@@ -35,10 +35,11 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/src/roly/bodycore/ArtisticConfig.o \
+	${OBJECTDIR}/src/roly/bodycore/ArtisticBus.o \
 	${OBJECTDIR}/src/roly/bodycore/BodyBus.o \
-	${OBJECTDIR}/src/roly/bodycore/BodyConfig.o \
-	${OBJECTDIR}/src/roly/bodycore/ComfortableConfig.o
+	${OBJECTDIR}/src/roly/bodycore/config/ArtisticConfig.o \
+	${OBJECTDIR}/src/roly/bodycore/config/BodyConfig.o \
+	${OBJECTDIR}/src/roly/bodycore/config/ComfortConfig.o
 
 
 # C Compiler Flags
@@ -65,25 +66,30 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libroly_bodycore.${CND_DLIB_EXT}: ${O
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libroly_bodycore.${CND_DLIB_EXT} ${OBJECTFILES} ${LDLIBSOPTIONS} -shared -fPIC
 
-${OBJECTDIR}/src/roly/bodycore/ArtisticConfig.o: src/roly/bodycore/ArtisticConfig.cpp 
+${OBJECTDIR}/src/roly/bodycore/ArtisticBus.o: src/roly/bodycore/ArtisticBus.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/roly/bodycore
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycore/ArtisticConfig.o src/roly/bodycore/ArtisticConfig.cpp
+	$(COMPILE.cc) -O2 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycore/ArtisticBus.o src/roly/bodycore/ArtisticBus.cpp
 
 ${OBJECTDIR}/src/roly/bodycore/BodyBus.o: src/roly/bodycore/BodyBus.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/roly/bodycore
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycore/BodyBus.o src/roly/bodycore/BodyBus.cpp
 
-${OBJECTDIR}/src/roly/bodycore/BodyConfig.o: src/roly/bodycore/BodyConfig.cpp 
-	${MKDIR} -p ${OBJECTDIR}/src/roly/bodycore
+${OBJECTDIR}/src/roly/bodycore/config/ArtisticConfig.o: src/roly/bodycore/config/ArtisticConfig.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/roly/bodycore/config
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycore/BodyConfig.o src/roly/bodycore/BodyConfig.cpp
+	$(COMPILE.cc) -O2 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycore/config/ArtisticConfig.o src/roly/bodycore/config/ArtisticConfig.cpp
 
-${OBJECTDIR}/src/roly/bodycore/ComfortableConfig.o: src/roly/bodycore/ComfortableConfig.cpp 
-	${MKDIR} -p ${OBJECTDIR}/src/roly/bodycore
+${OBJECTDIR}/src/roly/bodycore/config/BodyConfig.o: src/roly/bodycore/config/BodyConfig.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/roly/bodycore/config
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycore/ComfortableConfig.o src/roly/bodycore/ComfortableConfig.cpp
+	$(COMPILE.cc) -O2 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycore/config/BodyConfig.o src/roly/bodycore/config/BodyConfig.cpp
+
+${OBJECTDIR}/src/roly/bodycore/config/ComfortConfig.o: src/roly/bodycore/config/ComfortConfig.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/roly/bodycore/config
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycore/config/ComfortConfig.o src/roly/bodycore/config/ComfortConfig.cpp
 
 # Subprojects
 .build-subprojects:

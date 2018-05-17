@@ -13,14 +13,18 @@
                    displayName="Source Files"
                    projectFiles="true">
       <logicalFolder name="bodycore" displayName="bodycore" projectFiles="true">
-        <itemPath>src/roly/bodycore/ArtisticConfig.cpp</itemPath>
-        <itemPath>src/roly/bodycore/ArtisticConfig.h</itemPath>
+        <logicalFolder name="f1" displayName="config" projectFiles="true">
+          <itemPath>src/roly/bodycore/config/ArtisticConfig.cpp</itemPath>
+          <itemPath>src/roly/bodycore/config/ArtisticConfig.h</itemPath>
+          <itemPath>src/roly/bodycore/config/BodyConfig.cpp</itemPath>
+          <itemPath>src/roly/bodycore/config/BodyConfig.h</itemPath>
+          <itemPath>src/roly/bodycore/config/ComfortConfig.cpp</itemPath>
+          <itemPath>src/roly/bodycore/config/ComfortConfig.h</itemPath>
+        </logicalFolder>
+        <itemPath>src/roly/bodycore/ArtisticBus.cpp</itemPath>
+        <itemPath>src/roly/bodycore/ArtisticBus.h</itemPath>
         <itemPath>src/roly/bodycore/BodyBus.cpp</itemPath>
         <itemPath>src/roly/bodycore/BodyBus.h</itemPath>
-        <itemPath>src/roly/bodycore/BodyConfig.cpp</itemPath>
-        <itemPath>src/roly/bodycore/BodyConfig.h</itemPath>
-        <itemPath>src/roly/bodycore/ComfortableConfig.cpp</itemPath>
-        <itemPath>src/roly/bodycore/ComfortableConfig.h</itemPath>
       </logicalFolder>
     </logicalFolder>
     <logicalFolder name="TestFiles"
@@ -74,27 +78,40 @@
           </linkerLibItems>
         </linkerTool>
       </compileType>
-      <item path="src/roly/bodycore/ArtisticConfig.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
+      <item path="src/roly/bodycore/ArtisticBus.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="src/roly/bodycore/ArtisticConfig.h" ex="false" tool="3" flavor2="0">
+      <item path="src/roly/bodycore/ArtisticBus.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/roly/bodycore/BodyBus.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/roly/bodycore/BodyBus.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/roly/bodycore/BodyConfig.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/roly/bodycore/BodyConfig.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/roly/bodycore/ComfortableConfig.cpp"
+      <item path="src/roly/bodycore/config/ArtisticConfig.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
-      <item path="src/roly/bodycore/ComfortableConfig.h"
+      <item path="src/roly/bodycore/config/ArtisticConfig.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/roly/bodycore/config/BodyConfig.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/roly/bodycore/config/BodyConfig.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/roly/bodycore/config/ComfortConfig.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/roly/bodycore/config/ComfortConfig.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -120,27 +137,40 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
-      <item path="src/roly/bodycore/ArtisticConfig.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
+      <item path="src/roly/bodycore/ArtisticBus.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="src/roly/bodycore/ArtisticConfig.h" ex="false" tool="3" flavor2="0">
+      <item path="src/roly/bodycore/ArtisticBus.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/roly/bodycore/BodyBus.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/roly/bodycore/BodyBus.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/roly/bodycore/BodyConfig.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/roly/bodycore/BodyConfig.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/roly/bodycore/ComfortableConfig.cpp"
+      <item path="src/roly/bodycore/config/ArtisticConfig.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
-      <item path="src/roly/bodycore/ComfortableConfig.h"
+      <item path="src/roly/bodycore/config/ArtisticConfig.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/roly/bodycore/config/BodyConfig.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/roly/bodycore/config/BodyConfig.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="src/roly/bodycore/config/ComfortConfig.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/roly/bodycore/config/ComfortConfig.h"
             ex="false"
             tool="3"
             flavor2="0">

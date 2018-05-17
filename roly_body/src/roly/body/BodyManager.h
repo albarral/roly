@@ -11,9 +11,10 @@
 #include <log4cxx/logger.h>
 
 #include "roly/bodycore/BodyBus.h"
+#include "roly/body/modules/ArmSense.h"
 #include "roly/body/modules/Artistic.h"
 #include "roly/body/modules/Expressive.h"
-#include "roly/body/modules/ComfortableArm.h"
+#include "roly/body/modules/Comfort.h"
 #include "roly/body/modules/BodyModule.h"
 
 namespace roly
@@ -28,12 +29,15 @@ class BodyManager
         bool blaunched;     // indicates when the manager has been launched   
         int topLevel; // allow activation of modules until this level
         // modules ...
+        // level 4
+        Comfort oComfort;
         // level 3
-        Artistic oArtistic;
+        Artistic oArtistic1;
+        Artistic oArtistic2;
         // level 2
         Expressive oExpressive;
         // level 1
-        ComfortableArm oComfortableArm;
+        ArmSense oArmSense;
         std::vector<BodyModule*> listModules;      // list of modules (pointers)
 
     public:

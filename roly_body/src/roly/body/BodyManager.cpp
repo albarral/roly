@@ -7,7 +7,7 @@
 #include "log4cxx/ndc.h"
 
 #include "roly/body/BodyManager.h"
-#include "roly/bodycore/BodyConfig.h"
+#include "roly/bodycore/config/BodyConfig.h"
 
 using namespace log4cxx;
 
@@ -19,7 +19,7 @@ LoggerPtr BodyManager::logger(Logger::getLogger("roly.body"));
 BodyManager::BodyManager ()
 {    
     blaunched = false;
-    topLevel = 3;       
+    topLevel = 0;       
 }
 
 // Destructor
@@ -47,6 +47,7 @@ bool BodyManager::launch(BodyBus& oBodyBus)
         // read configuration
         BodyConfig oBodyConfig;
         float freq = oBodyConfig.getModulesFreq();
+        topLevel = oBodyConfig.getBehaviourLevels();
                 
         LOG4CXX_INFO(logger, "top level: " << topLevel);
         // organize control architecture in levels
@@ -73,11 +74,10 @@ bool BodyManager::end()
 
 void BodyManager::initArchitecture()
 {
-    // LEVEL 1    
     int nivel = 1;    
-    // comfortable arm behaviour
-    oComfortableArm.setLevel(nivel);
-    listModules.push_back(&oComfortableArm);
+    // arm sense behaviour
+    oArmSense.setLevel(nivel);
+    listModules.push_back(&oArmSense);
 
     nivel = 2;    
     // expressive behaviour
@@ -85,9 +85,18 @@ void BodyManager::initArchitecture()
     listModules.push_back(&oExpressive);
 
     nivel = 3;    
-    // artistic behaviour
-    oArtistic.setLevel(nivel);
-    listModules.push_back(&oArtistic);
+    // artistic behaviours
+    oArtistic1.setLevel(nivel);
+    oArtistic2.setLevel(nivel);
+    oArtistic1.setID(BodyConfig::ARTISTIC1);
+    oArtistic2.setID(BodyConfig::ARTISTIC2);
+    listModules.push_back(&oArtistic1);
+    listModules.push_back(&oArtistic2);
+
+    nivel = 4;    
+    // comfortable arm behaviour
+    oComfort.setLevel(nivel);
+    listModules.push_back(&oComfort);
 }
 
 void BodyManager::showArchitecture()

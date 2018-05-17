@@ -6,7 +6,8 @@
 #include "log4cxx/ndc.h"
 
 #include "roly/body/modules/Artistic.h"
-#include "roly/bodycore/ArtisticConfig.h"
+#include "roly/bodycore/config/ArtisticConfig.h"
+#include "roly/bodycore/config/BodyConfig.h"
 #include "tron2/moves/CyclicMovement.h"
 #include "tron2/language/objects/FiguresTheme.h"
 
@@ -19,6 +20,8 @@ LoggerPtr Artistic::logger(Logger::getLogger("roly.body"));
 Artistic::Artistic()
 {
     modName = "Artistic";
+    id = -1;
+    pArtisticBus = 0;
 }
 
 //Artistic::~Artistic()
@@ -30,9 +33,29 @@ void Artistic::showInitialized()
     LOG4CXX_INFO(logger, modName << " initialized");          
 }
 
+void Artistic::setID(int value)
+{
+    if (value == BodyConfig::ARTISTIC1 || value == BodyConfig::ARTISTIC2)
+    {
+        id = value;
+        modName += std::to_string(id);
+    }
+}
 
 void Artistic::first()
 {
+    // connect module to proper bus
+    if (id == BodyConfig::ARTISTIC1)
+        pArtisticBus = &(pBodyBus->getArtisticBus1());
+    else if (id == BodyConfig::ARTISTIC2)
+        pArtisticBus = &(pBodyBus->getArtisticBus2());
+    else
+    {
+        LOG4CXX_WARN(logger, modName << " couldn't connect to proper bus. Ending module!");
+        tron::Module3::off();
+        return;
+    }
+    
     // set default move factory values
     ArtisticConfig oArtisticConfig;
     oMoveFactory.setFreq(oArtisticConfig.getFreq());
@@ -112,12 +135,12 @@ void Artistic::senseBus()
     float value;
         
      // check inhibition
-    binhibited = pBodyBus->getCO_INHIBIT_ARTISTIC().isRequested();
+    binhibited = pArtisticBus->getCO_INHIBIT_ARTISTIC().isRequested();
 
     // check figure requests
-    if (pBodyBus->getCO_ARTISTIC_FIGURE().checkRequested())
+    if (pArtisticBus->getCO_ARTISTIC_FIGURE().checkRequested())
     {
-        value = pBodyBus->getCO_ARTISTIC_FIGURE().getValue();
+        value = pArtisticBus->getCO_ARTISTIC_FIGURE().getValue();
         if (value >= 0)
         {
             bnewMove = true;
@@ -128,9 +151,9 @@ void Artistic::senseBus()
     }
         
     // check freq requests
-    if (pBodyBus->getCO_ARTISTIC_FREQ().checkRequested())
+    if (pArtisticBus->getCO_ARTISTIC_FREQ().checkRequested())
     {  
-        value = pBodyBus->getCO_ARTISTIC_FREQ().getValue();
+        value = pArtisticBus->getCO_ARTISTIC_FREQ().getValue();
         if (value > 0)
         {
             bmoveChanged = true;
@@ -143,9 +166,9 @@ void Artistic::senseBus()
     }
 
     // check size requests
-    if (pBodyBus->getCO_ARTISTIC_SIZE().checkRequested())
+    if (pArtisticBus->getCO_ARTISTIC_SIZE().checkRequested())
     {  
-        value = pBodyBus->getCO_ARTISTIC_SIZE().getValue();
+        value = pArtisticBus->getCO_ARTISTIC_SIZE().getValue();
         if (value > 0)
         {
             bmoveChanged = true;
@@ -158,9 +181,9 @@ void Artistic::senseBus()
     }
 
     // check orientation requests
-    if (pBodyBus->getCO_ARTISTIC_ORIENTATION().checkRequested())
+    if (pArtisticBus->getCO_ARTISTIC_ORIENTATION().checkRequested())
     {  
-        value = pBodyBus->getCO_ARTISTIC_ORIENTATION().getValue();
+        value = pArtisticBus->getCO_ARTISTIC_ORIENTATION().getValue();
         // all orientations are valid
         bmoveChanged = true;
         oMoveFactory.setAngle(value);
@@ -169,9 +192,9 @@ void Artistic::senseBus()
     }
 
     // check relative factor requests
-    if (pBodyBus->getCO_ARTISTIC_RELFACTOR().checkRequested())
+    if (pArtisticBus->getCO_ARTISTIC_RELFACTOR().checkRequested())
     {  
-        float value = pBodyBus->getCO_ARTISTIC_RELFACTOR().getValue();
+        float value = pArtisticBus->getCO_ARTISTIC_RELFACTOR().getValue();
         if (value > 0.0)
         {
             bmoveChanged = true;
@@ -191,12 +214,11 @@ void Artistic::senseBus()
         setState(eSTATE_UPDATE);                                       
     
     // anyway, if halt requested -> STOP
-    if (pBodyBus->getCO_ARTISTIC_HALT().checkRequested())
+    if (pArtisticBus->getCO_ARTISTIC_HALT().checkRequested())
     {
         setState(eSTATE_STOP);
     }
 }
-
 
 
 bool Artistic::checkMovementFinished()
@@ -214,37 +236,43 @@ void Artistic::triggerMove()
     if (!oMoveFactory.generateMovement(oCyclicMovement, movement))
         return;    
         
-    // set cycler 1 main component
-    updateCyclerComponent(1, true, oCyclicMovement.getPrimaryComponent());        
-    // if dual, set cycler 1 secondary component
+    // set cycler main component
+    updateCyclerComponent(true, oCyclicMovement.getPrimaryComponent());        
+    // if dual, set cycler secondary component
     if (oCyclicMovement.isDual())
-        updateCyclerComponent(1, false, oCyclicMovement.getSecondaryComponent());
-    // otherwise clear it (the secondary component)
+        updateCyclerComponent(false, oCyclicMovement.getSecondaryComponent());
+    // otherwise clear the secondary component
     else
-        stopCyclerComponent(1, false);
+        stopCyclerComponent(false);
     
     // start movement
-    oArmClient.setCycler1Action(1);
+    if (id == BodyConfig::ARTISTIC1)    
+        oArmClient.setCycler1Action(1);
+    else if (id == BodyConfig::ARTISTIC2)
+        oArmClient.setCycler2Action(1);
 }
 
 void Artistic::updateMove()
 {        
     // set cycler 1 main component
-    updateCyclerComponent(1, true, oCyclicMovement.getPrimaryComponent());        
+    updateCyclerComponent(true, oCyclicMovement.getPrimaryComponent());        
     // if dual, set cycler 1 secondary component
     if (oCyclicMovement.isDual())
-        updateCyclerComponent(1, false, oCyclicMovement.getSecondaryComponent());
+        updateCyclerComponent(false, oCyclicMovement.getSecondaryComponent());
 }
 
 void Artistic::stopMove()
 {    
     // stop movement
-    oArmClient.setCycler1Action(0);
+    if (id == BodyConfig::ARTISTIC1)    
+        oArmClient.setCycler1Action(0);
+    else if (id == BodyConfig::ARTISTIC2)
+        oArmClient.setCycler2Action(0);
 }
 
-void Artistic::updateCyclerComponent(int cycler, bool bmain, tron::CyclicComponent& oCyclicComponent)
+void Artistic::updateCyclerComponent(bool bmain, tron::CyclicComponent& oCyclicComponent)
 {        
-    if (cycler == 1)
+    if (id == BodyConfig::ARTISTIC1)
     {
         // cycler 1 main component
         if (bmain)
@@ -263,7 +291,7 @@ void Artistic::updateCyclerComponent(int cycler, bool bmain, tron::CyclicCompone
             oArmClient.setCycler1SecPhase(oCyclicComponent.getPhase());            
         }
     }
-    else if (cycler == 2)
+    else if (id == BodyConfig::ARTISTIC2)
     {
         // cycler 2 main component
         if (bmain)
@@ -284,9 +312,9 @@ void Artistic::updateCyclerComponent(int cycler, bool bmain, tron::CyclicCompone
     }
 }
 
-void Artistic::stopCyclerComponent(int cycler, bool bmain)
+void Artistic::stopCyclerComponent(bool bmain)
 {        
-    if (cycler == 1)
+    if (id == BodyConfig::ARTISTIC1)
     {
         // cycler 1 main component
         if (bmain)
@@ -301,7 +329,7 @@ void Artistic::stopCyclerComponent(int cycler, bool bmain)
             oArmClient.setCycler1SecFreq(0.0);
         }
     }
-    else if (cycler == 2)
+    else if (id == BodyConfig::ARTISTIC2)
     {
         // cycler 2 main component
         if (bmain)

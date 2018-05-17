@@ -12,7 +12,7 @@
 #include "roly/body/modules/BodyModule.h"
 #include "roly/body/moves/ArmMovement.h"
 #include "tron/util/Click.h"
-#include "tron2/talky/arm/ArmClient.h"
+#include "tron2/coms/arm/ArmClient.h"
 
 namespace roly
 {
