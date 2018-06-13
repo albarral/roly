@@ -10,8 +10,8 @@
             <sourceEncoding>UTF-8</sourceEncoding>
             <make-dep-projects>
                 <make-dep-project>../roly_bodycore</make-dep-project>
-                <make-dep-project>../../tron/tron_util</make-dep-project>
                 <make-dep-project>../../tron2/tron2_moves</make-dep-project>
+                <make-dep-project>../../tron/tron_util</make-dep-project>
                 <make-dep-project>../../tron/tron_control</make-dep-project>
                 <make-dep-project>../../tron/tron_wire</make-dep-project>
                 <make-dep-project>../../tron/tron_wire2</make-dep-project>
@@ -20,6 +20,7 @@
                 <make-dep-project>../../tron2/tron2_coms</make-dep-project>
                 <make-dep-project>../../tron/tron_tools</make-dep-project>
                 <make-dep-project>../../tron2/tron2_language</make-dep-project>
+                <make-dep-project>../../amy/amy_interface</make-dep-project>
             </make-dep-projects>
             <sourceRootList>
                 <sourceRootElem>src/roly/body</sourceRootElem>
