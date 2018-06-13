@@ -17,6 +17,8 @@
                 <make-dep-project>../../tron2/tron2_robot</make-dep-project>
                 <make-dep-project>../../tron2/tron2_coms</make-dep-project>
                 <make-dep-project>../../tron/tron_tools</make-dep-project>
+                <make-dep-project>../roly_interface</make-dep-project>
+                <make-dep-project>../../amy/amy_interface</make-dep-project>
             </make-dep-projects>
             <sourceRootList>
                 <sourceRootElem>src/roly/bodycoms</sourceRootElem>

@@ -10,8 +10,8 @@
 #include <log4cxx/logger.h>
 
 #include "roly/bodycore/BodyBus.h"
-#include "tron2/coms/arm/ArmListener.h"
 #include "tron/control/module3.h"
+#include "amy/interface/ArmListener.h"
 
 namespace roly
 {
@@ -24,7 +24,7 @@ private:
     bool benabled;
     // logic
     BodyBus* pBodyBus;      // access to body bus
-    tron2::ArmListener oArmListener;
+    amy::ArmListener oArmListener;
 
 public:
     BodyAware();

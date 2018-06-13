@@ -4,10 +4,9 @@
  ***************************************************************************/
 
 #include "roly/bodycoms/server/ExtraChannelServer.h"
-#include "tron2/robot/RobotNetwork.h"
-#include "tron2/robot/RobotSystem.h"
-#include "tron2/robot/Node.h"
+#include "roly/interface/BodyNode.h"
 #include "tron2/robot/common/ExtraTopic.h"
+#include "tron2/robot/RobotSystem.h"
 
 using namespace log4cxx;
 
@@ -16,7 +15,8 @@ namespace roly
 ExtraChannelServer::ExtraChannelServer()
 {    
     bEndRequested = false;
-    tron2::ChannelServer::connect2Channel(tron2::RobotSystem::eNODE_BODYROLE, tron2::RobotNetwork::eBODY_EXTRA_CHANNEL, tron2::Node::eEXTRA_TOPIC);    
+    int channel = BodyNode::eBODY_EXTRA_CHANNEL;
+    tron2::ChannelServer::connect2Channel(tron2::RobotSystem::eNODE_BODYROLE, channel, BodyNode::getTopic4Channel(channel));
 }
 
 //ExtraChannelServer::~ExtraChannelServer()
