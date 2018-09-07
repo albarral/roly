@@ -12,7 +12,7 @@
 #include "roly/body/modules/BodyModule.h"
 #include "roly/body/moves/ArmMovement.h"
 #include "tron/util/Click.h"
-#include "amy/interface/ArmClient.h"
+#include "amy/interface2/control/AxesClient.h"
 
 namespace roly
 {
@@ -48,7 +48,7 @@ public:
 private:    
     static log4cxx::LoggerPtr logger;
     // logic
-    amy::ArmClient oArmClient;     // client for arm control
+    amy::AxesClient oArmAxesClient;     // client for control of arm axes section
     std::vector<ArmMovement> listMovements;
     int step;       // present step of arm movement sequence
     int stepDuration;  // duration of present step

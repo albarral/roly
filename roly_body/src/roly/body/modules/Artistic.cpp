@@ -46,9 +46,15 @@ void Artistic::first()
 {
     // connect module to proper bus
     if (id == BodyConfig::ARTISTIC1)
+    {
         pArtisticBus = &(pBodyBus->getArtisticBus1());
+        oArmCyclerClient.tune2Cycler(1);
+    }
     else if (id == BodyConfig::ARTISTIC2)
+    {
         pArtisticBus = &(pBodyBus->getArtisticBus2());
+        oArmCyclerClient.tune2Cycler(2);
+    }
     else
     {
         LOG4CXX_WARN(logger, modName << " couldn't connect to proper bus. Ending module!");
@@ -246,10 +252,7 @@ void Artistic::triggerMove()
         stopCyclerComponent(false);
     
     // start movement
-    if (id == BodyConfig::ARTISTIC1)    
-        oArmClient.setCycler1Action(1);
-    else if (id == BodyConfig::ARTISTIC2)
-        oArmClient.setCycler2Action(1);
+    oArmCyclerClient.run(true);
 }
 
 void Artistic::updateMove()
@@ -264,85 +267,42 @@ void Artistic::updateMove()
 void Artistic::stopMove()
 {    
     // stop movement
-    if (id == BodyConfig::ARTISTIC1)    
-        oArmClient.setCycler1Action(0);
-    else if (id == BodyConfig::ARTISTIC2)
-        oArmClient.setCycler2Action(0);
+    oArmCyclerClient.run(false);
 }
 
 void Artistic::updateCyclerComponent(bool bmain, tron::CyclicComponent& oCyclicComponent)
 {        
-    if (id == BodyConfig::ARTISTIC1)
+    // cycler main component
+    if (bmain)
     {
-        // cycler 1 main component
-        if (bmain)
-        {
-            oArmClient.setCycler1MainAmp(oCyclicComponent.getAmp());
-            oArmClient.setCycler1MainAngle(oCyclicComponent.getAngle());
-            oArmClient.setCycler1MainFreq(oCyclicComponent.getFreq());
-            oArmClient.setCycler1MainPhase(oCyclicComponent.getPhase());            
-        }
-        // cycler 1 secondary component
-        else
-        {
-            oArmClient.setCycler1SecAmp(oCyclicComponent.getAmp());
-            oArmClient.setCycler1SecAngle(oCyclicComponent.getAngle());
-            oArmClient.setCycler1SecFreq(oCyclicComponent.getFreq());
-            oArmClient.setCycler1SecPhase(oCyclicComponent.getPhase());            
-        }
+        oArmCyclerClient.setMainAmplitude(oCyclicComponent.getAmp());
+        oArmCyclerClient.setMainAngle(oCyclicComponent.getAngle());
+        oArmCyclerClient.setMainFreq(oCyclicComponent.getFreq());
+        oArmCyclerClient.setMainPhase(oCyclicComponent.getPhase());            
     }
-    else if (id == BodyConfig::ARTISTIC2)
+    // cycler secondary component
+    else
     {
-        // cycler 2 main component
-        if (bmain)
-        {
-            oArmClient.setCycler2MainAmp(oCyclicComponent.getAmp());
-            oArmClient.setCycler2MainAngle(oCyclicComponent.getAngle());
-            oArmClient.setCycler2MainFreq(oCyclicComponent.getFreq());
-            oArmClient.setCycler2MainPhase(oCyclicComponent.getPhase());            
-        }
-        // cycler 2 secondary component
-        else
-        {
-            oArmClient.setCycler2SecAmp(oCyclicComponent.getAmp());
-            oArmClient.setCycler2SecAngle(oCyclicComponent.getAngle());
-            oArmClient.setCycler2SecFreq(oCyclicComponent.getFreq());
-            oArmClient.setCycler2SecPhase(oCyclicComponent.getPhase());            
-        }
+        oArmCyclerClient.setSecondaryAmplitude(oCyclicComponent.getAmp());
+        oArmCyclerClient.setSecondaryAngle(oCyclicComponent.getAngle());
+        oArmCyclerClient.setSecondaryFreq(oCyclicComponent.getFreq());
+        oArmCyclerClient.setSecondaryPhase(oCyclicComponent.getPhase());            
     }
 }
 
 void Artistic::stopCyclerComponent(bool bmain)
 {        
-    if (id == BodyConfig::ARTISTIC1)
+    // cycler main component
+    if (bmain)
     {
-        // cycler 1 main component
-        if (bmain)
-        {
-            oArmClient.setCycler1MainAmp(0.0);
-            oArmClient.setCycler1MainFreq(0.0);
-        }
-        // cycler 1 secondary component
-        else
-        {
-            oArmClient.setCycler1SecAmp(0.0);
-            oArmClient.setCycler1SecFreq(0.0);
-        }
+        oArmCyclerClient.setMainAmplitude(0.0);
+        oArmCyclerClient.setMainFreq(0.0);
     }
-    else if (id == BodyConfig::ARTISTIC2)
+    // cycler secondary component
+    else
     {
-        // cycler 2 main component
-        if (bmain)
-        {
-            oArmClient.setCycler2MainAmp(0.0);
-            oArmClient.setCycler2MainFreq(0.0);
-        }
-        // cycler 2 secondary component
-        else
-        {
-            oArmClient.setCycler2SecAmp(0.0);
-            oArmClient.setCycler2SecFreq(0.0);
-        }
+        oArmCyclerClient.setSecondaryAmplitude(0.0);
+        oArmCyclerClient.setSecondaryFreq(0.0);
     }
 }
 

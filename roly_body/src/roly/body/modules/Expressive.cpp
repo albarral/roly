@@ -110,16 +110,16 @@ void Expressive::performStep(ArmMovement& oArmMovement)
     // if posture request, command arm position
     if (oArmMovement.getType() == ArmMovement::eTYPE_POSTURE)
     {
-        oArmClient.setPan(oArmMovement.getPan());
-        oArmClient.setTilt(oArmMovement.getTilt());
-        oArmClient.setRadial(oArmMovement.getRadius());
+        oArmAxesClient.setPan(oArmMovement.getPan());
+        oArmAxesClient.setTilt(oArmMovement.getTilt());
+        oArmAxesClient.setRadial(oArmMovement.getRadius());
     }
     // if move request, command arm speed
     else
     {
-        oArmClient.setPanSpeed(oArmMovement.getPan());
-        oArmClient.setTiltSpeed(oArmMovement.getTilt());
-        oArmClient.setRadialSpeed(oArmMovement.getRadius());
+        oArmAxesClient.setPanSpeed(oArmMovement.getPan());
+        oArmAxesClient.setTiltSpeed(oArmMovement.getTilt());
+        oArmAxesClient.setRadialSpeed(oArmMovement.getRadius());
     }                
 }
 

@@ -105,9 +105,9 @@ void Comfort::senseBus()
 void Comfort::requestComfortPosture()
 {
     // request arm relaxed posture
-    oArmClient.setPan(relaxPosture[0]);
-    oArmClient.setTilt(relaxPosture[1]);
-    oArmClient.setRadial(relaxPosture[2]);
+    oArmAxesClient.setPan(relaxPosture[0]);
+    oArmAxesClient.setTilt(relaxPosture[1]);
+    oArmAxesClient.setRadial(relaxPosture[2]);
 }
 
 

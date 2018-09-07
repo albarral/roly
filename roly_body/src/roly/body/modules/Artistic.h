@@ -14,7 +14,7 @@
 #include "tron2/moves/CyclicMovement.h"
 #include "tron2/moves/MoveFactory.h"
 #include "tron/math/CyclicComponent.h"
-#include "amy/interface/ArmClient.h"
+#include "amy/interface2/control/CyclerClient.h"
 
 namespace roly
 {
@@ -40,7 +40,7 @@ private:
     // bus        
     ArtisticBus* pArtisticBus;  // bus connection for this module
     // logic
-    amy::ArmClient oArmClient;     // client for arm control
+    amy::CyclerClient oArmCyclerClient;     // client for control of arm cycler section (main or secondary)
     bool bcontinuous;       // continuous or simple mode
     tron2::MoveFactory oMoveFactory; // utility class for movements creation
     tron2::CyclicMovement oCyclicMovement;
