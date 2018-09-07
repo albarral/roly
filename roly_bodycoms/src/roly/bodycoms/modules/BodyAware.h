@@ -11,7 +11,7 @@
 
 #include "roly/bodycore/BodyBus.h"
 #include "tron/control/module3.h"
-#include "amy/interface/ArmListener.h"
+#include "amy/interface2/sense/AxesListener.h"
 
 namespace roly
 {
@@ -24,7 +24,7 @@ private:
     bool benabled;
     // logic
     BodyBus* pBodyBus;      // access to body bus
-    amy::ArmListener oArmListener;
+    amy::AxesListener oArmAxesListener;     // listener for sensing arm axes section
 
 public:
     BodyAware();

@@ -6,7 +6,6 @@
 #include "log4cxx/ndc.h"
 
 #include "roly/bodycoms/modules/BodyAware.h"
-#include "amy/interface/ArmSensors.h"
 
 using namespace log4cxx;
 
@@ -36,20 +35,23 @@ void BodyAware::first()
 
 void BodyAware::loop()
 {
-    // sense arm data
-    if (oArmListener.senseChannels())
-    {
-        amy::AxesData& axesPositions = oArmListener.getAxesPositions();
-        amy::AxesData& axesSpeeds = oArmListener.getAxesSpeeds();
-        // inform bus with arm axes positions
-        pBodyBus->getSI_ARM_PAN().setValue(axesPositions.pan);
-        pBodyBus->getSI_ARM_TILT().setValue(axesPositions.tilt);
-        pBodyBus->getSI_ARM_RADIUS().setValue(axesPositions.radial);
+    float value;
+
+    // inform bus with arm axes positions
+    if (oArmAxesListener.sensePan(value))
+        pBodyBus->getSI_ARM_PAN().setValue(value);        
+    if (oArmAxesListener.senseTilt(value))
+        pBodyBus->getSI_ARM_TILT().setValue(value);                
+    if (oArmAxesListener.senseRadial(value))        
+        pBodyBus->getSI_ARM_RADIUS().setValue(value);
+        
         // inform bus with arm axes speeds
-        pBodyBus->getSI_ARM_PANSPEED().setValue(axesSpeeds.pan);
-        pBodyBus->getSI_ARM_TILTSPEED().setValue(axesSpeeds.tilt);
-        pBodyBus->getSI_ARM_RADIALSPEED().setValue(axesSpeeds.radial);        
-    }
+    if (oArmAxesListener.sensePanSpeed(value))
+        pBodyBus->getSI_ARM_PANSPEED().setValue(value);    
+    if (oArmAxesListener.senseTiltSpeed(value))
+        pBodyBus->getSI_ARM_TILTSPEED().setValue(value);
+    if (oArmAxesListener.senseRadialSpeed(value))
+        pBodyBus->getSI_ARM_RADIALSPEED().setValue(value);        
 }
 
 }
