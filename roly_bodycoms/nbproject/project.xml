@@ -13,7 +13,8 @@
                 <make-dep-project>../roly_bodycore</make-dep-project>
                 <make-dep-project>../../tron/tron_util</make-dep-project>
                 <make-dep-project>../../tron/tron_control</make-dep-project>
-                <make-dep-project>../roly_interface</make-dep-project>
+                <make-dep-project>../../tron/tron_interface</make-dep-project>
+                <make-dep-project>../roly_interface2</make-dep-project>
             </make-dep-projects>
             <sourceRootList>
                 <sourceRootElem>src/roly/bodycoms</sourceRootElem>

@@ -16,15 +16,15 @@ LoggerPtr ArtisticServer::logger(Logger::getLogger("roly.interface"));
 
 ArtisticServer::ArtisticServer()
 {    
-    // set topics for arm joints control
-    int node = tron::RobotNodes::eNODE_ARM;
-    int section = BodyNode2::eeSECTION_JOINTS;
+    // set topics for body artistic control
+    int node = tron::RobotNodes::eNODE_BODYROLE;
+    int section = BodyNode2::eSECTION_ARTISTIC1;
     int type = tron::Topic::eTYPE_CONTROL;
     
     tron::Topic oTopic;
     BodyNode2 oBodyNode;
     // for each channel in section
-    for (int channel=0; channel<BodyNode2::eJOINTS_DIM; channel++)
+    for (int channel=0; channel<BodyNode2::eARTISTIC_DIM; channel++)
     {
         // set its topic 
         oTopic.set(node, section, channel, type);
@@ -37,76 +37,90 @@ ArtisticServer::ArtisticServer()
     oComsReceiver.connect();
     
     // store channel pointers for faster access
-    pHSChannel = oComsReceiver.getChannel(BodyNode2::eJOINTS_HS);
-    pVSChannel = oComsReceiver.getChannel(BodyNode2::eJOINTS_VS);
-    pELBChannel = oComsReceiver.getChannel(BodyNode2::eJOINTS_ELB);
-    pHWRIChannel = oComsReceiver.getChannel(BodyNode2::eJOINTS_HWRI);
-    pVWRIChannel = oComsReceiver.getChannel(BodyNode2::eJOINTS_VWRI);    
+    pFigureChannel = oComsReceiver.getChannel(BodyNode2::eARTISTIC_FIGURE);
+    pFrequencyChannel = oComsReceiver.getChannel(BodyNode2::eARTISTIC_FREQ);
+    pSizeChannel = oComsReceiver.getChannel(BodyNode2::eARTISTIC_SIZE);
+    pOrientationChannel = oComsReceiver.getChannel(BodyNode2::eARTISTIC_ORIENTATION);
+    pRelFactorChannel = oComsReceiver.getChannel(BodyNode2::eARTISTIC_RELFACTOR);    
+    pHaltChannel = oComsReceiver.getChannel(BodyNode2::eARTISTIC_HALT);    
 }
 
 //ArtisticServer::~ArtisticServer()
 //{    
 //}
 
-bool ArtisticServer::getHS(float& value)
+bool ArtisticServer::getFigure(std::string& value)
 {    
-    // if hs command received, get it
-    if (pHSChannel->hasNew()) 
+    // if command received, get it
+    if (pFigureChannel->hasNew()) 
     {
-        value = std::stof(pHSChannel->getMessage());
-        LOG4CXX_DEBUG(logger, "ArtisticServer: get HS > " << std::to_string(value));
+        value = pFigureChannel->getMessage();
+        LOG4CXX_DEBUG(logger, "ArtisticServer: get figure > " << value);
         return true;
     }
     else
         return false;
 }
 
-bool ArtisticServer::getVS(float& value)
+bool ArtisticServer::getFrequency(float& value)
 {    
-    // if vs command received, get it
-    if (pVSChannel->hasNew())
+    // if command received, get it
+    if (pFrequencyChannel->hasNew())
     {
-        value = std::stof(pVSChannel->getMessage());
-        LOG4CXX_DEBUG(logger, "ArtisticServer: get VS > " << std::to_string(value));
+        value = std::stof(pFrequencyChannel->getMessage());
+        LOG4CXX_DEBUG(logger, "ArtisticServer: get freq > " << std::to_string(value));
         return true;
     }
     else
         return false;
 }
 
-bool ArtisticServer::getELB(float& value)
+bool ArtisticServer::getSize(float& value)
 {    
-    // if elbow command received, get it
-    if (pELBChannel->hasNew())
+    // if command received, get it
+    if (pSizeChannel->hasNew())
     {
-        value = std::stof(pELBChannel->getMessage());
-        LOG4CXX_DEBUG(logger, "ArtisticServer: get ELB > " << std::to_string(value));
+        value = std::stof(pSizeChannel->getMessage());
+        LOG4CXX_DEBUG(logger, "ArtisticServer: get size > " << std::to_string(value));
         return true;
     }
     else
         return false;
 }
 
-bool ArtisticServer::getHWRI(float& value)
+bool ArtisticServer::getOrientation(float& value)
 {    
-    // if h wrist command received, get it
-    if (pHWRIChannel->hasNew())
+    // if command received, get it
+    if (pOrientationChannel->hasNew())
     {
-        value = std::stof(pHWRIChannel->getMessage());
-        LOG4CXX_DEBUG(logger, "ArtisticServer: get HWRI > " << std::to_string(value));
+        value = std::stof(pOrientationChannel->getMessage());
+        LOG4CXX_DEBUG(logger, "ArtisticServer: get orientation > " << std::to_string(value));
         return true;
     }
     else
         return false;
 }
 
-bool ArtisticServer::getVWRI(float& value)
+bool ArtisticServer::getRelativeFactor(float& value)
 {    
-    // if v wrist command received, get it
-    if (pVWRIChannel->hasNew())
+    // if command received, get it
+    if (pRelFactorChannel->hasNew())
     {
-        value = std::stof(pVWRIChannel->getMessage());
-        LOG4CXX_DEBUG(logger, "ArtisticServer: get VWRI > " << std::to_string(value));
+        value = std::stof(pRelFactorChannel->getMessage());
+        LOG4CXX_DEBUG(logger, "ArtisticServer: get relative factor > " << std::to_string(value));
+        return true;
+    }
+    else
+        return false;
+}
+
+bool ArtisticServer::getHalt()
+{    
+    // if command received, get it
+    if (pHaltChannel->hasNew())
+    {
+        pHaltChannel->clear();
+        LOG4CXX_DEBUG(logger, "ArtisticServer: halt received > ");
         return true;
     }
     else

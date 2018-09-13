@@ -36,12 +36,8 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/src/roly/bodycoms/BodyComs.o \
-	${OBJECTDIR}/src/roly/bodycoms/BodyConnector.o \
 	${OBJECTDIR}/src/roly/bodycoms/modules/BodyAware.o \
-	${OBJECTDIR}/src/roly/bodycoms/modules/BodyServer.o \
-	${OBJECTDIR}/src/roly/bodycoms/server/ArtisticChannelServer.o \
-	${OBJECTDIR}/src/roly/bodycoms/server/ExpressiveChannelServer.o \
-	${OBJECTDIR}/src/roly/bodycoms/server/ExtraChannelServer.o
+	${OBJECTDIR}/src/roly/bodycoms/modules/BodyServer2.o
 
 
 # C Compiler Flags
@@ -73,35 +69,15 @@ ${OBJECTDIR}/src/roly/bodycoms/BodyComs.o: src/roly/bodycoms/BodyComs.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycoms/BodyComs.o src/roly/bodycoms/BodyComs.cpp
 
-${OBJECTDIR}/src/roly/bodycoms/BodyConnector.o: src/roly/bodycoms/BodyConnector.cpp 
-	${MKDIR} -p ${OBJECTDIR}/src/roly/bodycoms
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycoms/BodyConnector.o src/roly/bodycoms/BodyConnector.cpp
-
 ${OBJECTDIR}/src/roly/bodycoms/modules/BodyAware.o: src/roly/bodycoms/modules/BodyAware.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/roly/bodycoms/modules
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycoms/modules/BodyAware.o src/roly/bodycoms/modules/BodyAware.cpp
 
-${OBJECTDIR}/src/roly/bodycoms/modules/BodyServer.o: src/roly/bodycoms/modules/BodyServer.cpp 
+${OBJECTDIR}/src/roly/bodycoms/modules/BodyServer2.o: src/roly/bodycoms/modules/BodyServer2.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/roly/bodycoms/modules
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycoms/modules/BodyServer.o src/roly/bodycoms/modules/BodyServer.cpp
-
-${OBJECTDIR}/src/roly/bodycoms/server/ArtisticChannelServer.o: src/roly/bodycoms/server/ArtisticChannelServer.cpp 
-	${MKDIR} -p ${OBJECTDIR}/src/roly/bodycoms/server
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycoms/server/ArtisticChannelServer.o src/roly/bodycoms/server/ArtisticChannelServer.cpp
-
-${OBJECTDIR}/src/roly/bodycoms/server/ExpressiveChannelServer.o: src/roly/bodycoms/server/ExpressiveChannelServer.cpp 
-	${MKDIR} -p ${OBJECTDIR}/src/roly/bodycoms/server
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycoms/server/ExpressiveChannelServer.o src/roly/bodycoms/server/ExpressiveChannelServer.cpp
-
-${OBJECTDIR}/src/roly/bodycoms/server/ExtraChannelServer.o: src/roly/bodycoms/server/ExtraChannelServer.cpp 
-	${MKDIR} -p ${OBJECTDIR}/src/roly/bodycoms/server
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycoms/server/ExtraChannelServer.o src/roly/bodycoms/server/ExtraChannelServer.cpp
+	$(COMPILE.cc) -O2 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycoms/modules/BodyServer2.o src/roly/bodycoms/modules/BodyServer2.cpp
 
 # Subprojects
 .build-subprojects:

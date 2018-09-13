@@ -14,7 +14,7 @@ ArtisticBus::ArtisticBus ()
 
 std::string ArtisticBus::toString()
 {
-    std::string text = "ArtisticBus:[ CO_ARTISTIC_FIGURE: " + std::to_string(CO_ARTISTIC_FIGURE.getRequested()) + " - " + std::to_string(CO_ARTISTIC_FIGURE.getValue()) + "\n" +
+    std::string text = "ArtisticBus:[ CO_ARTISTIC_FIGURE: " + std::to_string(CO_ARTISTIC_FIGURE.getRequested()) + " - " + CO_ARTISTIC_FIGURE.getValue() + "\n" +
          "CO_ARTISTIC_FREQ: " + std::to_string(CO_ARTISTIC_FREQ.getRequested()) + " - " + std::to_string(CO_ARTISTIC_FREQ.getValue()) + "\n" +
          "CO_ARTISTIC_SIZE: " + std::to_string(CO_ARTISTIC_SIZE.getRequested()) + " - " + std::to_string(CO_ARTISTIC_SIZE.getValue()) + "\n" +
          "CO_ARTISTIC_ORIENTATION: " + std::to_string(CO_ARTISTIC_ORIENTATION.getRequested()) + " - " + std::to_string(CO_ARTISTIC_ORIENTATION.getValue()) + "\n" +

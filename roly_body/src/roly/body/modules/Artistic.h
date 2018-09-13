@@ -11,6 +11,7 @@
 
 #include "roly/bodycore/ArtisticBus.h"
 #include "roly/body/modules/BodyModule.h"
+#include "tron2/language/objects/FiguresTheme.h"
 #include "tron2/moves/CyclicMovement.h"
 #include "tron2/moves/MoveFactory.h"
 #include "tron/math/CyclicComponent.h"
@@ -40,11 +41,12 @@ private:
     // bus        
     ArtisticBus* pArtisticBus;  // bus connection for this module
     // logic
-    amy::CyclerClient oArmCyclerClient;     // client for control of arm cycler section (main or secondary)
+    std::string figure;         // requested figure (name) for cycler
     bool bcontinuous;       // continuous or simple mode
+    tron2::FiguresTheme oFiguresTheme; // language theme for figures
     tron2::MoveFactory oMoveFactory; // utility class for movements creation
     tron2::CyclicMovement oCyclicMovement;
-    int figure;         // requested figure for cycler
+    amy::CyclerClient oArmCyclerClient;     // client for control of arm cycler section (main or secondary)
 
 public:
         Artistic();
@@ -73,7 +75,7 @@ private:
         // changes a cyclic movement        
         void updateMove();
         
-        int translateFigure2Movement(int value);
+        int translateFigure2Movement(std::string figure);
         
         // updates cyclic component of cycler (main or secondary)
         void updateCyclerComponent(bool bmain, tron::CyclicComponent& oCyclicComponent);

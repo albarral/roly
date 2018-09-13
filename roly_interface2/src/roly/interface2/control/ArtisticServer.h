@@ -6,6 +6,7 @@
  *   albarral@migtron.com   *
  ***************************************************************************/
 
+#include <string>
 #include <log4cxx/logger.h>
 
 #include "tron/coms/ComsReceiver.h"
@@ -20,26 +21,29 @@ class ArtisticServer
 private:
     static log4cxx::LoggerPtr logger;
     tron::ComsReceiver oComsReceiver;  // communications object     
-    tron::ChannelReader* pHSChannel;    // channel reader for HS joint
-    tron::ChannelReader* pVSChannel;    // channel reader for VS joint
-    tron::ChannelReader* pELBChannel;   // channel reader for ELB joint
-    tron::ChannelReader* pHWRIChannel;  // channel reader for HWRI joint
-    tron::ChannelReader* pVWRIChannel;  // channel reader for VWRI joint
+    tron::ChannelReader* pFigureChannel;    // channel reader for artistic figure
+    tron::ChannelReader* pFrequencyChannel;    // channel reader for cyclic frequency
+    tron::ChannelReader* pSizeChannel;   // channel reader for figure size
+    tron::ChannelReader* pOrientationChannel;  // channel reader for figure orientation
+    tron::ChannelReader* pRelFactorChannel;  // channel reader for figure relative factor
+    tron::ChannelReader* pHaltChannel;  // channel reader for movement halt
 
 public:
     ArtisticServer();
     //~ArtisticServer();
 
-    // get HS joint position received command (degrees)
-    bool getHS(float& value);
-    // get VS joint position received command (degrees)
-    bool getVS(float& value);
-    // get ELB joint position received command (degrees)
-    bool getELB(float& value);
-    // get HWRI joint position received command (degrees)
-    bool getHWRI(float& value);
-    // get VWRI joint position received command (degrees)
-    bool getVWRI(float& value);    
+    // get artistic figure received command (figure name)
+    bool getFigure(std::string& value);
+    // get cyclic frequency received command (Hz)
+    bool getFrequency(float& value);
+    // get figure size received command (degrees)
+    bool getSize(float& value);
+    // get figure orientation received command (degrees)
+    bool getOrientation(float& value);
+    // get figure relative factor received command
+    bool getRelativeFactor(float& value);    
+    // get movement halt received command 
+    bool getHalt();    
 };
 
 }

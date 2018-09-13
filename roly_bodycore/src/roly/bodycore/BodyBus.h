@@ -38,10 +38,11 @@ class BodyBus
         tron::Control2 CO_EXPRESSIVE_ACTION;   // action to express 
         tron::Control CO_EXPRESSIVE_HALT;                // halt any ongoing action expression        
         
-        // ArmSense module
+        // ArmComfort module
         tron::ControlT<cv::Vec3f> CO_RELAX_POSTURE;  // relax posture (pan, tilt, radial)
         tron::Control2 CO_RELAX_TILT;                 // relax position for pan axis
         tron::Control2 CO_RELAX_PAN;                 // relax position for pan axis
+        // ArmSense module
         tron::Sensor SO_ARM_MOVING;                // arm moving state (boolean)
         tron::Sensor SO_ARM_COMFORT;             // arm comfort state (boolean)
         tron::Sensor3 SO_ARM_TIRED;                 // arm tired time (secs)

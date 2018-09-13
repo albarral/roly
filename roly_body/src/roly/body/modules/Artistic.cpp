@@ -9,7 +9,6 @@
 #include "roly/bodycore/config/ArtisticConfig.h"
 #include "roly/bodycore/config/BodyConfig.h"
 #include "tron2/moves/CyclicMovement.h"
-#include "tron2/language/objects/FiguresTheme.h"
 
 using namespace log4cxx;
 
@@ -146,14 +145,11 @@ void Artistic::senseBus()
     // check figure requests
     if (pArtisticBus->getCO_ARTISTIC_FIGURE().checkRequested())
     {
-        value = pArtisticBus->getCO_ARTISTIC_FIGURE().getValue();
-        if (value >= 0)
-        {
+        figure = pArtisticBus->getCO_ARTISTIC_FIGURE().getValue();
+        if (!figure.empty())
             bnewMove = true;
-            figure = value;
-        }
         else
-            LOG4CXX_WARN(logger, modName << " invalid figure requested " + std::to_string(value));                     
+            LOG4CXX_WARN(logger, modName << " no figure requested");                     
     }
         
     // check freq requests
@@ -164,7 +160,7 @@ void Artistic::senseBus()
         {
             bmoveChanged = true;
             oMoveFactory.setFreq(value);
-            if (figure != -1)
+            if (!figure.empty())
                 oCyclicMovement.updateFreq(value);
         }
         else
@@ -179,7 +175,7 @@ void Artistic::senseBus()
         {
             bmoveChanged = true;
             oMoveFactory.setSize(value);
-            if (figure != -1)
+            if (!figure.empty())
                 oCyclicMovement.updateAmplitude(value);
         }
         else
@@ -193,7 +189,7 @@ void Artistic::senseBus()
         // all orientations are valid
         bmoveChanged = true;
         oMoveFactory.setAngle(value);
-        if (figure != -1)
+        if (!figure.empty())
             oCyclicMovement.updateAngle(value);
     }
 
@@ -205,7 +201,7 @@ void Artistic::senseBus()
         {
             bmoveChanged = true;
             oMoveFactory.setRelativeFactor(value);
-            if (figure != -1)
+            if (!figure.empty())
                 oCyclicMovement.updateRelFactor(value); 
         }
         else
@@ -307,33 +303,45 @@ void Artistic::stopCyclerComponent(bool bmain)
 }
 
 // convert a generic figure code (from tron2 language) to a corresponding movement code (from tron2 moves)
-int Artistic::translateFigure2Movement(int value)
-{
+int Artistic::translateFigure2Movement(std::string figure)
+{    
     int movement = -1;
-    switch (value)
+    
+    int figureCode;
+    // get the code for that figure name
+    if (oFiguresTheme.getCode4Name(figure, figureCode))
     {
-        case tron2::FiguresTheme::eFIGURE_CIRCLE:                 
-            movement = tron2::MoveFactory::eMOVEMENT_CIRCLE;
-            break;
-        case tron2::FiguresTheme::eFIGURE_ELLIPSE:                       
-            movement = tron2::MoveFactory::eMOVEMENT_ELLIPSE;
-            break;
-        case tron2::FiguresTheme::eFIGURE_SQUARE:                       
-            movement = tron2::MoveFactory::eMOVEMENT_SQUARE;
-            break;
-        case tron2::FiguresTheme::eFIGURE_RECTANGLE:                    
-            movement = tron2::MoveFactory::eMOVEMENT_RECTANGLE;
-            break;
-        case tron2::FiguresTheme::eFIGURE_TRIANGLE:                    
-            movement = tron2::MoveFactory::eMOVEMENT_TRIANGLE;
-            break;
-        case tron2::FiguresTheme::eFIGURE_LINE:                    
-            movement = tron2::MoveFactory::eMOVEMENT_LINE;
-            break;
-        case tron2::FiguresTheme::eFIGURE_WAVE:
-            movement = tron2::MoveFactory::eMOVEMENT_WAVE;
-            break;
+        // if known translate to movement factory
+        switch (figureCode) 
+        {
+            case tron2::FiguresTheme::eFIGURE_CIRCLE:
+                movement = tron2::MoveFactory::eMOVEMENT_CIRCLE;
+                break;
+            case tron2::FiguresTheme::eFIGURE_ELLIPSE:
+                movement = tron2::MoveFactory::eMOVEMENT_ELLIPSE;
+                break;
+            case tron2::FiguresTheme::eFIGURE_SQUARE:
+                movement = tron2::MoveFactory::eMOVEMENT_SQUARE;
+                break;
+            case tron2::FiguresTheme::eFIGURE_RECTANGLE:
+                movement = tron2::MoveFactory::eMOVEMENT_RECTANGLE;
+                break;
+            case tron2::FiguresTheme::eFIGURE_TRIANGLE:
+                movement = tron2::MoveFactory::eMOVEMENT_TRIANGLE;
+                break;
+            case tron2::FiguresTheme::eFIGURE_LINE:
+                movement = tron2::MoveFactory::eMOVEMENT_LINE;
+                break;
+            case tron2::FiguresTheme::eFIGURE_WAVE:
+                movement = tron2::MoveFactory::eMOVEMENT_WAVE;
+                break;                
+            default:
+                LOG4CXX_WARN(logger, modName << " figure not available in movements factory: " << figure);                     
+        }
     }
+    else                  
+        LOG4CXX_WARN(logger, modName << " figure unknown: " << figure);                     
+    
     return movement;
 }
 

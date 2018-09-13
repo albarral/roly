@@ -36,12 +36,8 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/src/roly/bodycoms/BodyComs.o \
-	${OBJECTDIR}/src/roly/bodycoms/BodyConnector.o \
 	${OBJECTDIR}/src/roly/bodycoms/modules/BodyAware.o \
-	${OBJECTDIR}/src/roly/bodycoms/modules/BodyServer.o \
-	${OBJECTDIR}/src/roly/bodycoms/server/ArtisticChannelServer.o \
-	${OBJECTDIR}/src/roly/bodycoms/server/ExpressiveChannelServer.o \
-	${OBJECTDIR}/src/roly/bodycoms/server/ExtraChannelServer.o
+	${OBJECTDIR}/src/roly/bodycoms/modules/BodyServer2.o
 
 
 # C Compiler Flags
@@ -58,7 +54,7 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=-Wl,-rpath,../roly_bodycore/dist/Debug/GNU-Linux -L../roly_bodycore/dist/Debug/GNU-Linux -lroly_bodycore -Wl,-rpath,../roly_interface/dist/Debug/GNU-Linux -L../roly_interface/dist/Debug/GNU-Linux -lroly_interface -Wl,-rpath,../../tron/tron_control/dist/Debug/GNU-Linux -L../../tron/tron_control/dist/Debug/GNU-Linux -ltron_control -Wl,-rpath,../../tron/tron_util/dist/Debug/GNU-Linux -L../../tron/tron_util/dist/Debug/GNU-Linux -ltron_util -Wl,-rpath,../../amy/amy_interface2/dist/Debug/GNU-Linux -L../../amy/amy_interface2/dist/Debug/GNU-Linux -lamy_interface2
+LDLIBSOPTIONS=-Wl,-rpath,../roly_bodycore/dist/Debug/GNU-Linux -L../roly_bodycore/dist/Debug/GNU-Linux -lroly_bodycore -Wl,-rpath,../roly_interface2/dist/Debug/GNU-Linux -L../roly_interface2/dist/Debug/GNU-Linux -lroly_interface2 -Wl,-rpath,../../amy/amy_interface2/dist/Debug/GNU-Linux -L../../amy/amy_interface2/dist/Debug/GNU-Linux -lamy_interface2 -Wl,-rpath,../../tron/tron_control/dist/Debug/GNU-Linux -L../../tron/tron_control/dist/Debug/GNU-Linux -ltron_control -Wl,-rpath,../../tron/tron_util/dist/Debug/GNU-Linux -L../../tron/tron_util/dist/Debug/GNU-Linux -ltron_util -Wl,-rpath,../../tron/tron_interface/dist/Debug/GNU-Linux -L../../tron/tron_interface/dist/Debug/GNU-Linux -ltron_interface
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
@@ -66,13 +62,15 @@ LDLIBSOPTIONS=-Wl,-rpath,../roly_bodycore/dist/Debug/GNU-Linux -L../roly_bodycor
 
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libroly_bodycoms.${CND_DLIB_EXT}: ../roly_bodycore/dist/Debug/GNU-Linux/libroly_bodycore.so
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libroly_bodycoms.${CND_DLIB_EXT}: ../roly_interface/dist/Debug/GNU-Linux/libroly_interface.so
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libroly_bodycoms.${CND_DLIB_EXT}: ../roly_interface2/dist/Debug/GNU-Linux/libroly_interface2.so
+
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libroly_bodycoms.${CND_DLIB_EXT}: ../../amy/amy_interface2/dist/Debug/GNU-Linux/libamy_interface2.so
 
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libroly_bodycoms.${CND_DLIB_EXT}: ../../tron/tron_control/dist/Debug/GNU-Linux/libtron_control.so
 
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libroly_bodycoms.${CND_DLIB_EXT}: ../../tron/tron_util/dist/Debug/GNU-Linux/libtron_util.so
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libroly_bodycoms.${CND_DLIB_EXT}: ../../amy/amy_interface2/dist/Debug/GNU-Linux/libamy_interface2.so
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libroly_bodycoms.${CND_DLIB_EXT}: ../../tron/tron_interface/dist/Debug/GNU-Linux/libtron_interface.so
 
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libroly_bodycoms.${CND_DLIB_EXT}: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
@@ -81,45 +79,26 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libroly_bodycoms.${CND_DLIB_EXT}: ${O
 ${OBJECTDIR}/src/roly/bodycoms/BodyComs.o: src/roly/bodycoms/BodyComs.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/roly/bodycoms
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Isrc -I../roly_bodycore/src -I../roly_interface/src -I../../amy/amy_interface2/src -I../../tron/tron_control/src -I../../tron/tron_coms/src -I../../tron/tron_topics/src -I../../tron/tron_util/src -I/usr/include/ignition/transport3 -I/usr/include/ignition/msgs0 -I/usr/include/ignition/math2 -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycoms/BodyComs.o src/roly/bodycoms/BodyComs.cpp
-
-${OBJECTDIR}/src/roly/bodycoms/BodyConnector.o: src/roly/bodycoms/BodyConnector.cpp 
-	${MKDIR} -p ${OBJECTDIR}/src/roly/bodycoms
-	${RM} "$@.d"
-	$(COMPILE.cc) -g -Isrc -I../roly_bodycore/src -I../roly_interface/src -I../../amy/amy_interface2/src -I../../tron/tron_control/src -I../../tron/tron_coms/src -I../../tron/tron_topics/src -I../../tron/tron_util/src -I/usr/include/ignition/transport3 -I/usr/include/ignition/msgs0 -I/usr/include/ignition/math2 -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycoms/BodyConnector.o src/roly/bodycoms/BodyConnector.cpp
+	$(COMPILE.cc) -g -Isrc -I../roly_bodycore/src -I../roly_interface2/src -I../../amy/amy_interface2/src -I../../tron/tron_control/src -I../../tron/tron_coms/src -I../../tron/tron_topics/src -I../../tron/tron_util/src -I../../tron/tron_interface/src -I/usr/include/ignition/transport3 -I/usr/include/ignition/msgs0 -I/usr/include/ignition/math2 -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycoms/BodyComs.o src/roly/bodycoms/BodyComs.cpp
 
 ${OBJECTDIR}/src/roly/bodycoms/modules/BodyAware.o: src/roly/bodycoms/modules/BodyAware.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/roly/bodycoms/modules
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Isrc -I../roly_bodycore/src -I../roly_interface/src -I../../amy/amy_interface2/src -I../../tron/tron_control/src -I../../tron/tron_coms/src -I../../tron/tron_topics/src -I../../tron/tron_util/src -I/usr/include/ignition/transport3 -I/usr/include/ignition/msgs0 -I/usr/include/ignition/math2 -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycoms/modules/BodyAware.o src/roly/bodycoms/modules/BodyAware.cpp
+	$(COMPILE.cc) -g -Isrc -I../roly_bodycore/src -I../roly_interface2/src -I../../amy/amy_interface2/src -I../../tron/tron_control/src -I../../tron/tron_coms/src -I../../tron/tron_topics/src -I../../tron/tron_util/src -I../../tron/tron_interface/src -I/usr/include/ignition/transport3 -I/usr/include/ignition/msgs0 -I/usr/include/ignition/math2 -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycoms/modules/BodyAware.o src/roly/bodycoms/modules/BodyAware.cpp
 
-${OBJECTDIR}/src/roly/bodycoms/modules/BodyServer.o: src/roly/bodycoms/modules/BodyServer.cpp 
+${OBJECTDIR}/src/roly/bodycoms/modules/BodyServer2.o: src/roly/bodycoms/modules/BodyServer2.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/roly/bodycoms/modules
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Isrc -I../roly_bodycore/src -I../roly_interface/src -I../../amy/amy_interface2/src -I../../tron/tron_control/src -I../../tron/tron_coms/src -I../../tron/tron_topics/src -I../../tron/tron_util/src -I/usr/include/ignition/transport3 -I/usr/include/ignition/msgs0 -I/usr/include/ignition/math2 -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycoms/modules/BodyServer.o src/roly/bodycoms/modules/BodyServer.cpp
-
-${OBJECTDIR}/src/roly/bodycoms/server/ArtisticChannelServer.o: src/roly/bodycoms/server/ArtisticChannelServer.cpp 
-	${MKDIR} -p ${OBJECTDIR}/src/roly/bodycoms/server
-	${RM} "$@.d"
-	$(COMPILE.cc) -g -Isrc -I../roly_bodycore/src -I../roly_interface/src -I../../amy/amy_interface2/src -I../../tron/tron_control/src -I../../tron/tron_coms/src -I../../tron/tron_topics/src -I../../tron/tron_util/src -I/usr/include/ignition/transport3 -I/usr/include/ignition/msgs0 -I/usr/include/ignition/math2 -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycoms/server/ArtisticChannelServer.o src/roly/bodycoms/server/ArtisticChannelServer.cpp
-
-${OBJECTDIR}/src/roly/bodycoms/server/ExpressiveChannelServer.o: src/roly/bodycoms/server/ExpressiveChannelServer.cpp 
-	${MKDIR} -p ${OBJECTDIR}/src/roly/bodycoms/server
-	${RM} "$@.d"
-	$(COMPILE.cc) -g -Isrc -I../roly_bodycore/src -I../roly_interface/src -I../../amy/amy_interface2/src -I../../tron/tron_control/src -I../../tron/tron_coms/src -I../../tron/tron_topics/src -I../../tron/tron_util/src -I/usr/include/ignition/transport3 -I/usr/include/ignition/msgs0 -I/usr/include/ignition/math2 -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycoms/server/ExpressiveChannelServer.o src/roly/bodycoms/server/ExpressiveChannelServer.cpp
-
-${OBJECTDIR}/src/roly/bodycoms/server/ExtraChannelServer.o: src/roly/bodycoms/server/ExtraChannelServer.cpp 
-	${MKDIR} -p ${OBJECTDIR}/src/roly/bodycoms/server
-	${RM} "$@.d"
-	$(COMPILE.cc) -g -Isrc -I../roly_bodycore/src -I../roly_interface/src -I../../amy/amy_interface2/src -I../../tron/tron_control/src -I../../tron/tron_coms/src -I../../tron/tron_topics/src -I../../tron/tron_util/src -I/usr/include/ignition/transport3 -I/usr/include/ignition/msgs0 -I/usr/include/ignition/math2 -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycoms/server/ExtraChannelServer.o src/roly/bodycoms/server/ExtraChannelServer.cpp
+	$(COMPILE.cc) -g -Isrc -I../roly_bodycore/src -I../roly_interface2/src -I../../amy/amy_interface2/src -I../../tron/tron_control/src -I../../tron/tron_coms/src -I../../tron/tron_topics/src -I../../tron/tron_util/src -I../../tron/tron_interface/src -I/usr/include/ignition/transport3 -I/usr/include/ignition/msgs0 -I/usr/include/ignition/math2 -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycoms/modules/BodyServer2.o src/roly/bodycoms/modules/BodyServer2.cpp
 
 # Subprojects
 .build-subprojects:
 	cd ../roly_bodycore && ${MAKE}  -f Makefile CONF=Debug
-	cd ../roly_interface && ${MAKE}  -f Makefile CONF=Debug
+	cd ../roly_interface2 && ${MAKE}  -f Makefile CONF=Debug
+	cd ../../amy/amy_interface2 && ${MAKE}  -f Makefile CONF=Debug
 	cd ../../tron/tron_control && ${MAKE}  -f Makefile CONF=Debug
 	cd ../../tron/tron_util && ${MAKE}  -f Makefile CONF=Debug
-	cd ../../amy/amy_interface2 && ${MAKE}  -f Makefile CONF=Debug
+	cd ../../tron/tron_interface && ${MAKE}  -f Makefile CONF=Debug
 
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
@@ -129,10 +108,11 @@ ${OBJECTDIR}/src/roly/bodycoms/server/ExtraChannelServer.o: src/roly/bodycoms/se
 # Subprojects
 .clean-subprojects:
 	cd ../roly_bodycore && ${MAKE}  -f Makefile CONF=Debug clean
-	cd ../roly_interface && ${MAKE}  -f Makefile CONF=Debug clean
+	cd ../roly_interface2 && ${MAKE}  -f Makefile CONF=Debug clean
+	cd ../../amy/amy_interface2 && ${MAKE}  -f Makefile CONF=Debug clean
 	cd ../../tron/tron_control && ${MAKE}  -f Makefile CONF=Debug clean
 	cd ../../tron/tron_util && ${MAKE}  -f Makefile CONF=Debug clean
-	cd ../../amy/amy_interface2 && ${MAKE}  -f Makefile CONF=Debug clean
+	cd ../../tron/tron_interface && ${MAKE}  -f Makefile CONF=Debug clean
 
 # Enable dependency checking
 .dep.inc: .depcheck-impl

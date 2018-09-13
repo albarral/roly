@@ -31,10 +31,10 @@ BodyComs::~BodyComs()
     if (oBodyAware.isEnabled())
         oBodyAware.on();
     
-    oBodyServer.init(oBodyBus);
-    oBodyServer.setFrequency(freq);
-    if (oBodyServer.isEnabled())
-        oBodyServer.on();
+    oBodyServer2.init(oBodyBus);
+    oBodyServer2.setFrequency(freq);
+    if (oBodyServer2.isEnabled())
+        oBodyServer2.on();
 
     return true;
 }
@@ -51,16 +51,16 @@ bool BodyComs::end()
         oBodyAware.wait();      
     }
 
-    if (oBodyServer.isOn())
+    if (oBodyServer2.isOn())
     {
-        oBodyServer.off();
-        oBodyServer.wait();      
+        oBodyServer2.off();
+        oBodyServer2.wait();      
     }
 }
 
 bool BodyComs::checkEndRequested()
 {
-    return oBodyServer.getBodyEndRequested();    
+    return oBodyServer2.getBodyEndRequested();    
 }
 
 }		

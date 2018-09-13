@@ -11,7 +11,7 @@
 namespace roly
 {    
 
-BodyNode2::BodyNode2() : tron::Node(tron::RobotNodes::eNODE_ARM)
+BodyNode2::BodyNode2() : tron::Node(tron::RobotNodes::eNODE_BODYROLE)
 {
     oSectionsMap.addCode(eSECTION_EXPRESSIVE, SECTION_EXPRESSIVE);
     oSectionsMap.addCode(eSECTION_ARTISTIC1, SECTION_ARTISTIC1);
@@ -52,6 +52,6 @@ void BodyNode2::setArtisticSection(int section)
 
 std::string BodyNode2::toString()
 {
-    return "ArmNode\n" + tron::Node::toString();
+    return "BodyNode\n" + tron::Node::toString();
 }
 }

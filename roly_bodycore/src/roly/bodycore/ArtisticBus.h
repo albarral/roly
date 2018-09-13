@@ -11,6 +11,7 @@
 #include "tron/control/brooks/control.h"
 #include "tron/control/brooks/control2.h"
 #include "tron/control/brooks/control3.h"
+#include "tron/control/brooks/ControlS.h"
 #include "tron/control/brooks/inhibition.h"
 
 namespace roly
@@ -23,7 +24,7 @@ class ArtisticBus
         tron::Inhibition CO_INHIBIT_ARTISTIC;       // inhibit artistic module
         
         // CONTROLS                
-        tron::Control2 CO_ARTISTIC_FIGURE;       // id of artistic figure to implement
+        tron::ControlS CO_ARTISTIC_FIGURE;       // name of artistic figure (from tron2_language FiguresTheme)
         tron::Control3 CO_ARTISTIC_FREQ;       // frequency of cyclic figure (Hz) 
         tron::Control3 CO_ARTISTIC_SIZE;        // size of cyclic figure (degrees)
         tron::Control3 CO_ARTISTIC_ORIENTATION;  // orientation of cyclic figure (degrees)
@@ -38,7 +39,7 @@ class ArtisticBus
         tron::Inhibition& getCO_INHIBIT_ARTISTIC() {return CO_INHIBIT_ARTISTIC;};
 
         // CONTROLS        
-        tron::Control2& getCO_ARTISTIC_FIGURE() {return CO_ARTISTIC_FIGURE;};
+        tron::ControlS& getCO_ARTISTIC_FIGURE() {return CO_ARTISTIC_FIGURE;};
         tron::Control3& getCO_ARTISTIC_FREQ() {return CO_ARTISTIC_FREQ;};
         tron::Control3& getCO_ARTISTIC_SIZE() {return CO_ARTISTIC_SIZE;};
         tron::Control3& getCO_ARTISTIC_ORIENTATION() {return CO_ARTISTIC_ORIENTATION;};

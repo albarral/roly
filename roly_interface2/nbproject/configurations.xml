@@ -16,8 +16,6 @@
         <logicalFolder name="control" displayName="control" projectFiles="true">
           <itemPath>src/roly/interface2/control/ArtisticServer.cpp</itemPath>
           <itemPath>src/roly/interface2/control/ArtisticServer.h</itemPath>
-          <itemPath>src/roly/interface2/control/ExpressiveServer.cpp</itemPath>
-          <itemPath>src/roly/interface2/control/ExpressiveServer.h</itemPath>
         </logicalFolder>
         <itemPath>src/roly/interface2/BodyNode.cpp</itemPath>
         <itemPath>src/roly/interface2/BodyNode.h</itemPath>
@@ -54,6 +52,9 @@
             <pElem>../../tron/tron_coms/src</pElem>
             <pElem>../../tron/tron_topics/src</pElem>
             <pElem>../../tron/tron_util/src</pElem>
+            <pElem>/usr/include/ignition/transport3</pElem>
+            <pElem>/usr/include/ignition/msgs0</pElem>
+            <pElem>/usr/include/ignition/math2</pElem>
           </incDir>
         </ccTool>
         <linkerTool>
@@ -111,16 +112,6 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="src/roly/interface2/control/ExpressiveServer.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/roly/interface2/control/ExpressiveServer.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
     </conf>
     <conf name="Release" type="2">
       <toolsSet>
@@ -152,16 +143,6 @@
             flavor2="0">
       </item>
       <item path="src/roly/interface2/control/ArtisticServer.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/roly/interface2/control/ExpressiveServer.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/roly/interface2/control/ExpressiveServer.h"
             ex="false"
             tool="3"
             flavor2="0">
