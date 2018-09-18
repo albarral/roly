@@ -47,6 +47,9 @@ private:
     tron2::MoveFactory oMoveFactory; // utility class for movements creation
     tron2::CyclicMovement oCyclicMovement;
     amy::CyclerClient oArmCyclerClient;     // client for control of arm cycler section (main or secondary)
+    bool bchangeRequested;      // flag indicating a movement change was requested (speed, size or length)
+    bool bturnRequested;           // flag indicating a movement turn was requested (angle)  
+    std::string change;             // requested change (name) of movement
 
 public:
         Artistic();
@@ -70,18 +73,24 @@ private:
         
         // triggers a cyclic movement
         void triggerMove();
-        // stop a cyclic movement
+        // stops a cyclic movement
         void stopMove();
-        // changes a cyclic movement        
-        void updateMove();
+        // performs a requested movement change
+        void performChange();
+        // transmit components of cyclic movement        
+        void transmitMovement();
         
         int translateFigure2Movement(std::string figure);
         
-        // updates cyclic component of cycler (main or secondary)
-        void updateCyclerComponent(bool bmain, tron::CyclicComponent& oCyclicComponent);
-        // stop cyclic component of cycler (main or secondary)
-        void stopCyclerComponent(bool bmain);
-
+        // update primary component of arm cycler
+        void updateCyclerPrimary(float freq, float amp, float angle, float phase);
+        // update secondary component of arm cycler
+        void updateCyclerSecondary(float freq, float amp, float angle, float phase);
+        // stop primary component of arm cycler
+        void stopCyclerPrimary();
+        // stop secondary component of arm cycler
+        void stopCyclerSecondary();
+        
         // checks if ordered movement is finished (just for simple mode)
         bool checkMovementFinished();
 };

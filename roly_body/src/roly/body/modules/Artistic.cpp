@@ -70,6 +70,8 @@ void Artistic::first()
     oMoveFactory.setRelativeFreq(oArtisticConfig.getRelativeFreq());
     oMoveFactory.setRotation(oArtisticConfig.getRotation());
     figure = -1;
+    bchangeRequested = false;
+    bturnRequested = false;
     
     // start at WAIT
     setState(eSTATE_IDLE);
@@ -112,9 +114,10 @@ void Artistic::loop()
             }
             break;
 
-        case eSTATE_UPDATE:
-            // updates the cyclic movement            
-            updateMove();
+        case eSTATE_UPDATE:            
+            // update the cyclic movement            
+            performChange();
+            transmitMovement();
             // -> WAIT
             setState(eSTATE_WAIT);
             break;                        
@@ -234,30 +237,38 @@ void Artistic::triggerMove()
     // get movement code for requested figure
     int movement = translateFigure2Movement(figure); 
     
-    // generate cyclic movement 
+    // generate cyclic movemen, skip if invalid
     if (!oMoveFactory.generateMovement(oCyclicMovement, movement))
         return;    
         
-    // set cycler main component
-    updateCyclerComponent(true, oCyclicMovement.getPrimaryComponent());        
-    // if dual, set cycler secondary component
-    if (oCyclicMovement.isDual())
-        updateCyclerComponent(false, oCyclicMovement.getSecondaryComponent());
-    // otherwise clear the secondary component
-    else
-        stopCyclerComponent(false);
+    transmitMovement();
+
+    // if not dual movement, clear any ongoing secondary component
+    if (!oCyclicMovement.isDual())
+        stopCyclerSecondary();
     
     // start movement
     oArmCyclerClient.run(true);
 }
 
-void Artistic::updateMove()
+void Artistic::transmitMovement()
 {        
-    // set cycler 1 main component
-    updateCyclerComponent(true, oCyclicMovement.getPrimaryComponent());        
-    // if dual, set cycler 1 secondary component
+    // set cycler main component
+    tron::CyclicComponent& oCyclicComponent1 = oCyclicMovement.getPrimaryComponent();
+    updateCyclerPrimary(oCyclicComponent1.getFreq(), 
+            oCyclicComponent1.getAmp(),
+            oCyclicComponent1.getAngle(),
+            oCyclicComponent1.getPhase());
+
+    // if dual, set cycler secondary component
     if (oCyclicMovement.isDual())
-        updateCyclerComponent(false, oCyclicMovement.getSecondaryComponent());
+    {
+        tron::CyclicComponent& oCyclicComponent2 = oCyclicMovement.getSecondaryComponent();
+        updateCyclerSecondary(oCyclicComponent2.getFreq(), 
+                oCyclicComponent2.getAmp(),
+                oCyclicComponent2.getAngle(),
+                oCyclicComponent2.getPhase());
+    }
 }
 
 void Artistic::stopMove()
@@ -266,40 +277,36 @@ void Artistic::stopMove()
     oArmCyclerClient.run(false);
 }
 
-void Artistic::updateCyclerComponent(bool bmain, tron::CyclicComponent& oCyclicComponent)
+void Artistic::updateCyclerPrimary(float freq, float amp, float angle, float phase)
 {        
     // cycler main component
-    if (bmain)
-    {
-        oArmCyclerClient.setMainAmplitude(oCyclicComponent.getAmp());
-        oArmCyclerClient.setMainAngle(oCyclicComponent.getAngle());
-        oArmCyclerClient.setMainFreq(oCyclicComponent.getFreq());
-        oArmCyclerClient.setMainPhase(oCyclicComponent.getPhase());            
-    }
-    // cycler secondary component
-    else
-    {
-        oArmCyclerClient.setSecondaryAmplitude(oCyclicComponent.getAmp());
-        oArmCyclerClient.setSecondaryAngle(oCyclicComponent.getAngle());
-        oArmCyclerClient.setSecondaryFreq(oCyclicComponent.getFreq());
-        oArmCyclerClient.setSecondaryPhase(oCyclicComponent.getPhase());            
-    }
+    oArmCyclerClient.setMainFreq(freq);
+    oArmCyclerClient.setMainAmplitude(amp);
+    oArmCyclerClient.setMainAngle(angle);
+    oArmCyclerClient.setMainPhase(phase);            
 }
 
-void Artistic::stopCyclerComponent(bool bmain)
+void Artistic::updateCyclerSecondary(float freq, float amp, float angle, float phase)
+{        
+    // cycler secondary component
+    oArmCyclerClient.setSecondaryFreq(freq);
+    oArmCyclerClient.setSecondaryAmplitude(amp);
+    oArmCyclerClient.setSecondaryAngle(angle);
+    oArmCyclerClient.setSecondaryPhase(phase);            
+}
+
+void Artistic::stopCyclerPrimary()
 {        
     // cycler main component
-    if (bmain)
-    {
-        oArmCyclerClient.setMainAmplitude(0.0);
-        oArmCyclerClient.setMainFreq(0.0);
-    }
+    oArmCyclerClient.setMainAmplitude(0.0);
+    oArmCyclerClient.setMainFreq(0.0);
+}
+
+void Artistic::stopCyclerSecondary()
+{        
     // cycler secondary component
-    else
-    {
-        oArmCyclerClient.setSecondaryAmplitude(0.0);
-        oArmCyclerClient.setSecondaryFreq(0.0);
-    }
+    oArmCyclerClient.setSecondaryAmplitude(0.0);
+    oArmCyclerClient.setSecondaryFreq(0.0);
 }
 
 // convert a generic figure code (from tron2 language) to a corresponding movement code (from tron2 moves)
@@ -343,6 +350,19 @@ int Artistic::translateFigure2Movement(std::string figure)
         LOG4CXX_WARN(logger, modName << " figure unknown: " << figure);                     
     
     return movement;
+}
+
+
+void Artistic::performChange()
+{    
+    if (bchangeRequested) 
+    {
+        // TO DO ...
+    }
+    else if (bturnRequested)
+    {
+        // TO DO ...
+    }
 }
 
 void Artistic::writeBus()
