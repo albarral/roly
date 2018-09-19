@@ -69,40 +69,27 @@ void BodyServer2::loop()
 
 void BodyServer2::checkArtisticSection()
 {
-    std::string svalue;
-    float value;
+    std::string value;
         
     // TEMP: TO DO selection of art1 & art2
     ArtisticBus& oArtisticBus = pBodyBus->getArtisticBus1();
     
-    if (oArtisticServer.getFigure(svalue))
+    if (oArtisticServer.getFigure(value))
     {
-        oArtisticBus.getCO_ARTISTIC_FIGURE().request(svalue);
-        LOG4CXX_INFO(logger, "> set artistic figure " << svalue);                        
+        oArtisticBus.getCO_ARTISTIC_FIGURE().request(value);
+        LOG4CXX_INFO(logger, "> set artistic figure " << value);                        
     }
 
-    if (oArtisticServer.getFrequency(value))
+    if (oArtisticServer.getMovementChange(value))
     {
-        oArtisticBus.getCO_ARTISTIC_FREQ().request(value);
-        LOG4CXX_INFO(logger, "> set artistic freq " << value);                        
+        oArtisticBus.getCO_ARTISTIC_SET().request(value);
+        LOG4CXX_INFO(logger, "> set artistic change " << value);                        
     }
 
-    if (oArtisticServer.getSize(value))
+    if (oArtisticServer.getMovementTurn(value))
     {
-        oArtisticBus.getCO_ARTISTIC_SIZE().request(value);
-        LOG4CXX_INFO(logger, "> set artistic size " << value);                        
-    }
-
-    if (oArtisticServer.getOrientation(value))
-    {
-        oArtisticBus.getCO_ARTISTIC_ORIENTATION().request(value);
-        LOG4CXX_INFO(logger, "> set artistic orientation " << value);                        
-    }
-
-    if (oArtisticServer.getRelativeFactor(value))
-    {
-        oArtisticBus.getCO_ARTISTIC_RELFACTOR().request(value);
-        LOG4CXX_INFO(logger, "> set artistic relative factor " << value);                        
+        oArtisticBus.getCO_ARTISTIC_TURN().request(value);
+        LOG4CXX_INFO(logger, "> set artistic turn " << value);                        
     }
 
     if (oArtisticServer.getHalt())
@@ -112,121 +99,6 @@ void BodyServer2::checkArtisticSection()
     }
 }
 
-//void BodyServer2::checkAxesSection()
-//{
-//    float value;
-//    bool bvalue;
-//    if (oAxesServer.getPan(value))
-//    {
-//        pBodyBus->getPanBus().getCO_AXIS_POS().request(value);
-//        LOG4CXX_INFO(logger, "> set pan " << value);                        
-//    }
-//    
-//    if (oAxesServer.getTilt(value))
-//    {
-//        pBodyBus->getTiltBus().getCO_AXIS_POS().request(value);
-//        LOG4CXX_INFO(logger, "> set tilt " << value);                        
-//    }
-//
-//    if (oAxesServer.getRadial(value))
-//    {
-//        pBodyBus->getRadialBus().getCO_AXIS_POS().request(value);
-//        LOG4CXX_INFO(logger, "> set radius " << value);                        
-//    }
-//
-//    if (oAxesServer.getPanSpeed(value))
-//    {
-//        pBodyBus->getPanBus().getCO_AXIS_SPEED1().request(value);
-//        LOG4CXX_INFO(logger, "> pan speed " << value);                        
-//    }
-//
-//    if (oAxesServer.getTiltSpeed(value))
-//    {
-//       pBodyBus->getTiltBus().getCO_AXIS_SPEED1().request(value);
-//       LOG4CXX_INFO(logger, "> tilt speed " << value);                        
-//    }
-//
-//    if (oAxesServer.getRadialSpeed(value))
-//    {
-//        pBodyBus->getRadialBus().getCO_AXIS_SPEED1().request(value);
-//        LOG4CXX_INFO(logger, "> rad speed " << value);                                
-//    }
-//
-//    if (oAxesServer.getKeepTilt(bvalue))
-//    {
-//        pBodyBus->getCO_KEEP_TILT().request((int)bvalue);
-//        LOG4CXX_INFO(logger, "> keep tilt " << value);                        
-//    }    
-//}
-//
-//void BodyServer2::checkCyclerSection(int i)
-//{
-//    // security check
-//    if (i<1 && i>2) 
-//        return; 
-//        
-//    // select cycler server to use
-//    CyclerServer& oCyclerServer = (i==1) ? oCyclerServer1 : oCyclerServer2;        
-//    CyclerBus& oCyclerBus = (i==1) ? pBodyBus->getCyclerBus1() : pBodyBus->getCyclerBus2(); 
-//    std::string identity = (i==1) ? "> cycler1 " : "> cycler2 ";
-//       
-//    float value;
-//    int ivalue;
-//    if (oCyclerServer.getMainFreq(value))
-//    {
-//        oCyclerBus.getCO_CYCLER_FREQ1().request(value);
-//        LOG4CXX_INFO(logger, identity << "main freq " << value);                        
-//    }
-//    
-//    if (oCyclerServer.getMainAmplitude(value))
-//    {
-//        oCyclerBus.getCO_CYCLER_AMP1().request(value);
-//        LOG4CXX_INFO(logger, identity << "main amplitude " << value);                        
-//    }
-//
-//    if (oCyclerServer.getMainAngle(value))
-//    {
-//        oCyclerBus.getCO_CYCLER_ANGLE1().request(value);
-//        LOG4CXX_INFO(logger, identity << "main angle " << value);                        
-//    }
-//
-//    if (oCyclerServer.getMainPhase(value))
-//    {
-//        oCyclerBus.getCO_CYCLER_PHASE1().request((int)value);
-//        LOG4CXX_INFO(logger, identity << "main phase " << value);                        
-//    }
-//
-//    if (oCyclerServer.getSecondaryFreq(value))
-//    {
-//        oCyclerBus.getCO_CYCLER_FREQ2().request(value);
-//        LOG4CXX_INFO(logger, identity << "secondary freq " << value);                        
-//    }
-//    
-//    if (oCyclerServer.getSecondaryAmplitude(value))
-//    {
-//        oCyclerBus.getCO_CYCLER_AMP2().request(value);
-//        LOG4CXX_INFO(logger, identity << "secondary amplitude " << value);                        
-//    }
-//
-//    if (oCyclerServer.getSecondaryAngle(value))
-//    {
-//        oCyclerBus.getCO_CYCLER_ANGLE2().request(value);
-//        LOG4CXX_INFO(logger, identity << "secondary angle " << value);                        
-//    }
-//
-//    if (oCyclerServer.getSecondaryPhase(value))
-//    {
-//        oCyclerBus.getCO_CYCLER_PHASE2().request((int)value);
-//        LOG4CXX_INFO(logger, identity << "secondary phase " << value);                        
-//    }
-//
-//    if (oCyclerServer.getAction(ivalue))
-//    {
-//        bool bgo = (ivalue != 0); 
-//        oCyclerBus.getCO_CYCLER_ACTION().request(bgo);
-//        LOG4CXX_INFO(logger, identity << " action " << bgo);                        
-//    }
-//}
 
 void BodyServer2::checkExtraSection()
 {

@@ -11,11 +11,18 @@
 
 #include "roly/bodycore/ArtisticBus.h"
 #include "roly/body/modules/BodyModule.h"
-#include "tron2/language/objects/FiguresTheme.h"
+#include "amy/interface2/control/CyclerClient.h"
+#include "tron/math/CyclicComponent.h"
+#include "tron/util/ControlMagnitude.h"
 #include "tron2/moves/CyclicMovement.h"
 #include "tron2/moves/MoveFactory.h"
-#include "tron/math/CyclicComponent.h"
-#include "amy/interface2/control/CyclerClient.h"
+// language themes
+#include "tron2/language/features/DirectionsTheme.h"
+#include "tron2/language/features/LengthTheme.h"
+#include "tron2/language/features/QuantityTheme.h"
+#include "tron2/language/features/SizeTheme.h"
+#include "tron2/language/features/SpeedTheme.h"
+#include "tron2/language/objects/FiguresTheme.h"
 
 namespace roly
 {
@@ -41,15 +48,27 @@ private:
     // bus        
     ArtisticBus* pArtisticBus;  // bus connection for this module
     // logic
-    std::string figure;         // requested figure (name) for cycler
-    bool bcontinuous;       // continuous or simple mode
-    tron2::FiguresTheme oFiguresTheme; // language theme for figures
-    tron2::MoveFactory oMoveFactory; // utility class for movements creation
-    tron2::CyclicMovement oCyclicMovement;
-    amy::CyclerClient oArmCyclerClient;     // client for control of arm cycler section (main or secondary)
+    std::string figure;         // requested movement figure (name)
+    std::string change;        // requested movement change (name)
+    std::string turn;             // requested movement turn (name)
+    bool bfigureRequested;      // flag indicating a new figure was requested (speed, size or length)
     bool bchangeRequested;      // flag indicating a movement change was requested (speed, size or length)
     bool bturnRequested;           // flag indicating a movement turn was requested (angle)  
-    std::string change;             // requested change (name) of movement
+    bool bcontinuous;       // continuous or simple mode
+    amy::CyclerClient oArmCyclerClient;     // client for control of arm cycler section (main or secondary)
+    tron::ControlMagnitude oFrequency;
+    tron::ControlMagnitude oSize;
+    tron::ControlMagnitude oAngle;
+    tron::ControlMagnitude oRelFactor;
+    tron2::MoveFactory oMoveFactory; // utility class for movements creation
+    tron2::CyclicMovement oCyclicMovement;
+    // language themes
+    tron2::DirectionsTheme oDirectionsTheme; // directions
+    tron2::LengthTheme oLengthTheme; // length
+    tron2::QuantityTheme oQuantityTheme; // quantity
+    tron2::SizeTheme oSizeTheme; // size
+    tron2::SpeedTheme oSpeedTheme; // speed
+    tron2::FiguresTheme oFiguresTheme; // figures 
 
 public:
         Artistic();
@@ -93,6 +112,15 @@ private:
         
         // checks if ordered movement is finished (just for simple mode)
         bool checkMovementFinished();
+        
+        // changes speed of present movement
+        bool changeMovementSpeed(int mode);
+        // changes size of present movement
+        bool changeMovementSize(int mode);
+        // changes angle of present movement
+        bool changeMovementOrientation(int mode);
+        // changes relative factor of present movement
+        bool changeMovementFactor(int mode);
 };
 }
 #endif

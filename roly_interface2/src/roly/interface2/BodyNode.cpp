@@ -41,10 +41,8 @@ void BodyNode2::setArtisticSection(int section)
     tron::NodeSection oArtisticSection(section);
     
     oArtisticSection.addChannel(eARTISTIC_FIGURE, ARTISTIC_FIGURE);
-    oArtisticSection.addChannel(eARTISTIC_FREQ, ARTISTIC_FREQ);                         
-    oArtisticSection.addChannel(eARTISTIC_SIZE, ARTISTIC_SIZE);                      
-    oArtisticSection.addChannel(eARTISTIC_ORIENTATION, ARTISTIC_ORIENTATION);                   
-    oArtisticSection.addChannel(eARTISTIC_RELFACTOR, ARTISTIC_RELFACTOR);
+    oArtisticSection.addChannel(eARTISTIC_SET, ARTISTIC_SET);                         
+    oArtisticSection.addChannel(eARTISTIC_TURN, ARTISTIC_TURN);                      
     oArtisticSection.addChannel(eARTISTIC_HALT, ARTISTIC_HALT);                         
     
     listNodeSections.push_back(oArtisticSection);            

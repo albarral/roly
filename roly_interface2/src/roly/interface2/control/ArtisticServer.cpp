@@ -38,10 +38,8 @@ ArtisticServer::ArtisticServer()
     
     // store channel pointers for faster access
     pFigureChannel = oComsReceiver.getChannel(BodyNode2::eARTISTIC_FIGURE);
-    pFrequencyChannel = oComsReceiver.getChannel(BodyNode2::eARTISTIC_FREQ);
-    pSizeChannel = oComsReceiver.getChannel(BodyNode2::eARTISTIC_SIZE);
-    pOrientationChannel = oComsReceiver.getChannel(BodyNode2::eARTISTIC_ORIENTATION);
-    pRelFactorChannel = oComsReceiver.getChannel(BodyNode2::eARTISTIC_RELFACTOR);    
+    pChangesChannel = oComsReceiver.getChannel(BodyNode2::eARTISTIC_SET);
+    pTurnsChannel = oComsReceiver.getChannel(BodyNode2::eARTISTIC_TURN);
     pHaltChannel = oComsReceiver.getChannel(BodyNode2::eARTISTIC_HALT);    
 }
 
@@ -62,52 +60,26 @@ bool ArtisticServer::getFigure(std::string& value)
         return false;
 }
 
-bool ArtisticServer::getFrequency(float& value)
+bool ArtisticServer::getMovementChange(std::string& value)
 {    
     // if command received, get it
-    if (pFrequencyChannel->hasNew())
+    if (pChangesChannel->hasNew())
     {
-        value = std::stof(pFrequencyChannel->getMessage());
-        LOG4CXX_DEBUG(logger, "ArtisticServer: get freq > " << std::to_string(value));
+        value = pChangesChannel->getMessage();
+        LOG4CXX_DEBUG(logger, "ArtisticServer: get change > " << value);
         return true;
     }
     else
         return false;
 }
 
-bool ArtisticServer::getSize(float& value)
+bool ArtisticServer::getMovementTurn(std::string& value)
 {    
     // if command received, get it
-    if (pSizeChannel->hasNew())
+    if (pTurnsChannel->hasNew())
     {
-        value = std::stof(pSizeChannel->getMessage());
-        LOG4CXX_DEBUG(logger, "ArtisticServer: get size > " << std::to_string(value));
-        return true;
-    }
-    else
-        return false;
-}
-
-bool ArtisticServer::getOrientation(float& value)
-{    
-    // if command received, get it
-    if (pOrientationChannel->hasNew())
-    {
-        value = std::stof(pOrientationChannel->getMessage());
-        LOG4CXX_DEBUG(logger, "ArtisticServer: get orientation > " << std::to_string(value));
-        return true;
-    }
-    else
-        return false;
-}
-
-bool ArtisticServer::getRelativeFactor(float& value)
-{    
-    // if command received, get it
-    if (pRelFactorChannel->hasNew())
-    {
-        value = std::stof(pRelFactorChannel->getMessage());
-        LOG4CXX_DEBUG(logger, "ArtisticServer: get relative factor > " << std::to_string(value));
+        value = pTurnsChannel->getMessage();
+        LOG4CXX_DEBUG(logger, "ArtisticServer: get turn > " << value);
         return true;
     }
     else

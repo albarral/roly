@@ -62,16 +62,23 @@ void Artistic::first()
     }
     
     // set default move factory values
+    figure = -1;
+    oFrequency.setValues(0.1, 0.5, 2.0);
+    oFrequency.setChanges(0.1, 1.5);
+    oSize.setValues(10, 30, 90);
+    oSize.setChanges(5, 1.5);
+    oRelFactor.setValues(0.1, 0.5, 2.0);
+    oRelFactor.setChanges(0.1, 1.5);
+    oAngle.setValues(-45, 0, 45);
+    oAngle.setChanges(5, 1.5);
+    
     ArtisticConfig oArtisticConfig;
-    oMoveFactory.setFreq(oArtisticConfig.getFreq());
-    oMoveFactory.setSize(oArtisticConfig.getSize());
-    oMoveFactory.setAngle(oArtisticConfig.getAngle());
-    oMoveFactory.setRelativeFactor(oArtisticConfig.getRelativeFactor());
+//    oMoveFactory.setFreq(oArtisticConfig.getFreq());
+//    oMoveFactory.setSize(oArtisticConfig.getSize());
+//    oMoveFactory.setAngle(oArtisticConfig.getAngle());    
+//    oMoveFactory.setRelativeFactor(oArtisticConfig.getRelativeFactor());
     oMoveFactory.setRelativeFreq(oArtisticConfig.getRelativeFreq());
     oMoveFactory.setRotation(oArtisticConfig.getRotation());
-    figure = -1;
-    bchangeRequested = false;
-    bturnRequested = false;
     
     // start at WAIT
     setState(eSTATE_IDLE);
@@ -117,7 +124,6 @@ void Artistic::loop()
         case eSTATE_UPDATE:            
             // update the cyclic movement            
             performChange();
-            transmitMovement();
             // -> WAIT
             setState(eSTATE_WAIT);
             break;                        
@@ -137,10 +143,6 @@ void Artistic::senseBus()
 {
     // TO DO ... get from BUS
     bcontinuous = true;
-    // control flags
-    bool bnewMove = false;
-    bool bmoveChanged = false;
-    float value;
         
      // check inhibition
     binhibited = pArtisticBus->getCO_INHIBIT_ARTISTIC().isRequested();
@@ -150,79 +152,66 @@ void Artistic::senseBus()
     {
         figure = pArtisticBus->getCO_ARTISTIC_FIGURE().getValue();
         if (!figure.empty())
-            bnewMove = true;
+        {
+            bfigureRequested = true;
+            LOG4CXX_INFO(logger, modName << " < figure requested: " + figure);                     
+        }
         else
-            LOG4CXX_WARN(logger, modName << " no figure requested");                     
+        {
+            bfigureRequested = false;
+            LOG4CXX_WARN(logger, modName << " < empty figure requested. Ignored!");                     
+        }
     }
+    else if (bfigureRequested)
+        bfigureRequested = false;
         
-    // check freq requests
-    if (pArtisticBus->getCO_ARTISTIC_FREQ().checkRequested())
+    // check change requests
+    if (pArtisticBus->getCO_ARTISTIC_SET().checkRequested())
     {  
-        value = pArtisticBus->getCO_ARTISTIC_FREQ().getValue();
-        if (value > 0)
+        change = pArtisticBus->getCO_ARTISTIC_SET().getValue();
+        if (!change.empty())
         {
-            bmoveChanged = true;
-            oMoveFactory.setFreq(value);
-            if (!figure.empty())
-                oCyclicMovement.updateFreq(value);
+            bchangeRequested = true;
+            LOG4CXX_INFO(logger, modName << " < change requested: " + change);                     
         }
         else
-            LOG4CXX_WARN(logger, modName << " invalid freq requested " + std::to_string(value));                     
-    }
-
-    // check size requests
-    if (pArtisticBus->getCO_ARTISTIC_SIZE().checkRequested())
-    {  
-        value = pArtisticBus->getCO_ARTISTIC_SIZE().getValue();
-        if (value > 0)
         {
-            bmoveChanged = true;
-            oMoveFactory.setSize(value);
-            if (!figure.empty())
-                oCyclicMovement.updateAmplitude(value);
+            bchangeRequested = false;
+            LOG4CXX_WARN(logger, modName << " < empty change requested. Ignored!");                     
+        }
+    }
+    else if (bchangeRequested)
+        bchangeRequested = false;
+
+    // check turn requests
+    if (pArtisticBus->getCO_ARTISTIC_TURN().checkRequested())
+    {  
+        turn = pArtisticBus->getCO_ARTISTIC_TURN().getValue();
+        if (!turn.empty())
+        {
+            bturnRequested = true;
+            LOG4CXX_INFO(logger, modName << " < turn requested: " + turn);                     
         }
         else
-            LOG4CXX_WARN(logger, modName << " invalid size requested " + std::to_string(value));                     
-    }
-
-    // check orientation requests
-    if (pArtisticBus->getCO_ARTISTIC_ORIENTATION().checkRequested())
-    {  
-        value = pArtisticBus->getCO_ARTISTIC_ORIENTATION().getValue();
-        // all orientations are valid
-        bmoveChanged = true;
-        oMoveFactory.setAngle(value);
-        if (!figure.empty())
-            oCyclicMovement.updateAngle(value);
-    }
-
-    // check relative factor requests
-    if (pArtisticBus->getCO_ARTISTIC_RELFACTOR().checkRequested())
-    {  
-        float value = pArtisticBus->getCO_ARTISTIC_RELFACTOR().getValue();
-        if (value > 0.0)
         {
-            bmoveChanged = true;
-            oMoveFactory.setRelativeFactor(value);
-            if (!figure.empty())
-                oCyclicMovement.updateRelFactor(value); 
+            bturnRequested = false;
+            LOG4CXX_WARN(logger, modName << " < empty turn requested. Ignored!");                     
         }
-        else
-            LOG4CXX_WARN(logger, modName << " invalid relative factor requested " + std::to_string(value));                     
     }
+    else if (bturnRequested)
+        bturnRequested = false;
 
-    // if new figure requested -> LAUNCH movement
-    if (bnewMove)
+
+    // if new figure requested -> LAUNCH
+    if (bfigureRequested)
         setState(eSTATE_LAUNCH);                                       
-    // otherwise if movement change requested -> UPDATE movement
-    else if (bmoveChanged)
+    // otherwise if movement change requested -> UPDATE
+    else if (bchangeRequested || bturnRequested)
         setState(eSTATE_UPDATE);                                       
     
     // anyway, if halt requested -> STOP
     if (pArtisticBus->getCO_ARTISTIC_HALT().checkRequested())
-    {
         setState(eSTATE_STOP);
-    }
 }
 
 
@@ -237,7 +226,18 @@ void Artistic::triggerMove()
     // get movement code for requested figure
     int movement = translateFigure2Movement(figure); 
     
-    // generate cyclic movemen, skip if invalid
+    // skip if figure unknown
+    if (movement == -1)
+        return;
+
+    oMoveFactory.setFreq(oFrequency.getValue());
+    oMoveFactory.setSize(oSize.getValue());
+    oMoveFactory.setAngle(oAngle.getValue());
+    oMoveFactory.setRelativeFactor(oRelFactor.getValue());
+    oMoveFactory.setRelativeFreq(1.0);
+    oMoveFactory.setRotation(true);
+
+    // generate requested movement, skip if unknown
     if (!oMoveFactory.generateMovement(oCyclicMovement, movement))
         return;    
         
@@ -249,6 +249,50 @@ void Artistic::triggerMove()
     
     // start movement
     oArmCyclerClient.run(true);
+}
+
+void Artistic::stopMove()
+{    
+    // stop movement
+    oArmCyclerClient.run(false);
+}
+
+void Artistic::performChange()
+{
+    bool bok1 = false, bok2 = false;
+    int mode;
+    // if change requested 
+    if (bchangeRequested) 
+    {
+        // if speed change requested, change movement frequency
+        if (oSpeedTheme.getCode4Name(change, mode))
+            bok1 = changeMovementSpeed(mode);
+        // if size change requested, change movement amplitude
+        else if (oSizeTheme.getCode4Name(change, mode))
+            bok1 = changeMovementSize(mode);
+        // if length change requested, change movement relative factor
+        else if (oLengthTheme.getCode4Name(change, mode))
+            bok1 = changeMovementFactor(mode);
+
+        // inform of unavailable changes
+        if (!bok1)
+            LOG4CXX_WARN(logger, modName << " requested change not available: " << change << ". Ignored!");                     
+    }
+    
+    // if turn requested 
+    if (bturnRequested)
+    {
+        // if turn requested, change movement angle
+        if (oDirectionsTheme.getCode4Name(turn, mode))
+            bok2 = changeMovementOrientation(mode);
+
+        // inform of unavailable turns
+        if (!bok2)
+            LOG4CXX_WARN(logger, modName << " requested turn not available: " << turn << ". Ignored!");                     
+    }
+    
+    if (bok1 || bok2)
+        transmitMovement();
 }
 
 void Artistic::transmitMovement()
@@ -269,12 +313,6 @@ void Artistic::transmitMovement()
                 oCyclicComponent2.getAngle(),
                 oCyclicComponent2.getPhase());
     }
-}
-
-void Artistic::stopMove()
-{    
-    // stop movement
-    oArmCyclerClient.run(false);
 }
 
 void Artistic::updateCyclerPrimary(float freq, float amp, float angle, float phase)
@@ -353,16 +391,108 @@ int Artistic::translateFigure2Movement(std::string figure)
 }
 
 
-void Artistic::performChange()
+bool Artistic::changeMovementSpeed(int mode)
 {    
-    if (bchangeRequested) 
+    switch (mode)
     {
-        // TO DO ...
+        case tron2::SpeedTheme::eSPEED_SLOW:
+            oFrequency.setLow();
+            break;
+        case tron2::SpeedTheme::eSPEED_FAST:
+            oFrequency.setHigh();
+            break;
+        case tron2::SpeedTheme::eSPEED_SLOWER:
+            oFrequency.decrease();
+            break;            
+        case tron2::SpeedTheme::eSPEED_FASTER:
+            oFrequency.increase();
+            break;
+        default:
+            // return false if change unavailable
+            return false;
     }
-    else if (bturnRequested)
+    
+    if (!figure.empty())
+        oCyclicMovement.updateFreq(oFrequency.getValue());
+
+    return true;
+}
+
+bool Artistic::changeMovementSize(int mode)
+{    
+    switch (mode)
     {
-        // TO DO ...
+        case tron2::SizeTheme::eSIZE_SMALL:
+            oSize.setLow();
+            break;
+        case tron2::SizeTheme::eSIZE_BIG:
+            oSize.setHigh();
+            break;
+        case tron2::SizeTheme::eSIZE_SMALLER:
+            oSize.decrease();
+            break;            
+        case tron2::SizeTheme::eSIZE_BIGGER:
+            oSize.increase();
+            break;
+        default:
+            // return false if change unavailable
+            return false;
     }
+    
+    if (!figure.empty())
+        oCyclicMovement.updateAmplitude(oSize.getValue());
+    
+    return true;
+}
+
+bool Artistic::changeMovementOrientation(int mode)
+{    
+    switch (mode)
+    {
+        // turn left (go anticlockwise) -> increase angle
+        case tron2::DirectionsTheme::eDIRECTION_LEFT:
+            oAngle.increase();
+            break;
+        // turn right (go clockwise) (decrease angle)           
+        case tron2::DirectionsTheme::eDIRECTION_RIGHT:
+            oAngle.decrease();
+            break;
+        default:
+            // return false if change unavailable
+            return false;
+    }    
+    
+    if (!figure.empty())
+        oCyclicMovement.updateAngle(oAngle.getValue());
+    
+    return true;
+}
+
+bool Artistic::changeMovementFactor(int mode)
+{    
+    switch (mode)
+    {
+        case tron2::LengthTheme::eLENGTH_SHORT:
+            oRelFactor.setLow();
+            break;
+        case tron2::LengthTheme::eLENGTH_LONG:
+            oRelFactor.setHigh();
+            break;
+        case tron2::LengthTheme::eLENGTH_SHORTER:
+            oRelFactor.decrease();
+            break;            
+        case tron2::LengthTheme::eLENGTH_LONGER:
+            oRelFactor.increase();
+            break;
+        default:
+            // return false if change unavailable
+            return false;
+    }
+    
+    if (!figure.empty())
+        oCyclicMovement.updateRelFactor(oRelFactor.getValue()); 
+    
+    return true;
 }
 
 void Artistic::writeBus()

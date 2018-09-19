@@ -35,11 +35,9 @@ public:
     /*! artistic section channels  */
     enum eCyclerChannels
     {
-        eARTISTIC_FIGURE,        // id of artistic figure to implement
-        eARTISTIC_FREQ,       // frequency of cyclic figure (Hz) 
-        eARTISTIC_SIZE,        // size of cyclic figure (degrees)
-        eARTISTIC_ORIENTATION,  // orientation of cyclic figure (degrees)
-        eARTISTIC_RELFACTOR,    // relative xy factor of cyclic figure 
+        eARTISTIC_FIGURE,        // name of artistic figure to implement
+        eARTISTIC_SET,           // name of change in movement (speed, size or length categories)
+        eARTISTIC_TURN,         // name of turn in movement (left or right)
         eARTISTIC_HALT,                // halt ongoing artistic movement
         eARTISTIC_DIM
     };
@@ -55,11 +53,9 @@ public:
     const std::string EXPRESS_HALT = "halt";          /*! halt expression */
     
     /*! names of artistic section channels */
-    const std::string ARTISTIC_FIGURE = "figure";             /*! id of artistic figure to implement (integer) */
-    const std::string ARTISTIC_FREQ = "freq";                  /*! frequency of cyclic figure (Hz) */
-    const std::string ARTISTIC_SIZE = "size";                   /*! size of cyclic figure (degrees) */
-    const std::string ARTISTIC_ORIENTATION = "angle";     /*! orientation of cyclic figure (degrees) */
-    const std::string ARTISTIC_RELFACTOR = "factor";       /*! relative xy factor of cyclic figure */
+    const std::string ARTISTIC_FIGURE = "figure";             /*! name of artistic figure to implement */
+    const std::string ARTISTIC_SET = "set";                  /*! name of change in movement (speed, size or length categories) */
+    const std::string ARTISTIC_TURN = "turn";                   /*! name of turn in movement (left or right) */
     const std::string ARTISTIC_HALT = "halt";                   /*! halt ongoing artistic movement */
      
     void setExpressiveSection();

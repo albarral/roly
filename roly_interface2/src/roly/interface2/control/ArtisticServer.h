@@ -22,26 +22,20 @@ private:
     static log4cxx::LoggerPtr logger;
     tron::ComsReceiver oComsReceiver;  // communications object     
     tron::ChannelReader* pFigureChannel;    // channel reader for artistic figure
-    tron::ChannelReader* pFrequencyChannel;    // channel reader for cyclic frequency
-    tron::ChannelReader* pSizeChannel;   // channel reader for figure size
-    tron::ChannelReader* pOrientationChannel;  // channel reader for figure orientation
-    tron::ChannelReader* pRelFactorChannel;  // channel reader for figure relative factor
+    tron::ChannelReader* pChangesChannel;    // channel reader for movement changes
+    tron::ChannelReader* pTurnsChannel;   // channel reader for movement turns
     tron::ChannelReader* pHaltChannel;  // channel reader for movement halt
 
 public:
     ArtisticServer();
     //~ArtisticServer();
 
-    // get artistic figure received command (figure name)
+    // get requested artistic figure (figure name)
     bool getFigure(std::string& value);
-    // get cyclic frequency received command (Hz)
-    bool getFrequency(float& value);
-    // get figure size received command (degrees)
-    bool getSize(float& value);
-    // get figure orientation received command (degrees)
-    bool getOrientation(float& value);
-    // get figure relative factor received command
-    bool getRelativeFactor(float& value);    
+    // get requested movement change (speed, size or length features)
+    bool getMovementChange(std::string& value);
+    // get requested movement turn (left or right)
+    bool getMovementTurn(std::string& value);
     // get movement halt received command 
     bool getHalt();    
 };

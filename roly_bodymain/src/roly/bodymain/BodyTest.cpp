@@ -67,11 +67,11 @@ void BodyTest::testArtistic()
             break;            
             
         case 5:
-            oArtisticBus.getCO_ARTISTIC_FREQ().request(0.2);
+            oArtisticBus.getCO_ARTISTIC_SET().request("faster");
             break;
 
         case 10:
-            oArtisticBus.getCO_ARTISTIC_SIZE().request(60.0);            
+            oArtisticBus.getCO_ARTISTIC_SET().request("bigger");            
             break;            
 
         case 15:   
