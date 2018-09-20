@@ -9,18 +9,16 @@
 #include <string>
 #include <log4cxx/logger.h>
 
-#include "tron/coms/ComsReceiver.h"
+#include "tron/interface/SectionServer.h"
 #include "tron/coms/ChannelReader.h"
 
 namespace roly
 {
 // Artistic section server to control a body.
-// Uses tron ComsReceiver for communications    
-class ArtisticServer
+class ArtisticServer : public tron::SectionServer
 {            
 private:
-    static log4cxx::LoggerPtr logger;
-    tron::ComsReceiver oComsReceiver;  // communications object     
+    static log4cxx::LoggerPtr logger2;
     tron::ChannelReader* pFigureChannel;    // channel reader for artistic figure
     tron::ChannelReader* pChangesChannel;    // channel reader for movement changes
     tron::ChannelReader* pTurnsChannel;   // channel reader for movement turns
