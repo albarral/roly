@@ -100,16 +100,7 @@ private:
         void transmitMovement();
         
         int translateFigure2Movement(std::string figure);
-        
-        // update primary component of arm cycler
-        void updateCyclerPrimary(float freq, float amp, float angle, float phase);
-        // update secondary component of arm cycler
-        void updateCyclerSecondary(float freq, float amp, float angle, float phase);
-        // stop primary component of arm cycler
-        void stopCyclerPrimary();
-        // stop secondary component of arm cycler
-        void stopCyclerSecondary();
-        
+                
         // checks if ordered movement is finished (just for simple mode)
         bool checkMovementFinished();
         

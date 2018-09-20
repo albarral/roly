@@ -68,6 +68,7 @@
             <pElem>../../tron2/tron2_moves/src</pElem>
             <pElem>../../amy/amy_interface2/src</pElem>
             <pElem>../../tron/tron_coms/src</pElem>
+            <pElem>../../tron/tron_interface/src</pElem>
             <pElem>../../tron/tron_topics/src</pElem>
             <pElem>../../tron/tron_util/src</pElem>
             <pElem>/usr/include/ignition/transport3</pElem>

@@ -77,25 +77,25 @@ void BodyServer2::checkArtisticSection()
     if (oArtisticServer.getFigure(value))
     {
         oArtisticBus.getCO_ARTISTIC_FIGURE().request(value);
-        LOG4CXX_INFO(logger, "> set artistic figure " << value);                        
+        LOG4CXX_INFO(logger, "< art1 figure: " << value);                        
     }
 
     if (oArtisticServer.getMovementChange(value))
     {
         oArtisticBus.getCO_ARTISTIC_SET().request(value);
-        LOG4CXX_INFO(logger, "> set artistic change " << value);                        
+        LOG4CXX_INFO(logger, "< art1 change: " << value);                        
     }
 
     if (oArtisticServer.getMovementTurn(value))
     {
         oArtisticBus.getCO_ARTISTIC_TURN().request(value);
-        LOG4CXX_INFO(logger, "> set artistic turn " << value);                        
+        LOG4CXX_INFO(logger, "< art1 turn: " << value);                        
     }
 
     if (oArtisticServer.getHalt())
     {
         oArtisticBus.getCO_ARTISTIC_HALT().request();
-        LOG4CXX_INFO(logger, "> halt artistic");                        
+        LOG4CXX_INFO(logger, "< art1 halt");                        
     }
 }
 
@@ -104,13 +104,13 @@ void BodyServer2::checkExtraSection()
 {
     if (oExtraServer.getStop())
     {
-        LOG4CXX_INFO(logger, "> stop");                        
+        LOG4CXX_INFO(logger, "< stop");                        
     }
 
     if (oExtraServer.getEnd())
     {
         bEndRequested = true;
-        LOG4CXX_INFO(logger, "> end roly");  
+        LOG4CXX_INFO(logger, "< end roly");  
     }
 }
 
