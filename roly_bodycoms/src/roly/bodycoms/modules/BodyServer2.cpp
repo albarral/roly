@@ -27,7 +27,7 @@ BodyServer2::BodyServer2()
 //    oCyclerServer2.tune2Cycler(AmyConfig::CYCLER2);
     // tune extra server
     BodyNode2 oBodyNode;
-    oExtraServer.tune4Node(oBodyNode, BodyNode2::eSECTION_EXTRA);
+    oExtraServer.init(oBodyNode, BodyNode2::eSECTION_EXTRA);
  }
 
 void BodyServer2::init(BodyBus& oBodyBus)

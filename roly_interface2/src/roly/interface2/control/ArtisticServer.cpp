@@ -5,7 +5,6 @@
 
 #include "roly/interface2/control/ArtisticServer.h"
 #include "roly/interface2/BodyNode.h"
-#include "tron/topics/RobotNodes.h"
 
 using namespace log4cxx;
 
@@ -17,7 +16,7 @@ ArtisticServer::ArtisticServer()
 {    
     // set topics for body artistic control
     BodyNode2 oBodyNode;
-    tron::SectionServer::tune4Node(tron::RobotNodes::eNODE_BODYROLE, BodyNode2::eSECTION_ARTISTIC1, oBodyNode);
+    tron::SectionServer::tune4Node(oBodyNode, BodyNode2::eSECTION_ARTISTIC1);
 
     if (isTuned())
     {
