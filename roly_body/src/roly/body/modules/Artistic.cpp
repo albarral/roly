@@ -168,7 +168,8 @@ void Artistic::senseBus()
         {
             LOG4CXX_INFO(logger, "< change: " + command);                     
             change = analyseChange(command);
-            bnewChange = (change != -1);
+            // if anything to be changed
+            bnewChange = bchangeAll || (change != -1);
         }
     }
     else if (bnewChange)
@@ -284,26 +285,37 @@ void Artistic::performChange()
     // if change requested 
     if (bnewChange) 
     {
-        switch (changeType)
+        // if global change 
+        if (bchangeAll)
         {
-            // if speed change requested, change movement frequency
-            case tron2::FeaturesCategory::eFEATURE_SPEED:
-                bok1 = changeMovementSpeed(change);
-                break;
-
-            // if size change requested, change movement amplitude
-            case tron2::FeaturesCategory::eFEATURE_SIZE:
-                bok1 = changeMovementSize(change);
-                break;
-
-            // if length change requested, change movement relative factor
-            case tron2::FeaturesCategory::eFEATURE_LENGTH:
-                bok1 = changeMovementFactor(change);
-                break;
+            // change everything to normal            
+            setNormalMovement();
+            bok1 = true;            
         }
-        // inform of unavailable changes
-        if (!bok1)
-            LOG4CXX_WARN(logger, "requested change not available. Ignored!");      
+        // if particular change
+        else
+        {
+            switch (changedFeature)
+            {
+                // if speed change requested, change movement frequency
+                case tron2::FeaturesCategory::eFEATURE_SPEED:
+                    bok1 = changeMovementSpeed(change);
+                    break;
+
+                // if size change requested, change movement amplitude
+                case tron2::FeaturesCategory::eFEATURE_SIZE:
+                    bok1 = changeMovementSize(change);
+                    break;
+
+                // if length change requested, change movement relative factor
+                case tron2::FeaturesCategory::eFEATURE_LENGTH:
+                    bok1 = changeMovementFactor(change);
+                    break;
+            }
+            // inform of unavailable changes
+            if (!bok1)
+                LOG4CXX_WARN(logger, "requested change not available. Ignored!");      
+        }
     }
             
     // if turn requested 
@@ -381,34 +393,41 @@ int Artistic::analyseFigure(std::string word)
 
 int Artistic::analyseChange(std::string word)
 {
-    int change = -1;
+    int code = -1;
+    bchangeAll = false;
 
+    // check if generic change requested
+    if (oQuantityTheme.getCode4Name(word, code))
+    {
+        // just accept normal word 
+        bchangeAll = (code == tron2::QuantityTheme::eQUANTITY_NORMAL);
+    }
     // check if speed change requested
-    if (oSpeedTheme.getCode4Name(word, change))
-        changeType =  tron2::FeaturesCategory::eFEATURE_SPEED;
+    else if (oSpeedTheme.getCode4Name(word, code))
+        changedFeature =  tron2::FeaturesCategory::eFEATURE_SPEED;
     // check if size change requested
-    else if (oSizeTheme.getCode4Name(word, change))
-        changeType =  tron2::FeaturesCategory::eFEATURE_SIZE;
+    else if (oSizeTheme.getCode4Name(word, code))
+        changedFeature =  tron2::FeaturesCategory::eFEATURE_SIZE;
     // check if length change requested
-    else if (oLengthTheme.getCode4Name(word, change))
-        changeType =  tron2::FeaturesCategory::eFEATURE_LENGTH;
+    else if (oLengthTheme.getCode4Name(word, code))
+        changedFeature =  tron2::FeaturesCategory::eFEATURE_LENGTH;
     // inform of unknown request
     else
     {
         LOG4CXX_WARN(logger, "unknown change requested: " << word << ". Ignored!");                     
-        changeType =  -1;
+        changedFeature =  -1;
     }
     
-    return change;
+    return code;
 }
 
 int Artistic::analyseTurn(std::string word)
 {
-    int turn = -1;
+    int code = -1;
 
     // if turn requested, change movement angle
-    if (oDirectionsTheme.getCode4Name(word, turn))
-        return turn;            
+    if (oDirectionsTheme.getCode4Name(word, code))
+        return code;            
     // inform of unknown request
     else
     {
@@ -520,6 +539,21 @@ bool Artistic::changeMovementFactor(int code)
         oCyclicMovement.updateRelFactor(oRelFactor.getValue()); 
     
     return true;
+}
+
+
+void Artistic::setNormalMovement()
+{    
+    oFrequency.setNormal();
+    oSize.setNormal();
+    oRelFactor.setNormal();
+    
+    if (figure != -1)
+    {
+        oCyclicMovement.updateFreq(oFrequency.getValue());
+        oCyclicMovement.updateAmplitude(oSize.getValue());
+        oCyclicMovement.updateRelFactor(oRelFactor.getValue());         
+    }
 }
 
 void Artistic::writeBus()

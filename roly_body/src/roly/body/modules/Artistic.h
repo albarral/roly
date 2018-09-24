@@ -49,8 +49,9 @@ private:
     ArtisticBus* pArtisticBus;  // bus connection for this module
     // logic
     int figure;             // requested movement figure 
-    int changeType;    // requested movement change type (speed, size, ...)
     int change;           // requested movement change    
+    int changedFeature;    // feature to which the requested change applies (speed, size, ...)
+    bool bchangeAll;        // requested change applies to all features (speed, size, ...)
     int turn;               // requested movement turn
     bool bnewChange;      // flag indicating a movement change was requested (speed, size or length)
     bool bnewTurn;           // flag indicating a movement turn was requested (angle)  
@@ -117,6 +118,8 @@ private:
         bool changeMovementOrientation(int code);
         // changes relative factor of present movement
         bool changeMovementFactor(int code);
+        // set all movement properties to normal values
+        void setNormalMovement();
 };
 }
 #endif
