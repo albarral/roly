@@ -1,5 +1,5 @@
-#ifndef __ROLY_BODY_ARMMOVER_H
-#define __ROLY_BODY_ARMMOVER_H
+#ifndef __ROLY_BODY_ARTISTIC_H
+#define __ROLY_BODY_ARTISTIC_H
 
 /***************************************************************************
  *   Copyright (C) 2017 by Migtron Robotics   *
@@ -37,7 +37,7 @@ public:
     {
          eSTATE_IDLE,           // waits for requests
          eSTATE_LAUNCH,      // launches cycler movement
-         eSTATE_WAIT,           // waits for movement to finish (until halt request in continuous mode)
+         eSTATE_MOVE,      // waits for movement to finish (until halt request in continuous mode)
          eSTATE_UPDATE,      // updates cycler movement
          eSTATE_STOP           // stops cycler movement
     };
@@ -48,12 +48,12 @@ private:
     // bus        
     ArtisticBus* pArtisticBus;  // bus connection for this module
     // logic
-    std::string figure;         // requested movement figure (name)
-    std::string change;        // requested movement change (name)
-    std::string turn;             // requested movement turn (name)
-    bool bfigureRequested;      // flag indicating a new figure was requested (speed, size or length)
-    bool bchangeRequested;      // flag indicating a movement change was requested (speed, size or length)
-    bool bturnRequested;           // flag indicating a movement turn was requested (angle)  
+    int figure;             // requested movement figure 
+    int changeType;    // requested movement change type (speed, size, ...)
+    int change;           // requested movement change    
+    int turn;               // requested movement turn
+    bool bnewChange;      // flag indicating a movement change was requested (speed, size or length)
+    bool bnewTurn;           // flag indicating a movement turn was requested (angle)  
     bool bcontinuous;       // continuous or simple mode
     amy::CyclerClient oArmCyclerClient;     // client for control of arm cycler section (main or secondary)
     tron::ControlMagnitude oFrequency;
@@ -99,19 +99,24 @@ private:
         // transmit components of cyclic movement        
         void transmitMovement();
         
-        int translateFigure2Movement(std::string figure);
-                
         // checks if ordered movement is finished (just for simple mode)
         bool checkMovementFinished();
+
+        // analyzes requested movement figure
+        int analyseFigure(std::string word);        
+        // analyzes requested movement change
+        int analyseChange(std::string word);        
+        // analyzes requested movement turn        
+        int analyseTurn(std::string word);    
         
         // changes speed of present movement
-        bool changeMovementSpeed(int mode);
+        bool changeMovementSpeed(int code);
         // changes size of present movement
-        bool changeMovementSize(int mode);
+        bool changeMovementSize(int code);
         // changes angle of present movement
-        bool changeMovementOrientation(int mode);
+        bool changeMovementOrientation(int code);
         // changes relative factor of present movement
-        bool changeMovementFactor(int mode);
+        bool changeMovementFactor(int code);
 };
 }
 #endif
