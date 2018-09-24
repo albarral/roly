@@ -14,9 +14,36 @@ LoggerPtr ArtisticServer::logger2(Logger::getLogger("roly.interface"));
 
 ArtisticServer::ArtisticServer()
 {    
+    target = 0;
+    serverName = "ArtisticServer";
+    
+    pFigureChannel = 0;
+    pChangesChannel = 0;
+    pTurnsChannel = 0;
+    pHaltChannel = 0;
+}
+
+//ArtisticServer::~ArtisticServer()
+//{    
+//}
+
+bool ArtisticServer::tune2Artistic(int i)
+{
+    if (i < 1 || i > 2)
+    {
+        LOG4CXX_WARN(logger2, serverName + ": invalid target, must be tuned to artistic module 1 or 2");
+        return false;
+    }
+    
+    target = i;
+    serverName += std::to_string(target);
+
+    // set proper section
+    int section = (target == 1) ? BodyNode2::eSECTION_ARTISTIC1: BodyNode2::eSECTION_ARTISTIC2;
+    
     // set topics for body artistic control
     BodyNode2 oBodyNode;
-    tron::SectionServer::tune4Node(oBodyNode, BodyNode2::eSECTION_ARTISTIC1);
+    tron::SectionServer::tune4Node(oBodyNode, section);
 
     if (isTuned())
     {
@@ -26,11 +53,9 @@ ArtisticServer::ArtisticServer()
         pTurnsChannel = oComsReceiver.getChannel(BodyNode2::eARTISTIC_TURN);
         pHaltChannel = oComsReceiver.getChannel(BodyNode2::eARTISTIC_HALT);    
     }
+        
+    return btuned;
 }
-
-//ArtisticServer::~ArtisticServer()
-//{    
-//}
 
 bool ArtisticServer::getFigure(std::string& value)
 {    
@@ -38,7 +63,7 @@ bool ArtisticServer::getFigure(std::string& value)
     if (pFigureChannel->hasNew()) 
     {
         value = pFigureChannel->getMessage();
-        LOG4CXX_DEBUG(logger2, "ArtisticServer: get figure > " << value);
+        LOG4CXX_DEBUG(logger2, serverName + ": get figure > " << value);
         return true;
     }
     else
@@ -51,7 +76,7 @@ bool ArtisticServer::getMovementChange(std::string& value)
     if (pChangesChannel->hasNew())
     {
         value = pChangesChannel->getMessage();
-        LOG4CXX_DEBUG(logger2, "ArtisticServer: get change > " << value);
+        LOG4CXX_DEBUG(logger2, serverName + ": get change > " << value);
         return true;
     }
     else
@@ -64,7 +89,7 @@ bool ArtisticServer::getMovementTurn(std::string& value)
     if (pTurnsChannel->hasNew())
     {
         value = pTurnsChannel->getMessage();
-        LOG4CXX_DEBUG(logger2, "ArtisticServer: get turn > " << value);
+        LOG4CXX_DEBUG(logger2, serverName + ": get turn > " << value);
         return true;
     }
     else
@@ -77,7 +102,7 @@ bool ArtisticServer::getHalt()
     if (pHaltChannel->hasNew())
     {
         pHaltChannel->clear();
-        LOG4CXX_DEBUG(logger2, "ArtisticServer: halt received > ");
+        LOG4CXX_DEBUG(logger2, serverName + ": halt received > ");
         return true;
     }
     else

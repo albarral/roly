@@ -19,6 +19,8 @@ class ArtisticServer : public tron::SectionServer
 {            
 private:
     static log4cxx::LoggerPtr logger2;
+    std::string serverName;
+    int target;       // defines which artistic module is controlled
     tron::ChannelReader* pFigureChannel;    // channel reader for artistic figure
     tron::ChannelReader* pChangesChannel;    // channel reader for movement changes
     tron::ChannelReader* pTurnsChannel;   // channel reader for movement turns
@@ -27,6 +29,9 @@ private:
 public:
     ArtisticServer();
     //~ArtisticServer();
+
+    // tune server to given artistic module (connect channels to proper topics)
+    bool tune2Artistic(int i);
 
     // get requested artistic figure (figure name)
     bool getFigure(std::string& value);

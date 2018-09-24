@@ -10,33 +10,32 @@
 #include <log4cxx/logger.h>
 
 #include "roly/bodycore/BodyBus.h"
+#include "roly/bodycore/ArtisticBus.h"
 #include "roly/interface2/control/ArtisticServer.h"
-//#include "amy/interface2/control/AxesServer.h"
-//#include "amy/interface2/control/CyclerServer.h"
 #include "tron/control/module3.h"
 #include "tron/interface/ExtraServer.h"
 
 namespace roly
 {
-// This module serves external control requests for arm control. 
-// It uses an ignition based server for each arm node's section.
-class BodyServer2 : public tron::Module3
+// This module serves external control requests for body control. 
+// It uses an ignition based server for each body node's section.
+class BodyServer : public tron::Module3
 {
 private:
     static log4cxx::LoggerPtr logger;
     std::string modName;          // module name
     bool benabled;
-    // logic
-    BodyBus* pBodyBus;      // access to body bus    
-    ArtisticServer oArtisticServer;
-//    AxesServer oAxesServer;    
-//    CyclerServer oCyclerServer1;
-//    CyclerServer oCyclerServer2;
+    // bus connections
+    ArtisticBus* pArtisticBus1;
+    ArtisticBus* pArtisticBus2;
+    // section servers
+    ArtisticServer oArtisticServer1;
+    ArtisticServer oArtisticServer2;
     tron::ExtraServer oExtraServer;      
     bool bEndRequested;         // end of roly process requested
 
 public:
-    BodyServer2();
+    BodyServer();
     //~BodyServer2();
 
     void init(BodyBus& oBodyBus);       
@@ -49,9 +48,8 @@ private:
     // executes the behaviour
     virtual void loop();
     
-    void checkArtisticSection();        
-    //void checkAxesSection();
-//    void checkCyclerSection(int i);
+    void checkArtisticSection1();        
+    void checkArtisticSection2();        
     void checkExtraSection();
 };
 }		

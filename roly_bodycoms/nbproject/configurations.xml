@@ -16,8 +16,8 @@
         <logicalFolder name="modules" displayName="modules" projectFiles="true">
           <itemPath>src/roly/bodycoms/modules/BodyAware.cpp</itemPath>
           <itemPath>src/roly/bodycoms/modules/BodyAware.h</itemPath>
-          <itemPath>src/roly/bodycoms/modules/BodyServer2.cpp</itemPath>
-          <itemPath>src/roly/bodycoms/modules/BodyServer2.h</itemPath>
+          <itemPath>src/roly/bodycoms/modules/BodyServer.cpp</itemPath>
+          <itemPath>src/roly/bodycoms/modules/BodyServer.h</itemPath>
         </logicalFolder>
         <itemPath>src/roly/bodycoms/BodyComs.cpp</itemPath>
         <itemPath>src/roly/bodycoms/BodyComs.h</itemPath>
@@ -167,12 +167,12 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="src/roly/bodycoms/modules/BodyServer2.cpp"
+      <item path="src/roly/bodycoms/modules/BodyServer.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
-      <item path="src/roly/bodycoms/modules/BodyServer2.h"
+      <item path="src/roly/bodycoms/modules/BodyServer.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -212,12 +212,12 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="src/roly/bodycoms/modules/BodyServer2.cpp"
+      <item path="src/roly/bodycoms/modules/BodyServer.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
-      <item path="src/roly/bodycoms/modules/BodyServer2.h"
+      <item path="src/roly/bodycoms/modules/BodyServer.h"
             ex="false"
             tool="3"
             flavor2="0">

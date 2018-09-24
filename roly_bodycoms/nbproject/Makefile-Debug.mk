@@ -37,7 +37,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 OBJECTFILES= \
 	${OBJECTDIR}/src/roly/bodycoms/BodyComs.o \
 	${OBJECTDIR}/src/roly/bodycoms/modules/BodyAware.o \
-	${OBJECTDIR}/src/roly/bodycoms/modules/BodyServer2.o
+	${OBJECTDIR}/src/roly/bodycoms/modules/BodyServer.o
 
 
 # C Compiler Flags
@@ -86,10 +86,10 @@ ${OBJECTDIR}/src/roly/bodycoms/modules/BodyAware.o: src/roly/bodycoms/modules/Bo
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -Isrc -I../roly_bodycore/src -I../roly_interface2/src -I../../amy/amy_interface2/src -I../../tron/tron_control/src -I../../tron/tron_coms/src -I../../tron/tron_topics/src -I../../tron/tron_util/src -I../../tron/tron_interface/src -I/usr/include/ignition/transport3 -I/usr/include/ignition/msgs0 -I/usr/include/ignition/math2 -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycoms/modules/BodyAware.o src/roly/bodycoms/modules/BodyAware.cpp
 
-${OBJECTDIR}/src/roly/bodycoms/modules/BodyServer2.o: src/roly/bodycoms/modules/BodyServer2.cpp 
+${OBJECTDIR}/src/roly/bodycoms/modules/BodyServer.o: src/roly/bodycoms/modules/BodyServer.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/roly/bodycoms/modules
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Isrc -I../roly_bodycore/src -I../roly_interface2/src -I../../amy/amy_interface2/src -I../../tron/tron_control/src -I../../tron/tron_coms/src -I../../tron/tron_topics/src -I../../tron/tron_util/src -I../../tron/tron_interface/src -I/usr/include/ignition/transport3 -I/usr/include/ignition/msgs0 -I/usr/include/ignition/math2 -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycoms/modules/BodyServer2.o src/roly/bodycoms/modules/BodyServer2.cpp
+	$(COMPILE.cc) -g -Isrc -I../roly_bodycore/src -I../roly_interface2/src -I../../amy/amy_interface2/src -I../../tron/tron_control/src -I../../tron/tron_coms/src -I../../tron/tron_topics/src -I../../tron/tron_util/src -I../../tron/tron_interface/src -I/usr/include/ignition/transport3 -I/usr/include/ignition/msgs0 -I/usr/include/ignition/math2 -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/bodycoms/modules/BodyServer.o src/roly/bodycoms/modules/BodyServer.cpp
 
 # Subprojects
 .build-subprojects:
