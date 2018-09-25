@@ -378,11 +378,11 @@ void Artistic::transmitMovement()
 
 int Artistic::analyseFigure(std::string word)
 {
-    int figure = -1;
+    int code = -1;
 
-    // if turn requested, change movement angle
-    if (oFiguresTheme.getCode4Name(word, figure))
-        return figure;            
+    // check requested figure
+    if (oFiguresTheme.getCode4Name(word, code))
+        return code;            
     // inform of unknown request
     else
     {
@@ -425,7 +425,7 @@ int Artistic::analyseTurn(std::string word)
 {
     int code = -1;
 
-    // if turn requested, change movement angle
+    // check requested turn 
     if (oDirectionsTheme.getCode4Name(word, code))
         return code;            
     // inform of unknown request

@@ -30,9 +30,11 @@ void Expressive::showInitialized()
 
 void Expressive::first()
 {
+    log4cxx::NDC::push(modName);   
+    feeling = -1;
+
     // start at rest state
     setState(eSTATE_REST);    
-    log4cxx::NDC::push(modName);   
 }
                     
 void Expressive::loop()
@@ -52,29 +54,20 @@ void Expressive::loop()
             // nothing done
             break;
 
-        case eSTATE_ACTION:            
-            // if pending steps
-            if (step < listMovements.size())
-            {
-                // get next step and request it 
-                ArmMovement& oArmMovement = listMovements.at(step);
-                performStep(oArmMovement);
-                // start timer and set duration
-                oClickTired.start();
-                stepDuration = oArmMovement.getTimeMillis();
+        case eSTATE_ACTION:  
+            // do new step
+            if (performStep())
                 // -> WAIT
                 setState(eSTATE_WAIT);
-            }
             // if no pending steps -> REST
             else
                 setState(eSTATE_REST);                    
             break;
 
         case eSTATE_WAIT:            
-            // check if step duration finished
-            oClickTired.read();
-            // if finished, go for next step -> ACTION
-            if (oClickTired.getMillis() > stepDuration)        
+
+            // if step finished, go for next step -> ACTION
+            if (isStepFinished())        
             {
                 step++;    
                 setState(eSTATE_ACTION);
@@ -89,23 +82,73 @@ void Expressive::senseBus()
 {
     // check inhibition
     binhibited = pBodyBus->getCO_INHIBIT_EXPRESSIVE().isRequested();
+
     // if action requested -> ACTION
     if (pBodyBus->getCO_EXPRESSIVE_ACTION().checkRequested())
     {
-        int action = pBodyBus->getCO_EXPRESSIVE_ACTION().getValue();
-        // load new movement 
-        loadMovement4Action(action);
-        step = 0;
-        setState(eSTATE_ACTION);
+        std::string command = pBodyBus->getCO_EXPRESSIVE_ACTION().getValue();
+        // analyze action validity 
+        if (!command.empty())
+        {
+            LOG4CXX_INFO(logger, "< feeling: " + command);                     
+            feeling = analyseFeeling(command);
+            if (feeling != -1)
+            {
+                // if requested feeling has an associated movement, do it
+                if (loadMovement4Action(feeling))
+                {
+                    step = 0;
+                    setState(eSTATE_ACTION);                
+                }
+            }                
+        }
     }
+    
     // if halt requested -> REST
     if (pBodyBus->getCO_EXPRESSIVE_HALT().checkRequested())
-    {
         setState(eSTATE_REST);
+}
+
+int Expressive::analyseFeeling(std::string word)
+{
+    int code = -1;
+
+    // check requested feeling
+    if (oFeelingsTheme.getCode4Name(word, code))
+        return code;            
+    // inform of unknown request
+    else
+    {
+        LOG4CXX_WARN(logger, "unknown feeling requested: " << word << ". Ignored!");                     
+        return -1;
     }
 }
 
-void Expressive::performStep(ArmMovement& oArmMovement)
+bool Expressive::performStep()
+{
+    // if pending steps
+    if (step < listMovements.size())
+    {
+        // get next step and request it 
+        ArmMovement& oArmMovement = listMovements.at(step);
+        transmitMovement(oArmMovement);
+        // start timer and set duration
+        oClickStep.start();
+        stepDuration = oArmMovement.getTimeMillis();
+        return true;
+    }
+    else
+        return false;
+}
+
+bool Expressive::isStepFinished()
+{
+    // check if step duration finished
+    oClickStep.read();
+    return (oClickStep.getMillis() > stepDuration);         
+}
+
+void Expressive::transmitMovement(ArmMovement& oArmMovement)
 {
     // if posture request, command arm position
     if (oArmMovement.getType() == ArmMovement::eTYPE_POSTURE)
@@ -123,17 +166,28 @@ void Expressive::performStep(ArmMovement& oArmMovement)
     }                
 }
 
-void Expressive::loadMovement4Action(int action)
+bool Expressive::loadMovement4Action(int action)
 {    
+    bool bok; 
     // clear movement
     listMovements.clear();
     
     switch (action)
     {
-        case Expressive::eEXPRESS_JOY:
+        case tron2::FeelingsTheme::eFEELING_JOY:
             loadMovement4Joy();
+            bok = true;
             break;
+
+        default: 
+            bok = false;       
     }
+    
+    // inform of unavailable movement
+    if (!bok)
+        LOG4CXX_WARN(logger, "requested action not available. Ignored!");      
+    
+    return bok;
 }
 
 void Expressive::loadMovement4Joy()
