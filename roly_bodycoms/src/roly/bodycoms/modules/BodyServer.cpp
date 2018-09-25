@@ -20,6 +20,7 @@ BodyServer::BodyServer()
 {    
     modName = "BodyServer2";
     benabled = false;
+    pBodyBus = 0;
     pArtisticBus1 = 0;
     pArtisticBus2 = 0;
     bEndRequested = false;
@@ -33,11 +34,12 @@ BodyServer::BodyServer()
 
 void BodyServer::init(BodyBus& oBodyBus)
 {
+    pBodyBus = &oBodyBus;
     pArtisticBus1 = &(oBodyBus.getArtisticBus1());
     pArtisticBus2 = &(oBodyBus.getArtisticBus2());
         
     // if servers enabled
-    if (oArtisticServer1.isTuned() && oArtisticServer2.isTuned())
+    if (oArtisticServer1.isTuned() && oArtisticServer2.isTuned() && oExpressiveServer.isTuned())
     {
         benabled = true;
         LOG4CXX_INFO(logger, modName + " initialized");                                
@@ -53,6 +55,7 @@ void BodyServer::first()
 
 void BodyServer::loop()
 {
+    checkExpressiveSection();
     // check artistic 1 section
     checkArtisticSection1();
     // check artistic 2 section
@@ -61,6 +64,22 @@ void BodyServer::loop()
     checkExtraSection();
 }
 
+void BodyServer::checkExpressiveSection()
+{
+    std::string value;
+    
+    if (oExpressiveServer.getFeeling(value))
+    {
+        pBodyBus->getCO_EXPRESSIVE_ACTION().request(value);
+        LOG4CXX_INFO(logger, "< express feeling: " << value);                        
+    }
+
+    if (oExpressiveServer.getHalt())
+    {
+        pBodyBus->getCO_EXPRESSIVE_HALT().request();
+        LOG4CXX_INFO(logger, "< expressive halt");                        
+    }
+}
 
 void BodyServer::checkArtisticSection1()
 {

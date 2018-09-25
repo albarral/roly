@@ -11,6 +11,7 @@
 
 #include "roly/bodycore/BodyBus.h"
 #include "roly/bodycore/ArtisticBus.h"
+#include "roly/interface2/control/ExpressiveServer.h"
 #include "roly/interface2/control/ArtisticServer.h"
 #include "tron/control/module3.h"
 #include "tron/interface/ExtraServer.h"
@@ -26,9 +27,11 @@ private:
     std::string modName;          // module name
     bool benabled;
     // bus connections
+    BodyBus* pBodyBus;
     ArtisticBus* pArtisticBus1;
     ArtisticBus* pArtisticBus2;
     // section servers
+    ExpressiveServer oExpressiveServer;
     ArtisticServer oArtisticServer1;
     ArtisticServer oArtisticServer2;
     tron::ExtraServer oExtraServer;      
@@ -47,7 +50,9 @@ private:
     virtual void first();
     // executes the behaviour
     virtual void loop();
+
     
+    void checkExpressiveSection();        
     void checkArtisticSection1();        
     void checkArtisticSection2();        
     void checkExtraSection();
