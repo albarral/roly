@@ -36,7 +36,8 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/src/roly/interface2/BodyNode.o \
-	${OBJECTDIR}/src/roly/interface2/control/ArtisticServer.o
+	${OBJECTDIR}/src/roly/interface2/control/ArtisticServer.o \
+	${OBJECTDIR}/src/roly/interface2/control/ExpressiveServer.o
 
 
 # C Compiler Flags
@@ -72,6 +73,11 @@ ${OBJECTDIR}/src/roly/interface2/control/ArtisticServer.o: src/roly/interface2/c
 	${MKDIR} -p ${OBJECTDIR}/src/roly/interface2/control
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/interface2/control/ArtisticServer.o src/roly/interface2/control/ArtisticServer.cpp
+
+${OBJECTDIR}/src/roly/interface2/control/ExpressiveServer.o: src/roly/interface2/control/ExpressiveServer.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/roly/interface2/control
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/interface2/control/ExpressiveServer.o src/roly/interface2/control/ExpressiveServer.cpp
 
 # Subprojects
 .build-subprojects:
