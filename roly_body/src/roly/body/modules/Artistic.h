@@ -15,7 +15,7 @@
 #include "tron/math/CyclicComponent.h"
 #include "tron/util/ControlMagnitude.h"
 #include "tron2/moves/CyclicMovement.h"
-#include "tron2/moves/MoveFactory.h"
+#include "tron2/moves/CyclicFactory.h"
 // language themes
 #include "tron2/language/features/DirectionsTheme.h"
 #include "tron2/language/features/LengthTheme.h"
@@ -61,7 +61,7 @@ private:
     tron::ControlMagnitude oSize;
     tron::ControlMagnitude oAngle;
     tron::ControlMagnitude oRelFactor;
-    tron2::MoveFactory oMoveFactory; // utility class for movements creation
+    tron2::CyclicFactory oCyclicFactory; // specialized class for generation of cyclic movements
     tron2::CyclicMovement oCyclicMovement;
     // language themes
     tron2::DirectionsTheme oDirectionsTheme; // directions

@@ -76,8 +76,8 @@ void Artistic::first()
     oAngle.setChanges(5, 1.5);
     
     ArtisticConfig oArtisticConfig;
-    oMoveFactory.setRelativeFreq(oArtisticConfig.getRelativeFreq());
-    oMoveFactory.setRotation(oArtisticConfig.getRotation());
+    oCyclicFactory.setRelativeFreq(oArtisticConfig.getRelativeFreq());
+    oCyclicFactory.setRotation(oArtisticConfig.getRotation());
     
     // start at IDLE
     setState(eSTATE_IDLE);    
@@ -220,25 +220,25 @@ void Artistic::triggerMove()
     switch (figure) 
     {
         case tron2::FiguresTheme::eFIGURE_CIRCLE:
-            movement = tron2::MoveFactory::eMOVEMENT_CIRCLE;
+            movement = tron2::CyclicFactory::eMOVEMENT_CIRCLE;
             break;
         case tron2::FiguresTheme::eFIGURE_ELLIPSE:
-            movement = tron2::MoveFactory::eMOVEMENT_ELLIPSE;
+            movement = tron2::CyclicFactory::eMOVEMENT_ELLIPSE;
             break;
         case tron2::FiguresTheme::eFIGURE_SQUARE:
-            movement = tron2::MoveFactory::eMOVEMENT_SQUARE;
+            movement = tron2::CyclicFactory::eMOVEMENT_SQUARE;
             break;
         case tron2::FiguresTheme::eFIGURE_RECTANGLE:
-            movement = tron2::MoveFactory::eMOVEMENT_RECTANGLE;
+            movement = tron2::CyclicFactory::eMOVEMENT_RECTANGLE;
             break;
         case tron2::FiguresTheme::eFIGURE_TRIANGLE:
-            movement = tron2::MoveFactory::eMOVEMENT_TRIANGLE;
+            movement = tron2::CyclicFactory::eMOVEMENT_TRIANGLE;
             break;
         case tron2::FiguresTheme::eFIGURE_LINE:
-            movement = tron2::MoveFactory::eMOVEMENT_LINE;
+            movement = tron2::CyclicFactory::eMOVEMENT_LINE;
             break;
         case tron2::FiguresTheme::eFIGURE_WAVE:
-            movement = tron2::MoveFactory::eMOVEMENT_WAVE;
+            movement = tron2::CyclicFactory::eMOVEMENT_WAVE;
             break;                
         default:
             movement = -1;
@@ -249,15 +249,15 @@ void Artistic::triggerMove()
     if (movement == -1)
         return;
 
-    oMoveFactory.setFreq(oFrequency.getValue());
-    oMoveFactory.setSize(oSize.getValue());
-    oMoveFactory.setAngle(oAngle.getValue());
-    oMoveFactory.setRelativeFactor(oRelFactor.getValue());
-    oMoveFactory.setRelativeFreq(1.0);
-    oMoveFactory.setRotation(true);
+    oCyclicFactory.setFreq(oFrequency.getValue());
+    oCyclicFactory.setSize(oSize.getValue());
+    oCyclicFactory.setAngle(oAngle.getValue());
+    oCyclicFactory.setRelativeFactor(oRelFactor.getValue());
+    oCyclicFactory.setRelativeFreq(1.0);
+    oCyclicFactory.setRotation(true);
 
     // generate requested movement, skip if unknown
-    if (!oMoveFactory.generateMovement(oCyclicMovement, movement))
+    if (!oCyclicFactory.generateMovement(oCyclicMovement, movement))
         return;    
         
     transmitMovement();
