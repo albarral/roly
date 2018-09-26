@@ -40,8 +40,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/roly/body/modules/Artistic.o \
 	${OBJECTDIR}/src/roly/body/modules/BodyModule.o \
 	${OBJECTDIR}/src/roly/body/modules/Comfort.o \
-	${OBJECTDIR}/src/roly/body/modules/Expressive.o \
-	${OBJECTDIR}/src/roly/body/moves/ArmMovement.o
+	${OBJECTDIR}/src/roly/body/modules/Expressive.o
 
 
 # C Compiler Flags
@@ -111,11 +110,6 @@ ${OBJECTDIR}/src/roly/body/modules/Expressive.o: src/roly/body/modules/Expressiv
 	${MKDIR} -p ${OBJECTDIR}/src/roly/body/modules
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -Isrc -I../roly_bodycore/src -I../../tron/tron_control/src -I../../tron/tron_math/src -I../../tron2/tron2_language/src -I../../tron2/tron2_moves/src -I../../amy/amy_interface2/src -I../../tron/tron_coms/src -I../../tron/tron_interface/src -I../../tron/tron_topics/src -I../../tron/tron_util/src -I/usr/include/ignition/transport3 -I/usr/include/ignition/msgs0 -I/usr/include/ignition/math2 -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/body/modules/Expressive.o src/roly/body/modules/Expressive.cpp
-
-${OBJECTDIR}/src/roly/body/moves/ArmMovement.o: src/roly/body/moves/ArmMovement.cpp 
-	${MKDIR} -p ${OBJECTDIR}/src/roly/body/moves
-	${RM} "$@.d"
-	$(COMPILE.cc) -g -Isrc -I../roly_bodycore/src -I../../tron/tron_control/src -I../../tron/tron_math/src -I../../tron2/tron2_language/src -I../../tron2/tron2_moves/src -I../../amy/amy_interface2/src -I../../tron/tron_coms/src -I../../tron/tron_interface/src -I../../tron/tron_topics/src -I../../tron/tron_util/src -I/usr/include/ignition/transport3 -I/usr/include/ignition/msgs0 -I/usr/include/ignition/math2 -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/body/moves/ArmMovement.o src/roly/body/moves/ArmMovement.cpp
 
 # Subprojects
 .build-subprojects:

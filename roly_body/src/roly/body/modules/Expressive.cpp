@@ -6,6 +6,7 @@
 #include "log4cxx/ndc.h"
 
 #include "roly/body/modules/Expressive.h"
+#include "tron2/moves/SequentialFactory.h"
 
 using namespace log4cxx;
 
@@ -95,7 +96,7 @@ void Expressive::senseBus()
             if (feeling != -1)
             {
                 // if requested feeling has an associated movement, do it
-                if (loadMovement4Action(feeling))
+                if (loadMovement(feeling))
                 {
                     step = 0;
                     setState(eSTATE_ACTION);                
@@ -124,59 +125,16 @@ int Expressive::analyseFeeling(std::string word)
     }
 }
 
-bool Expressive::performStep()
-{
-    // if pending steps
-    if (step < listMovements.size())
-    {
-        // get next step and request it 
-        ArmMovement& oArmMovement = listMovements.at(step);
-        transmitMovement(oArmMovement);
-        // start timer and set duration
-        oClickStep.start();
-        stepDuration = oArmMovement.getTimeMillis();
-        return true;
-    }
-    else
-        return false;
-}
-
-bool Expressive::isStepFinished()
-{
-    // check if step duration finished
-    oClickStep.read();
-    return (oClickStep.getMillis() > stepDuration);         
-}
-
-void Expressive::transmitMovement(ArmMovement& oArmMovement)
-{
-    // if posture request, command arm position
-    if (oArmMovement.getType() == ArmMovement::eTYPE_POSTURE)
-    {
-        oArmAxesClient.setPan(oArmMovement.getPan());
-        oArmAxesClient.setTilt(oArmMovement.getTilt());
-        oArmAxesClient.setRadial(oArmMovement.getRadius());
-    }
-    // if move request, command arm speed
-    else
-    {
-        oArmAxesClient.setPanSpeed(oArmMovement.getPan());
-        oArmAxesClient.setTiltSpeed(oArmMovement.getTilt());
-        oArmAxesClient.setRadialSpeed(oArmMovement.getRadius());
-    }                
-}
-
-bool Expressive::loadMovement4Action(int action)
+// TO DO ... extend available movements
+bool Expressive::loadMovement(int action)
 {    
     bool bok; 
-    // clear movement
-    listMovements.clear();
     
+    // use sequential factory to generate proper movement
     switch (action)
     {
         case tron2::FeelingsTheme::eFEELING_JOY:
-            loadMovement4Joy();
-            bok = true;
+            bok = tron2::SequentialFactory::generateMovement(oSequentialMovement, tron2::SequentialFactory::eMOVEMENT_JOY);
             break;
 
         default: 
@@ -190,22 +148,46 @@ bool Expressive::loadMovement4Action(int action)
     return bok;
 }
 
-void Expressive::loadMovement4Joy()
+bool Expressive::performStep()
 {
-    int millis = 200;
-    float pos1[3] = {60.0, 60.0, 80.0}; 
-    float pos2[3] = {60.0, 60.0, 40.0}; 
+    // if pending steps
+    if (step < oSequentialMovement.getNumSteps())
+    {
+        // get next step and request it 
+        tron2::BasicMovement& oBasicMovement = oSequentialMovement.getMovementsList().at(step);
+        transmitMovement(oBasicMovement);
+        // start timer and set duration
+        oClickStep.start();
+        stepDuration = oBasicMovement.getTime();
+        return true;
+    }
+    else
+        return false;
+}
 
-    ArmMovement oArmMovement;
-    // four steps (pos1, pos2, pos1, pos2)
-    oArmMovement.setPosture(pos1[0], pos1[1], pos1[2], millis);
-    listMovements.push_back(oArmMovement);
-    oArmMovement.setPosture(pos2[0], pos2[1], pos2[2], millis);
-    listMovements.push_back(oArmMovement);
-    oArmMovement.setPosture(pos1[0], pos1[1], pos1[2], millis);
-    listMovements.push_back(oArmMovement);
-    oArmMovement.setPosture(pos2[0], pos2[1], pos2[2], millis);
-    listMovements.push_back(oArmMovement);    
+bool Expressive::isStepFinished()
+{
+    // check if step duration finished
+    oClickStep.read();
+    return (oClickStep.getMillis() > stepDuration);         
+}
+
+void Expressive::transmitMovement(tron2::BasicMovement& oBasicMovement)
+{
+    // if posture request, command arm position
+    if (oBasicMovement.isPosture())
+    {
+        oArmAxesClient.setPan(oBasicMovement.getPan());
+        oArmAxesClient.setTilt(oBasicMovement.getTilt());
+        oArmAxesClient.setRadial(oBasicMovement.getRadius());
+    }
+    // if move request, command arm speed
+    else if (oBasicMovement.isMove())
+    {
+        oArmAxesClient.setPanSpeed(oBasicMovement.getPan());
+        oArmAxesClient.setTiltSpeed(oBasicMovement.getTilt());
+        oArmAxesClient.setRadialSpeed(oBasicMovement.getRadius());
+    }                
 }
 
 void Expressive::writeBus()

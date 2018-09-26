@@ -11,9 +11,10 @@
 #include <log4cxx/logger.h>
 
 #include "roly/body/modules/BodyModule.h"
-#include "roly/body/moves/ArmMovement.h"
 #include "amy/interface2/control/AxesClient.h"
 #include "tron/util/Click.h"
+#include "tron2/moves/BasicMovement.h"
+#include "tron2/moves/SequentialMovement.h"
 // language themes
 #include "tron2/language/objects/FeelingsTheme.h"
 
@@ -42,11 +43,11 @@ private:
     static log4cxx::LoggerPtr logger;
     // logic
     int feeling;             // requested feeling
-    amy::AxesClient oArmAxesClient;     // client for control of arm axes section
-    std::vector<ArmMovement> listMovements;
-    int step;       // present step of arm movement sequence
+    tron2::SequentialMovement oSequentialMovement;  // associated movement
+    int step;       // present step of movement sequence
     int stepDuration;  // duration of present step
     tron::Click oClickStep;
+    amy::AxesClient oArmAxesClient;     // client for control of arm axes section
     // language themes
     tron2::FeelingsTheme oFeelingsTheme; // feelings
 
@@ -70,8 +71,8 @@ private:
         
         // analyzes requested feeling
         int analyseFeeling(std::string word);        
-        // load arm movement sequence for specified action
-        bool loadMovement4Action(int action);
+        // load movement sequence for specified action
+        bool loadMovement(int action);
         
         // performs a new step of the sequential movement
         bool performStep();
@@ -79,9 +80,7 @@ private:
         bool isStepFinished();
         
         // request arm posture or arm speed
-        void transmitMovement(ArmMovement& oArmMovement);    
-        
-        void loadMovement4Joy();
+        void transmitMovement(tron2::BasicMovement& oBasicMovement);    
 };
 }
 #endif
