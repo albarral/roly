@@ -9,19 +9,19 @@ CND_DISTDIR=dist
 # Debug configuration
 CND_PLATFORM_Debug=GNU-Linux
 CND_ARTIFACT_DIR_Debug=dist/Debug/GNU-Linux
-CND_ARTIFACT_NAME_Debug=libroly_interface.so
-CND_ARTIFACT_PATH_Debug=dist/Debug/GNU-Linux/libroly_interface.so
+CND_ARTIFACT_NAME_Debug=libroly_interface2.so
+CND_ARTIFACT_PATH_Debug=dist/Debug/GNU-Linux/libroly_interface2.so
 CND_PACKAGE_DIR_Debug=dist/Debug/GNU-Linux/package
-CND_PACKAGE_NAME_Debug=librolyinterface.so.tar
-CND_PACKAGE_PATH_Debug=dist/Debug/GNU-Linux/package/librolyinterface.so.tar
+CND_PACKAGE_NAME_Debug=librolyinterface2.so.tar
+CND_PACKAGE_PATH_Debug=dist/Debug/GNU-Linux/package/librolyinterface2.so.tar
 # Release configuration
 CND_PLATFORM_Release=GNU-Linux
 CND_ARTIFACT_DIR_Release=dist/Release/GNU-Linux
-CND_ARTIFACT_NAME_Release=libroly_interface.so
-CND_ARTIFACT_PATH_Release=dist/Release/GNU-Linux/libroly_interface.so
+CND_ARTIFACT_NAME_Release=libroly_interface2.so
+CND_ARTIFACT_PATH_Release=dist/Release/GNU-Linux/libroly_interface2.so
 CND_PACKAGE_DIR_Release=dist/Release/GNU-Linux/package
-CND_PACKAGE_NAME_Release=librolyinterface.so.tar
-CND_PACKAGE_PATH_Release=dist/Release/GNU-Linux/package/librolyinterface.so.tar
+CND_PACKAGE_NAME_Release=librolyinterface2.so.tar
+CND_PACKAGE_PATH_Release=dist/Release/GNU-Linux/package/librolyinterface2.so.tar
 #
 # include compiler specific variables
 #

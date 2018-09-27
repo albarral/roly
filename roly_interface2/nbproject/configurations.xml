@@ -12,17 +12,15 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
-      <logicalFolder name="interface" displayName="interface" projectFiles="true">
-        <logicalFolder name="topics" displayName="topics" projectFiles="true">
-          <itemPath>src/roly/interface/topics/ArtisticTopic.cpp</itemPath>
-          <itemPath>src/roly/interface/topics/ArtisticTopic.h</itemPath>
-          <itemPath>src/roly/interface/topics/ExpressiveTopic.cpp</itemPath>
-          <itemPath>src/roly/interface/topics/ExpressiveTopic.h</itemPath>
+      <logicalFolder name="interface2" displayName="interface2" projectFiles="true">
+        <logicalFolder name="control" displayName="control" projectFiles="true">
+          <itemPath>src/roly/interface2/control/ArtisticServer.cpp</itemPath>
+          <itemPath>src/roly/interface2/control/ArtisticServer.h</itemPath>
+          <itemPath>src/roly/interface2/control/ExpressiveServer.cpp</itemPath>
+          <itemPath>src/roly/interface2/control/ExpressiveServer.h</itemPath>
         </logicalFolder>
-        <itemPath>src/roly/interface/BodyClient.cpp</itemPath>
-        <itemPath>src/roly/interface/BodyClient.h</itemPath>
-        <itemPath>src/roly/interface/BodyNode.cpp</itemPath>
-        <itemPath>src/roly/interface/BodyNode.h</itemPath>
+        <itemPath>src/roly/interface2/BodyNode.cpp</itemPath>
+        <itemPath>src/roly/interface2/BodyNode.h</itemPath>
       </logicalFolder>
     </logicalFolder>
     <logicalFolder name="TestFiles"
@@ -38,7 +36,7 @@
     </logicalFolder>
   </logicalFolder>
   <sourceRootList>
-    <Elem>src/roly/interface</Elem>
+    <Elem>src/roly/interface2</Elem>
   </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
@@ -53,75 +51,51 @@
           <standard>8</standard>
           <incDir>
             <pElem>src</pElem>
-            <pElem>../../tron2/tron2_coms/src</pElem>
-            <pElem>../../tron2/tron2_robot/src</pElem>
-            <pElem>../../tron/tron_wire/src</pElem>
-            <pElem>../../tron/tron_wire2/src</pElem>
-            <pElem>../../tron/tron_tools/src</pElem>
+            <pElem>../../tron/tron_coms/src</pElem>
+            <pElem>../../tron/tron_interface/src</pElem>
+            <pElem>../../tron/tron_topics/src</pElem>
             <pElem>../../tron/tron_util/src</pElem>
+            <pElem>/usr/include/ignition/transport3</pElem>
+            <pElem>/usr/include/ignition/msgs0</pElem>
+            <pElem>/usr/include/ignition/math2</pElem>
           </incDir>
         </ccTool>
         <linkerTool>
-          <output>${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libroly_interface.${CND_DLIB_EXT}</output>
           <linkerLibItems>
             <linkerLibProjectItem>
-              <makeArtifact PL="../../tron2/tron2_coms"
+              <makeArtifact PL="../../tron/tron_coms"
                             CT="2"
                             CN="Debug"
                             AC="true"
                             BL="true"
-                            WD="../../tron2/tron2_coms"
+                            WD="../../tron/tron_coms"
                             BC="${MAKE}  -f Makefile CONF=Debug"
                             CC="${MAKE}  -f Makefile CONF=Debug clean"
-                            OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libtron2_coms.${CND_DLIB_EXT}">
+                            OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libtron_coms.${CND_DLIB_EXT}">
               </makeArtifact>
             </linkerLibProjectItem>
             <linkerLibProjectItem>
-              <makeArtifact PL="../../tron2/tron2_robot"
+              <makeArtifact PL="../../tron/tron_interface"
                             CT="2"
                             CN="Debug"
                             AC="true"
                             BL="true"
-                            WD="../../tron2/tron2_robot"
+                            WD="../../tron/tron_interface"
                             BC="${MAKE}  -f Makefile CONF=Debug"
                             CC="${MAKE}  -f Makefile CONF=Debug clean"
-                            OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libtron2_robot.${CND_DLIB_EXT}">
+                            OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libtron_interface.${CND_DLIB_EXT}">
               </makeArtifact>
             </linkerLibProjectItem>
             <linkerLibProjectItem>
-              <makeArtifact PL="../../tron/tron_wire"
+              <makeArtifact PL="../../tron/tron_topics"
                             CT="2"
                             CN="Debug"
                             AC="true"
                             BL="true"
-                            WD="../../tron/tron_wire"
+                            WD="../../tron/tron_topics"
                             BC="${MAKE}  -f Makefile CONF=Debug"
                             CC="${MAKE}  -f Makefile CONF=Debug clean"
-                            OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libtron_wire.${CND_DLIB_EXT}">
-              </makeArtifact>
-            </linkerLibProjectItem>
-            <linkerLibProjectItem>
-              <makeArtifact PL="../../tron/tron_wire2"
-                            CT="2"
-                            CN="Debug"
-                            AC="true"
-                            BL="true"
-                            WD="../../tron/tron_wire2"
-                            BC="${MAKE}  -f Makefile CONF=Debug"
-                            CC="${MAKE}  -f Makefile CONF=Debug clean"
-                            OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libtron_wire2.${CND_DLIB_EXT}">
-              </makeArtifact>
-            </linkerLibProjectItem>
-            <linkerLibProjectItem>
-              <makeArtifact PL="../../tron/tron_tools"
-                            CT="2"
-                            CN="Debug"
-                            AC="true"
-                            BL="true"
-                            WD="../../tron/tron_tools"
-                            BC="${MAKE}  -f Makefile CONF=Debug"
-                            CC="${MAKE}  -f Makefile CONF=Debug clean"
-                            OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libtron_tools.${CND_DLIB_EXT}">
+                            OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libtron_topics.${CND_DLIB_EXT}">
               </makeArtifact>
             </linkerLibProjectItem>
             <linkerLibProjectItem>
@@ -139,30 +113,26 @@
           </linkerLibItems>
         </linkerTool>
       </compileType>
-      <item path="src/roly/interface/BodyClient.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/roly/interface2/BodyNode.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="src/roly/interface/BodyClient.h" ex="false" tool="3" flavor2="0">
+      <item path="src/roly/interface2/BodyNode.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/roly/interface/BodyNode.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/roly/interface/BodyNode.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/roly/interface/topics/ArtisticTopic.cpp"
+      <item path="src/roly/interface2/control/ArtisticServer.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
-      <item path="src/roly/interface/topics/ArtisticTopic.h"
+      <item path="src/roly/interface2/control/ArtisticServer.h"
             ex="false"
             tool="3"
             flavor2="0">
       </item>
-      <item path="src/roly/interface/topics/ExpressiveTopic.cpp"
+      <item path="src/roly/interface2/control/ExpressiveServer.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
-      <item path="src/roly/interface/topics/ExpressiveTopic.h"
+      <item path="src/roly/interface2/control/ExpressiveServer.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -188,30 +158,26 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
-      <item path="src/roly/interface/BodyClient.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/roly/interface2/BodyNode.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="src/roly/interface/BodyClient.h" ex="false" tool="3" flavor2="0">
+      <item path="src/roly/interface2/BodyNode.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/roly/interface/BodyNode.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/roly/interface/BodyNode.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/roly/interface/topics/ArtisticTopic.cpp"
+      <item path="src/roly/interface2/control/ArtisticServer.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
-      <item path="src/roly/interface/topics/ArtisticTopic.h"
+      <item path="src/roly/interface2/control/ArtisticServer.h"
             ex="false"
             tool="3"
             flavor2="0">
       </item>
-      <item path="src/roly/interface/topics/ExpressiveTopic.cpp"
+      <item path="src/roly/interface2/control/ExpressiveServer.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
-      <item path="src/roly/interface/topics/ExpressiveTopic.h"
+      <item path="src/roly/interface2/control/ExpressiveServer.h"
             ex="false"
             tool="3"
             flavor2="0">

@@ -19,7 +19,7 @@ class BodyComs
 private:    
     static log4cxx::LoggerPtr logger;      
     BodyAware oBodyAware;            // communications module to listen to data published by external nodes
-    BodyServer oBodyServer;        // communications module to server control requests sent by external nodes
+    BodyServer oBodyServer2;        // communications module to server control requests sent by external nodes
 
 public:
   BodyComs();

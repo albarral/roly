@@ -50,7 +50,7 @@ git clone https://github.com/albarral/roly.git
 
 3. Make roly libs accessible from everywhere:
 
-cd <amy_installation_path>
+cd <roly_installation_path>
 gedit roly.conf
 change paths to meet real roly installation 
 

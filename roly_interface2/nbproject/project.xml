@@ -3,21 +3,19 @@
     <type>org.netbeans.modules.cnd.makeproject</type>
     <configuration>
         <data xmlns="http://www.netbeans.org/ns/make-project/1">
-            <name>roly_interface</name>
+            <name>roly_interface2</name>
             <c-extensions/>
             <cpp-extensions>cpp</cpp-extensions>
             <header-extensions>h</header-extensions>
             <sourceEncoding>UTF-8</sourceEncoding>
             <make-dep-projects>
+                <make-dep-project>../../tron/tron_topics</make-dep-project>
                 <make-dep-project>../../tron/tron_util</make-dep-project>
-                <make-dep-project>../../tron/tron_wire</make-dep-project>
-                <make-dep-project>../../tron/tron_wire2</make-dep-project>
-                <make-dep-project>../../tron2/tron2_robot</make-dep-project>
-                <make-dep-project>../../tron2/tron2_coms</make-dep-project>
-                <make-dep-project>../../tron/tron_tools</make-dep-project>
+                <make-dep-project>../../tron/tron_interface</make-dep-project>
+                <make-dep-project>../../tron/tron_coms</make-dep-project>
             </make-dep-projects>
             <sourceRootList>
-                <sourceRootElem>src/roly/interface</sourceRootElem>
+                <sourceRootElem>src/roly/interface2</sourceRootElem>
             </sourceRootList>
             <confList>
                 <confElem>

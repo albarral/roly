@@ -7,41 +7,45 @@
 
 #include "roly/bodycoms/modules/BodyServer.h"
 #include "roly/bodycore/config/BodyConfig.h"
+#include "roly/interface2/BodyNode.h"
 
 using namespace log4cxx;
 
 namespace roly
 {
-LoggerPtr BodyServer::logger(Logger::getLogger("roly.body.coms"));
+LoggerPtr BodyServer::logger(Logger::getLogger("roly.coms"));
 
 // Constructor 
 BodyServer::BodyServer()
 {    
-    modName = "BodyServer";
+    modName = "BodyServer2";
     benabled = false;
+    pBodyBus = 0;
+    pArtisticBus1 = 0;
+    pArtisticBus2 = 0;
+    bEndRequested = false;
+    // tune artistic servers
+    oArtisticServer1.tune2Artistic(BodyConfig::ARTISTIC1);
+    oArtisticServer2.tune2Artistic(BodyConfig::ARTISTIC2);
+    // tune extra server
+    BodyNode2 oBodyNode;
+    oExtraServer.init(oBodyNode, BodyNode2::eSECTION_EXTRA);
  }
 
 void BodyServer::init(BodyBus& oBodyBus)
 {
-    // prepare communication servers
-    oExpressiveChannelServer.connect2Bus(oBodyBus);    
-    oArtistic1ChannelServer.setTargetModule(BodyConfig::ARTISTIC1);
-    oArtistic1ChannelServer.connect2Bus(oBodyBus);    
-    oArtistic2ChannelServer.setTargetModule(BodyConfig::ARTISTIC2);
-    oArtistic2ChannelServer.connect2Bus(oBodyBus);    
-    oExtraChannelServer.connect2Bus(oBodyBus);    
-    
+    pBodyBus = &oBodyBus;
+    pArtisticBus1 = &(oBodyBus.getArtisticBus1());
+    pArtisticBus2 = &(oBodyBus.getArtisticBus2());
+        
     // if servers enabled
-    if (oExpressiveChannelServer.isTuned() && 
-        oArtistic1ChannelServer.isTuned() && 
-        oArtistic2ChannelServer.isTuned() && 
-        oExtraChannelServer.isTuned())
+    if (oArtisticServer1.isTuned() && oArtisticServer2.isTuned() && oExpressiveServer.isTuned())
     {
         benabled = true;
         LOG4CXX_INFO(logger, modName + " initialized");                                
     }
     else
-        LOG4CXX_ERROR(logger, modName + ": failed initialization, channel servers not tuned!");                        
+        LOG4CXX_ERROR(logger, modName + ": failed initialization, some servers not tuned!");                        
 }
 
 void BodyServer::first()
@@ -51,33 +55,102 @@ void BodyServer::first()
 
 void BodyServer::loop()
 {
-    // check expressive channel
-    checkChannelServer(oExpressiveChannelServer);        
-    // check artistic channel 1
-    checkChannelServer(oArtistic1ChannelServer);        
-    // check artistic channel 2
-    checkChannelServer(oArtistic2ChannelServer);        
-    // check extra channel
-    checkChannelServer(oExtraChannelServer);        
+    checkExpressiveSection();
+    // check artistic 1 section
+    checkArtisticSection1();
+    // check artistic 2 section
+    checkArtisticSection2();
+    // check extra section
+    checkExtraSection();
 }
 
-bool BodyServer::checkChannelServer(tron2::ChannelServer& oChannelServer)
-{    
-    // receive messages from the given channel
-    if (oChannelServer.senseChannel())
-    {
-        // and process them
-        oChannelServer.processCommands();
-        return true;
-    }
-    // if no messages could be read
-    else
-        return false;
-}
-
-bool BodyServer::getBodyEndRequested()
+void BodyServer::checkExpressiveSection()
 {
-    return oExtraChannelServer.getEndRequested();
+    std::string value;
+    
+    if (oExpressiveServer.getFeeling(value))
+    {
+        pBodyBus->getCO_EXPRESSIVE_ACTION().request(value);
+        LOG4CXX_INFO(logger, "< express feeling: " << value);                        
+    }
+
+    if (oExpressiveServer.getHalt())
+    {
+        pBodyBus->getCO_EXPRESSIVE_HALT().request();
+        LOG4CXX_INFO(logger, "< expressive halt");                        
+    }
+}
+
+void BodyServer::checkArtisticSection1()
+{
+    std::string value;
+    
+    if (oArtisticServer1.getFigure(value))
+    {
+        pArtisticBus1->getCO_ARTISTIC_FIGURE().request(value);
+        LOG4CXX_INFO(logger, "< art1 figure: " << value);                        
+    }
+
+    if (oArtisticServer1.getMovementChange(value))
+    {
+        pArtisticBus1->getCO_ARTISTIC_SET().request(value);
+        LOG4CXX_INFO(logger, "< art1 change: " << value);                        
+    }
+
+    if (oArtisticServer1.getMovementTurn(value))
+    {
+        pArtisticBus1->getCO_ARTISTIC_TURN().request(value);
+        LOG4CXX_INFO(logger, "< art1 turn: " << value);                        
+    }
+
+    if (oArtisticServer1.getHalt())
+    {
+        pArtisticBus1->getCO_ARTISTIC_HALT().request();
+        LOG4CXX_INFO(logger, "< art1 halt");                        
+    }
+}
+
+void BodyServer::checkArtisticSection2()
+{
+    std::string value;
+    
+    if (oArtisticServer2.getFigure(value))
+    {
+        pArtisticBus2->getCO_ARTISTIC_FIGURE().request(value);
+        LOG4CXX_INFO(logger, "< art2 figure: " << value);                        
+    }
+
+    if (oArtisticServer2.getMovementChange(value))
+    {
+        pArtisticBus2->getCO_ARTISTIC_SET().request(value);
+        LOG4CXX_INFO(logger, "< art2 change: " << value);                        
+    }
+
+    if (oArtisticServer2.getMovementTurn(value))
+    {
+        pArtisticBus2->getCO_ARTISTIC_TURN().request(value);
+        LOG4CXX_INFO(logger, "< art2 turn: " << value);                        
+    }
+
+    if (oArtisticServer2.getHalt())
+    {
+        pArtisticBus2->getCO_ARTISTIC_HALT().request();
+        LOG4CXX_INFO(logger, "< art2 halt");                        
+    }
+}
+
+void BodyServer::checkExtraSection()
+{
+    if (oExtraServer.getStop())
+    {
+        LOG4CXX_INFO(logger, "< stop");                        
+    }
+
+    if (oExtraServer.getEnd())
+    {
+        bEndRequested = true;
+        LOG4CXX_INFO(logger, "< end roly");  
+    }
 }
 
 }

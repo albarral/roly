@@ -10,7 +10,7 @@
 #include <log4cxx/logger.h>
 
 #include "roly/body/modules/BodyModule.h"
-#include "amy/interface/ArmClient.h"
+#include "amy/interface2/control/AxesClient.h"
 
 namespace roly
 {
@@ -34,7 +34,7 @@ public:
     
 private:    
     static log4cxx::LoggerPtr logger;
-    amy::ArmClient oArmClient;         // client for arm control
+    amy::AxesClient oArmAxesClient;          // client for control of arm axes section
     // config
     int relaxPosture[3];            // arm's relax posture (pan, tilt, radius)
     float maxTiredTime;           // max allowed tired time (secs)

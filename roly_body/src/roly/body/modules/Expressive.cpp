@@ -6,6 +6,7 @@
 #include "log4cxx/ndc.h"
 
 #include "roly/body/modules/Expressive.h"
+#include "tron2/moves/SequentialFactory.h"
 
 using namespace log4cxx;
 
@@ -30,9 +31,11 @@ void Expressive::showInitialized()
 
 void Expressive::first()
 {
+    log4cxx::NDC::push(modName);   
+    feeling = -1;
+
     // start at rest state
     setState(eSTATE_REST);    
-    log4cxx::NDC::push(modName);   
 }
                     
 void Expressive::loop()
@@ -52,29 +55,20 @@ void Expressive::loop()
             // nothing done
             break;
 
-        case eSTATE_ACTION:            
-            // if pending steps
-            if (step < listMovements.size())
-            {
-                // get next step and request it 
-                ArmMovement& oArmMovement = listMovements.at(step);
-                performStep(oArmMovement);
-                // start timer and set duration
-                oClickTired.start();
-                stepDuration = oArmMovement.getTimeMillis();
+        case eSTATE_ACTION:  
+            // do new step
+            if (performStep())
                 // -> WAIT
                 setState(eSTATE_WAIT);
-            }
             // if no pending steps -> REST
             else
                 setState(eSTATE_REST);                    
             break;
 
         case eSTATE_WAIT:            
-            // check if step duration finished
-            oClickTired.read();
-            // if finished, go for next step -> ACTION
-            if (oClickTired.getMillis() > stepDuration)        
+
+            // if step finished, go for next step -> ACTION
+            if (isStepFinished())        
             {
                 step++;    
                 setState(eSTATE_ACTION);
@@ -89,69 +83,111 @@ void Expressive::senseBus()
 {
     // check inhibition
     binhibited = pBodyBus->getCO_INHIBIT_EXPRESSIVE().isRequested();
+
     // if action requested -> ACTION
     if (pBodyBus->getCO_EXPRESSIVE_ACTION().checkRequested())
     {
-        int action = pBodyBus->getCO_EXPRESSIVE_ACTION().getValue();
-        // load new movement 
-        loadMovement4Action(action);
-        step = 0;
-        setState(eSTATE_ACTION);
+        std::string command = pBodyBus->getCO_EXPRESSIVE_ACTION().getValue();
+        // analyze action validity 
+        if (!command.empty())
+        {
+            LOG4CXX_INFO(logger, "< feeling: " + command);                     
+            feeling = analyseFeeling(command);
+            if (feeling != -1)
+            {
+                // if requested feeling has an associated movement, do it
+                if (loadMovement(feeling))
+                {
+                    step = 0;
+                    setState(eSTATE_ACTION);                
+                }
+            }                
+        }
     }
+    
     // if halt requested -> REST
     if (pBodyBus->getCO_EXPRESSIVE_HALT().checkRequested())
-    {
         setState(eSTATE_REST);
-    }
 }
 
-void Expressive::performStep(ArmMovement& oArmMovement)
+int Expressive::analyseFeeling(std::string word)
 {
-    // if posture request, command arm position
-    if (oArmMovement.getType() == ArmMovement::eTYPE_POSTURE)
-    {
-        oArmClient.setPan(oArmMovement.getPan());
-        oArmClient.setTilt(oArmMovement.getTilt());
-        oArmClient.setRadial(oArmMovement.getRadius());
-    }
-    // if move request, command arm speed
+    int code = -1;
+
+    // check requested feeling
+    if (oFeelingsTheme.getCode4Name(word, code))
+        return code;            
+    // inform of unknown request
     else
     {
-        oArmClient.setPanSpeed(oArmMovement.getPan());
-        oArmClient.setTiltSpeed(oArmMovement.getTilt());
-        oArmClient.setRadialSpeed(oArmMovement.getRadius());
-    }                
-}
-
-void Expressive::loadMovement4Action(int action)
-{    
-    // clear movement
-    listMovements.clear();
-    
-    switch (action)
-    {
-        case Expressive::eEXPRESS_JOY:
-            loadMovement4Joy();
-            break;
+        LOG4CXX_WARN(logger, "unknown feeling requested: " << word << ". Ignored!");                     
+        return -1;
     }
 }
 
-void Expressive::loadMovement4Joy()
-{
-    int millis = 200;
-    float pos1[3] = {60.0, 60.0, 80.0}; 
-    float pos2[3] = {60.0, 60.0, 40.0}; 
+// TO DO ... extend available movements
+bool Expressive::loadMovement(int action)
+{    
+    bool bok; 
+    
+    // use sequential factory to generate proper movement
+    switch (action)
+    {
+        case tron2::FeelingsTheme::eFEELING_JOY:
+            bok = tron2::SequentialFactory::generateMovement(oSequentialMovement, tron2::SequentialFactory::eMOVEMENT_JOY);
+            break;
 
-    ArmMovement oArmMovement;
-    // four steps (pos1, pos2, pos1, pos2)
-    oArmMovement.setPosture(pos1[0], pos1[1], pos1[2], millis);
-    listMovements.push_back(oArmMovement);
-    oArmMovement.setPosture(pos2[0], pos2[1], pos2[2], millis);
-    listMovements.push_back(oArmMovement);
-    oArmMovement.setPosture(pos1[0], pos1[1], pos1[2], millis);
-    listMovements.push_back(oArmMovement);
-    oArmMovement.setPosture(pos2[0], pos2[1], pos2[2], millis);
-    listMovements.push_back(oArmMovement);    
+        default: 
+            bok = false;       
+    }
+    
+    // inform of unavailable movement
+    if (!bok)
+        LOG4CXX_WARN(logger, "requested action not available. Ignored!");      
+    
+    return bok;
+}
+
+bool Expressive::performStep()
+{
+    // if pending steps
+    if (step < oSequentialMovement.getNumSteps())
+    {
+        // get next step and request it 
+        tron2::BasicMovement& oBasicMovement = oSequentialMovement.getMovementsList().at(step);
+        transmitMovement(oBasicMovement);
+        // start timer and set duration
+        oClickStep.start();
+        stepDuration = oBasicMovement.getTime();
+        return true;
+    }
+    else
+        return false;
+}
+
+bool Expressive::isStepFinished()
+{
+    // check if step duration finished
+    oClickStep.read();
+    return (oClickStep.getMillis() > stepDuration);         
+}
+
+void Expressive::transmitMovement(tron2::BasicMovement& oBasicMovement)
+{
+    // if posture request, command arm position
+    if (oBasicMovement.isPosture())
+    {
+        oArmAxesClient.setPan(oBasicMovement.getPan());
+        oArmAxesClient.setTilt(oBasicMovement.getTilt());
+        oArmAxesClient.setRadial(oBasicMovement.getRadius());
+    }
+    // if move request, command arm speed
+    else if (oBasicMovement.isMove())
+    {
+        oArmAxesClient.setPanSpeed(oBasicMovement.getPan());
+        oArmAxesClient.setTiltSpeed(oBasicMovement.getTilt());
+        oArmAxesClient.setRadialSpeed(oBasicMovement.getRadius());
+    }                
 }
 
 void Expressive::writeBus()

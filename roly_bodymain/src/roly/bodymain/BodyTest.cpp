@@ -63,15 +63,15 @@ void BodyTest::testArtistic()
     switch (step)
     {
         case 2:
-            oArtisticBus.getCO_ARTISTIC_FIGURE().request(tron2::FiguresTheme::eFIGURE_CIRCLE);
+            oArtisticBus.getCO_ARTISTIC_FIGURE().request("circle");
             break;            
             
         case 5:
-            oArtisticBus.getCO_ARTISTIC_FREQ().request(0.2);
+            oArtisticBus.getCO_ARTISTIC_SET().request("faster");
             break;
 
         case 10:
-            oArtisticBus.getCO_ARTISTIC_SIZE().request(60.0);            
+            oArtisticBus.getCO_ARTISTIC_SET().request("bigger");            
             break;            
 
         case 15:   

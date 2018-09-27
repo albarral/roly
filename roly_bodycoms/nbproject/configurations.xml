@@ -19,18 +19,8 @@
           <itemPath>src/roly/bodycoms/modules/BodyServer.cpp</itemPath>
           <itemPath>src/roly/bodycoms/modules/BodyServer.h</itemPath>
         </logicalFolder>
-        <logicalFolder name="server" displayName="server" projectFiles="true">
-          <itemPath>src/roly/bodycoms/server/ArtisticChannelServer.cpp</itemPath>
-          <itemPath>src/roly/bodycoms/server/ArtisticChannelServer.h</itemPath>
-          <itemPath>src/roly/bodycoms/server/ExpressiveChannelServer.cpp</itemPath>
-          <itemPath>src/roly/bodycoms/server/ExpressiveChannelServer.h</itemPath>
-          <itemPath>src/roly/bodycoms/server/ExtraChannelServer.cpp</itemPath>
-          <itemPath>src/roly/bodycoms/server/ExtraChannelServer.h</itemPath>
-        </logicalFolder>
         <itemPath>src/roly/bodycoms/BodyComs.cpp</itemPath>
         <itemPath>src/roly/bodycoms/BodyComs.h</itemPath>
-        <itemPath>src/roly/bodycoms/BodyConnector.cpp</itemPath>
-        <itemPath>src/roly/bodycoms/BodyConnector.h</itemPath>
       </logicalFolder>
     </logicalFolder>
     <logicalFolder name="TestFiles"
@@ -73,15 +63,16 @@
           <incDir>
             <pElem>src</pElem>
             <pElem>../roly_bodycore/src</pElem>
-            <pElem>../roly_interface/src</pElem>
-            <pElem>../../tron2/tron2_coms/src</pElem>
-            <pElem>../../tron2/tron2_robot/src</pElem>
+            <pElem>../roly_interface2/src</pElem>
+            <pElem>../../amy/amy_interface2/src</pElem>
             <pElem>../../tron/tron_control/src</pElem>
-            <pElem>../../tron/tron_wire/src</pElem>
-            <pElem>../../tron/tron_wire2/src</pElem>
-            <pElem>../../tron/tron_tools/src</pElem>
+            <pElem>../../tron/tron_coms/src</pElem>
+            <pElem>../../tron/tron_topics/src</pElem>
             <pElem>../../tron/tron_util/src</pElem>
-            <pElem>../../amy/amy_interface/src</pElem>
+            <pElem>../../tron/tron_interface/src</pElem>
+            <pElem>/usr/include/ignition/transport3</pElem>
+            <pElem>/usr/include/ignition/msgs0</pElem>
+            <pElem>/usr/include/ignition/math2</pElem>
           </incDir>
         </ccTool>
         <linkerTool>
@@ -100,39 +91,27 @@
               </makeArtifact>
             </linkerLibProjectItem>
             <linkerLibProjectItem>
-              <makeArtifact PL="../roly_interface"
+              <makeArtifact PL="../roly_interface2"
                             CT="2"
                             CN="Debug"
                             AC="true"
                             BL="true"
-                            WD="../roly_interface"
+                            WD="../roly_interface2"
                             BC="${MAKE}  -f Makefile CONF=Debug"
                             CC="${MAKE}  -f Makefile CONF=Debug clean"
-                            OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libroly_interface.${CND_DLIB_EXT}">
+                            OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libroly_interface2.${CND_DLIB_EXT}">
               </makeArtifact>
             </linkerLibProjectItem>
             <linkerLibProjectItem>
-              <makeArtifact PL="../../tron2/tron2_coms"
+              <makeArtifact PL="../../amy/amy_interface2"
                             CT="2"
                             CN="Debug"
                             AC="true"
                             BL="true"
-                            WD="../../tron2/tron2_coms"
+                            WD="../../amy/amy_interface2"
                             BC="${MAKE}  -f Makefile CONF=Debug"
                             CC="${MAKE}  -f Makefile CONF=Debug clean"
-                            OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libtron2_coms.${CND_DLIB_EXT}">
-              </makeArtifact>
-            </linkerLibProjectItem>
-            <linkerLibProjectItem>
-              <makeArtifact PL="../../tron2/tron2_robot"
-                            CT="2"
-                            CN="Debug"
-                            AC="true"
-                            BL="true"
-                            WD="../../tron2/tron2_robot"
-                            BC="${MAKE}  -f Makefile CONF=Debug"
-                            CC="${MAKE}  -f Makefile CONF=Debug clean"
-                            OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libtron2_robot.${CND_DLIB_EXT}">
+                            OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libamy_interface2.${CND_DLIB_EXT}">
               </makeArtifact>
             </linkerLibProjectItem>
             <linkerLibProjectItem>
@@ -148,42 +127,6 @@
               </makeArtifact>
             </linkerLibProjectItem>
             <linkerLibProjectItem>
-              <makeArtifact PL="../../tron/tron_wire"
-                            CT="2"
-                            CN="Debug"
-                            AC="true"
-                            BL="true"
-                            WD="../../tron/tron_wire"
-                            BC="${MAKE}  -f Makefile CONF=Debug"
-                            CC="${MAKE}  -f Makefile CONF=Debug clean"
-                            OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libtron_wire.${CND_DLIB_EXT}">
-              </makeArtifact>
-            </linkerLibProjectItem>
-            <linkerLibProjectItem>
-              <makeArtifact PL="../../tron/tron_wire2"
-                            CT="2"
-                            CN="Debug"
-                            AC="true"
-                            BL="true"
-                            WD="../../tron/tron_wire2"
-                            BC="${MAKE}  -f Makefile CONF=Debug"
-                            CC="${MAKE}  -f Makefile CONF=Debug clean"
-                            OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libtron_wire2.${CND_DLIB_EXT}">
-              </makeArtifact>
-            </linkerLibProjectItem>
-            <linkerLibProjectItem>
-              <makeArtifact PL="../../tron/tron_tools"
-                            CT="2"
-                            CN="Debug"
-                            AC="true"
-                            BL="true"
-                            WD="../../tron/tron_tools"
-                            BC="${MAKE}  -f Makefile CONF=Debug"
-                            CC="${MAKE}  -f Makefile CONF=Debug clean"
-                            OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libtron_tools.${CND_DLIB_EXT}">
-              </makeArtifact>
-            </linkerLibProjectItem>
-            <linkerLibProjectItem>
               <makeArtifact PL="../../tron/tron_util"
                             CT="2"
                             CN="Debug"
@@ -196,15 +139,15 @@
               </makeArtifact>
             </linkerLibProjectItem>
             <linkerLibProjectItem>
-              <makeArtifact PL="../../amy/amy_interface"
+              <makeArtifact PL="../../tron/tron_interface"
                             CT="2"
                             CN="Debug"
                             AC="true"
                             BL="true"
-                            WD="../../amy/amy_interface"
+                            WD="../../tron/tron_interface"
                             BC="${MAKE}  -f Makefile CONF=Debug"
                             CC="${MAKE}  -f Makefile CONF=Debug clean"
-                            OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libamy_interface.${CND_DLIB_EXT}">
+                            OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libtron_interface.${CND_DLIB_EXT}">
               </makeArtifact>
             </linkerLibProjectItem>
           </linkerLibItems>
@@ -213,13 +156,6 @@
       <item path="src/roly/bodycoms/BodyComs.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/roly/bodycoms/BodyComs.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/roly/bodycoms/BodyConnector.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/roly/bodycoms/BodyConnector.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/roly/bodycoms/modules/BodyAware.cpp"
             ex="false"
@@ -237,36 +173,6 @@
             flavor2="0">
       </item>
       <item path="src/roly/bodycoms/modules/BodyServer.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/roly/bodycoms/server/ArtisticChannelServer.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/roly/bodycoms/server/ArtisticChannelServer.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/roly/bodycoms/server/ExpressiveChannelServer.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/roly/bodycoms/server/ExpressiveChannelServer.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/roly/bodycoms/server/ExtraChannelServer.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/roly/bodycoms/server/ExtraChannelServer.h"
             ex="false"
             tool="3"
             flavor2="0">
@@ -296,13 +202,6 @@
       </item>
       <item path="src/roly/bodycoms/BodyComs.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/roly/bodycoms/BodyConnector.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/roly/bodycoms/BodyConnector.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="src/roly/bodycoms/modules/BodyAware.cpp"
             ex="false"
             tool="1"
@@ -319,36 +218,6 @@
             flavor2="0">
       </item>
       <item path="src/roly/bodycoms/modules/BodyServer.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/roly/bodycoms/server/ArtisticChannelServer.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/roly/bodycoms/server/ArtisticChannelServer.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/roly/bodycoms/server/ExpressiveChannelServer.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/roly/bodycoms/server/ExpressiveChannelServer.h"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="src/roly/bodycoms/server/ExtraChannelServer.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
-      </item>
-      <item path="src/roly/bodycoms/server/ExtraChannelServer.h"
             ex="false"
             tool="3"
             flavor2="0">

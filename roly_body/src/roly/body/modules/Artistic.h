@@ -1,5 +1,5 @@
-#ifndef __ROLY_BODY_ARMMOVER_H
-#define __ROLY_BODY_ARMMOVER_H
+#ifndef __ROLY_BODY_ARTISTIC_H
+#define __ROLY_BODY_ARTISTIC_H
 
 /***************************************************************************
  *   Copyright (C) 2017 by Migtron Robotics   *
@@ -11,10 +11,18 @@
 
 #include "roly/bodycore/ArtisticBus.h"
 #include "roly/body/modules/BodyModule.h"
-#include "tron2/moves/CyclicMovement.h"
-#include "tron2/moves/MoveFactory.h"
+#include "amy/interface2/control/CyclerClient.h"
 #include "tron/math/CyclicComponent.h"
-#include "amy/interface/ArmClient.h"
+#include "tron/util/ControlMagnitude.h"
+#include "tron2/moves/CyclicMovement.h"
+#include "tron2/moves/CyclicFactory.h"
+// language themes
+#include "tron2/language/features/DirectionsTheme.h"
+#include "tron2/language/features/LengthTheme.h"
+#include "tron2/language/features/QuantityTheme.h"
+#include "tron2/language/features/SizeTheme.h"
+#include "tron2/language/features/SpeedTheme.h"
+#include "tron2/language/objects/FiguresTheme.h"
 
 namespace roly
 {
@@ -29,7 +37,7 @@ public:
     {
          eSTATE_IDLE,           // waits for requests
          eSTATE_LAUNCH,      // launches cycler movement
-         eSTATE_WAIT,           // waits for movement to finish (until halt request in continuous mode)
+         eSTATE_MOVE,      // waits for movement to finish (until halt request in continuous mode)
          eSTATE_UPDATE,      // updates cycler movement
          eSTATE_STOP           // stops cycler movement
     };
@@ -40,11 +48,28 @@ private:
     // bus        
     ArtisticBus* pArtisticBus;  // bus connection for this module
     // logic
-    amy::ArmClient oArmClient;     // client for arm control
+    int figure;             // requested movement figure 
+    int change;           // requested movement change    
+    int changedFeature;    // feature to which the requested change applies (speed, size, ...)
+    bool bchangeAll;        // requested change applies to all features (speed, size, ...)
+    int turn;               // requested movement turn
+    bool bnewChange;      // flag indicating a movement change was requested (speed, size or length)
+    bool bnewTurn;           // flag indicating a movement turn was requested (angle)  
     bool bcontinuous;       // continuous or simple mode
-    tron2::MoveFactory oMoveFactory; // utility class for movements creation
+    amy::CyclerClient oArmCyclerClient;     // client for control of arm cycler section (main or secondary)
+    tron::ControlMagnitude oFrequency;
+    tron::ControlMagnitude oSize;
+    tron::ControlMagnitude oAngle;
+    tron::ControlMagnitude oRelFactor;
+    tron2::CyclicFactory oCyclicFactory; // specialized class for generation of cyclic movements
     tron2::CyclicMovement oCyclicMovement;
-    int figure;         // requested figure for cycler
+    // language themes
+    tron2::DirectionsTheme oDirectionsTheme; // directions
+    tron2::LengthTheme oLengthTheme; // length
+    tron2::QuantityTheme oQuantityTheme; // quantity
+    tron2::SizeTheme oSizeTheme; // size
+    tron2::SpeedTheme oSpeedTheme; // speed
+    tron2::FiguresTheme oFiguresTheme; // figures 
 
 public:
         Artistic();
@@ -68,20 +93,33 @@ private:
         
         // triggers a cyclic movement
         void triggerMove();
-        // stop a cyclic movement
+        // stops a cyclic movement
         void stopMove();
-        // changes a cyclic movement        
-        void updateMove();
+        // performs a requested movement change
+        void performChange();
+        // transmit components of cyclic movement        
+        void transmitMovement();
         
-        int translateFigure2Movement(int value);
-        
-        // updates cyclic component of cycler (main or secondary)
-        void updateCyclerComponent(bool bmain, tron::CyclicComponent& oCyclicComponent);
-        // stop cyclic component of cycler (main or secondary)
-        void stopCyclerComponent(bool bmain);
-
         // checks if ordered movement is finished (just for simple mode)
         bool checkMovementFinished();
+
+        // analyzes requested movement figure
+        int analyseFigure(std::string word);        
+        // analyzes requested movement change
+        int analyseChange(std::string word);        
+        // analyzes requested movement turn        
+        int analyseTurn(std::string word);    
+        
+        // changes speed of present movement
+        bool changeMovementSpeed(int code);
+        // changes size of present movement
+        bool changeMovementSize(int code);
+        // changes angle of present movement
+        bool changeMovementOrientation(int code);
+        // changes relative factor of present movement
+        bool changeMovementFactor(int code);
+        // set all movement properties to normal values
+        void setNormalMovement();
 };
 }
 #endif

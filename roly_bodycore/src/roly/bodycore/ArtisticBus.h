@@ -9,8 +9,7 @@
 #include <string>
 
 #include "tron/control/brooks/control.h"
-#include "tron/control/brooks/control2.h"
-#include "tron/control/brooks/control3.h"
+#include "tron/control/brooks/ControlS.h"
 #include "tron/control/brooks/inhibition.h"
 
 namespace roly
@@ -23,12 +22,10 @@ class ArtisticBus
         tron::Inhibition CO_INHIBIT_ARTISTIC;       // inhibit artistic module
         
         // CONTROLS                
-        tron::Control2 CO_ARTISTIC_FIGURE;       // id of artistic figure to implement
-        tron::Control3 CO_ARTISTIC_FREQ;       // frequency of cyclic figure (Hz) 
-        tron::Control3 CO_ARTISTIC_SIZE;        // size of cyclic figure (degrees)
-        tron::Control3 CO_ARTISTIC_ORIENTATION;  // orientation of cyclic figure (degrees)
-        tron::Control3 CO_ARTISTIC_RELFACTOR;    // relative xy factor of cyclic figure 
-        tron::Control CO_ARTISTIC_HALT;                // halt ongoing artistic movement
+        tron::ControlS CO_ARTISTIC_FIGURE;       // name of artistic figure (words of figures category)
+        tron::ControlS CO_ARTISTIC_SET;           // name of movement setting or change (words of speed, size and length categories)
+        tron::ControlS CO_ARTISTIC_TURN;        // name of orientation setting or change (words of direction category) 
+        tron::Control CO_ARTISTIC_HALT;           // halt ongoing artistic movement
         
     public:
         ArtisticBus();
@@ -38,11 +35,9 @@ class ArtisticBus
         tron::Inhibition& getCO_INHIBIT_ARTISTIC() {return CO_INHIBIT_ARTISTIC;};
 
         // CONTROLS        
-        tron::Control2& getCO_ARTISTIC_FIGURE() {return CO_ARTISTIC_FIGURE;};
-        tron::Control3& getCO_ARTISTIC_FREQ() {return CO_ARTISTIC_FREQ;};
-        tron::Control3& getCO_ARTISTIC_SIZE() {return CO_ARTISTIC_SIZE;};
-        tron::Control3& getCO_ARTISTIC_ORIENTATION() {return CO_ARTISTIC_ORIENTATION;};
-        tron::Control3& getCO_ARTISTIC_RELFACTOR() {return CO_ARTISTIC_RELFACTOR;};
+        tron::ControlS& getCO_ARTISTIC_FIGURE() {return CO_ARTISTIC_FIGURE;};
+        tron::ControlS& getCO_ARTISTIC_SET() {return CO_ARTISTIC_SET;};
+        tron::ControlS& getCO_ARTISTIC_TURN() {return CO_ARTISTIC_TURN;};
         tron::Control& getCO_ARTISTIC_HALT() {return CO_ARTISTIC_HALT;};
         
         std::string toString();
