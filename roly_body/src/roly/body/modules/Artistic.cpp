@@ -546,13 +546,11 @@ void Artistic::setNormalMovement()
 {    
     oFrequency.setNormal();
     oSize.setNormal();
-    oRelFactor.setNormal();
     
     if (figure != -1)
     {
         oCyclicMovement.updateFreq(oFrequency.getValue());
         oCyclicMovement.updateAmplitude(oSize.getValue());
-        oCyclicMovement.updateRelFactor(oRelFactor.getValue());         
     }
 }
 
