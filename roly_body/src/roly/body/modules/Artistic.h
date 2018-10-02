@@ -16,13 +16,8 @@
 #include "tron/util/ControlMagnitude.h"
 #include "tron2/moves/CyclicMovement.h"
 #include "tron2/moves/CyclicFactory.h"
-// language themes
-#include "tron2/language/features/DirectionsTheme.h"
-#include "tron2/language/features/LengthTheme.h"
-#include "tron2/language/features/QuantityTheme.h"
-#include "tron2/language/features/SizeTheme.h"
-#include "tron2/language/features/SpeedTheme.h"
-#include "tron2/language/objects/FiguresTheme.h"
+#include "tron2/knowledge/Concept.h"
+#include "tron2/knowledge/Knowledge.h"
 
 namespace roly
 {
@@ -63,13 +58,7 @@ private:
     tron::ControlMagnitude oRelFactor;
     tron2::CyclicFactory oCyclicFactory; // specialized class for generation of cyclic movements
     tron2::CyclicMovement oCyclicMovement;
-    // language themes
-    tron2::DirectionsTheme oDirectionsTheme; // directions
-    tron2::LengthTheme oLengthTheme; // length
-    tron2::QuantityTheme oQuantityTheme; // quantity
-    tron2::SizeTheme oSizeTheme; // size
-    tron2::SpeedTheme oSpeedTheme; // speed
-    tron2::FiguresTheme oFiguresTheme; // figures 
+    tron2::Knowledge oKnowledge;    // knowledge base to interpret requested commands
 
 public:
         Artistic();
@@ -109,6 +98,8 @@ private:
         int analyseChange(std::string word);        
         // analyzes requested movement turn        
         int analyseTurn(std::string word);    
+        // interpret the given word and check if it belongs to specified category
+        tron2::Concept* checkValidConcept(std::string word, int category);
         
         // changes speed of present movement
         bool changeMovementSpeed(int code);

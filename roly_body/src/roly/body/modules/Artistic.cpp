@@ -8,8 +8,16 @@
 #include "roly/body/modules/Artistic.h"
 #include "roly/bodycore/config/ArtisticConfig.h"
 #include "roly/bodycore/config/BodyConfig.h"
-#include "tron2/language/categories/FeaturesCategory.h"
 #include "tron2/moves/CyclicMovement.h"
+#include "tron2/language/Language.h"
+#include "tron2/language/categories/FeaturesCategory.h"
+// module knowledge
+#include "tron2/language/features/DirectionsTheme.h"
+#include "tron2/language/features/LengthTheme.h"
+#include "tron2/language/features/QuantityTheme.h"
+#include "tron2/language/features/SizeTheme.h"
+#include "tron2/language/features/SpeedTheme.h"
+#include "tron2/language/objects/FiguresTheme.h"
 
 using namespace log4cxx;
 
@@ -22,6 +30,20 @@ Artistic::Artistic()
     modName = "Artistic";
     id = -1;
     pArtisticBus = 0;
+    
+    // set module knowledge 
+    tron2::DirectionsTheme oDirectionsTheme; // directions
+    tron2::LengthTheme oLengthTheme; // length
+    tron2::QuantityTheme oQuantityTheme; // quantity
+    tron2::SizeTheme oSizeTheme; // size
+    tron2::SpeedTheme oSpeedTheme; // speed
+    tron2::FiguresTheme oFiguresTheme; // figures 
+    oKnowledge.addTheme(oDirectionsTheme);
+    oKnowledge.addTheme(oLengthTheme);
+    oKnowledge.addTheme(oQuantityTheme);
+    oKnowledge.addTheme(oSizeTheme);
+    oKnowledge.addTheme(oSpeedTheme);
+    oKnowledge.addTheme(oFiguresTheme);    
 }
 
 //Artistic::~Artistic()
@@ -221,6 +243,9 @@ void Artistic::triggerMove()
     {
         case tron2::FiguresTheme::eFIGURE_CIRCLE:
             movement = tron2::CyclicFactory::eMOVEMENT_CIRCLE;
+            // circles have relative factor 1
+            oRelFactor.setNormal(1.0);
+            oRelFactor.set2Normal();
             break;
         case tron2::FiguresTheme::eFIGURE_ELLIPSE:
             movement = tron2::CyclicFactory::eMOVEMENT_ELLIPSE;
@@ -378,74 +403,92 @@ void Artistic::transmitMovement()
 
 int Artistic::analyseFigure(std::string word)
 {
-    int code = -1;
-
-    // check requested figure
-    if (oFiguresTheme.getCode4Name(word, code))
-        return code;            
-    // inform of unknown request
+    // interpret requested figure (only accept objects)
+    tron2::Concept* pConcept = checkValidConcept(word, tron2::Language::eLANGUAGE_OBJECT);
+    if (pConcept != nullptr)
+        return pConcept->getCode();
+    // unknown or invalid
     else
-    {
-        LOG4CXX_WARN(logger, "unknown figure requested: " << word << ". Ignored!");                     
         return -1;
-    }
 }
 
 int Artistic::analyseChange(std::string word)
 {
-    int code = -1;
+    changedFeature =  -1;
     bchangeAll = false;
 
-    // check if generic change requested
-    if (oQuantityTheme.getCode4Name(word, code))
+    // interpret requested change (only accept features)
+    tron2::Concept* pConcept = checkValidConcept(word, tron2::Language::eLANGUAGE_FEATURE);
+    if (pConcept != nullptr)
     {
-        // just accept normal word 
-        bchangeAll = (code == tron2::QuantityTheme::eQUANTITY_NORMAL);
+        int theme = pConcept->getTheme();
+        int code = pConcept->getCode();
+        // special case: if normal quantity requested, change all features
+        if (theme == tron2::FeaturesCategory::eFEATURE_QUANTITY && code == tron2::QuantityTheme::eQUANTITY_NORMAL)
+            bchangeAll = true;
+        else
+            changedFeature = theme;
+        
+        return code;
     }
-    // check if speed change requested
-    else if (oSpeedTheme.getCode4Name(word, code))
-        changedFeature =  tron2::FeaturesCategory::eFEATURE_SPEED;
-    // check if size change requested
-    else if (oSizeTheme.getCode4Name(word, code))
-        changedFeature =  tron2::FeaturesCategory::eFEATURE_SIZE;
-    // check if length change requested
-    else if (oLengthTheme.getCode4Name(word, code))
-        changedFeature =  tron2::FeaturesCategory::eFEATURE_LENGTH;
-    // inform of unknown request
+    // unknown or invalid
     else
-    {
-        LOG4CXX_WARN(logger, "unknown change requested: " << word << ". Ignored!");                     
-        changedFeature =  -1;
-    }
-    
-    return code;
+        return -1;
 }
 
 int Artistic::analyseTurn(std::string word)
 {
-    int code = -1;
-
-    // check requested turn 
-    if (oDirectionsTheme.getCode4Name(word, code))
-        return code;            
-    // inform of unknown request
-    else
+    // interpret requested turn (only accept features)
+    tron2::Concept* pConcept = checkValidConcept(word, tron2::Language::eLANGUAGE_FEATURE);
+    if (pConcept != nullptr)
     {
-        LOG4CXX_WARN(logger, "unknown turn requested: " << word << ". Ignored!");                     
-        return -1;
+        // check that it's a direction command
+        if (pConcept->getTheme() == tron2::FeaturesCategory::eFEATURE_DIRECTION)
+            return pConcept->getCode();
+        else
+        {
+            LOG4CXX_WARN(logger, "not a direction command. Request ignored!");                     
+            return -1;
+        }
     }
+    // unknown or invalid
+    else
+        return -1;
 }
 
+tron2::Concept* Artistic::checkValidConcept(std::string word, int category)
+{
+    // interpret requested command
+    tron2::Concept* pConcept = oKnowledge.interpret(word);
+    if (pConcept != nullptr)
+    {
+        // if concept has proper category, return it
+        if (pConcept->getCategory() == category)
+            return pConcept;
+        // otherwise, it's invalid
+        else
+        {
+            LOG4CXX_WARN(logger, "invalid command. Request ignored!");                     
+            return nullptr;
+        }
+    }
+    // unknown word
+    else
+    {
+        LOG4CXX_WARN(logger, "unknown command. Request ignored!");                     
+        return nullptr;
+    }
+}
 
 bool Artistic::changeMovementSpeed(int code)
 {    
     switch (code)
     {
         case tron2::SpeedTheme::eSPEED_SLOW:
-            oFrequency.setLow();
+            oFrequency.set2Low();
             break;
         case tron2::SpeedTheme::eSPEED_FAST:
-            oFrequency.setHigh();
+            oFrequency.set2High();
             break;
         case tron2::SpeedTheme::eSPEED_SLOWER:
             oFrequency.decrease();
@@ -469,10 +512,10 @@ bool Artistic::changeMovementSize(int code)
     switch (code)
     {
         case tron2::SizeTheme::eSIZE_SMALL:
-            oSize.setLow();
+            oSize.set2Low();
             break;
         case tron2::SizeTheme::eSIZE_BIG:
-            oSize.setHigh();
+            oSize.set2High();
             break;
         case tron2::SizeTheme::eSIZE_SMALLER:
             oSize.decrease();
@@ -519,10 +562,10 @@ bool Artistic::changeMovementFactor(int code)
     switch (code)
     {
         case tron2::LengthTheme::eLENGTH_SHORT:
-            oRelFactor.setLow();
+            oRelFactor.set2Low();
             break;
         case tron2::LengthTheme::eLENGTH_LONG:
-            oRelFactor.setHigh();
+            oRelFactor.set2High();
             break;
         case tron2::LengthTheme::eLENGTH_SHORTER:
             oRelFactor.decrease();
@@ -544,8 +587,8 @@ bool Artistic::changeMovementFactor(int code)
 
 void Artistic::setNormalMovement()
 {    
-    oFrequency.setNormal();
-    oSize.setNormal();
+    oFrequency.set2Normal();
+    oSize.set2Normal();
     
     if (figure != -1)
     {

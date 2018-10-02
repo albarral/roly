@@ -11,10 +11,11 @@
             <make-dep-projects>
                 <make-dep-project>../../amy/amy_interface2</make-dep-project>
                 <make-dep-project>../roly_bodycore</make-dep-project>
-                <make-dep-project>../../tron2/tron2_moves</make-dep-project>
                 <make-dep-project>../../tron/tron_util</make-dep-project>
+                <make-dep-project>../../tron2/tron2_moves</make-dep-project>
                 <make-dep-project>../../tron/tron_control</make-dep-project>
                 <make-dep-project>../../tron/tron_math</make-dep-project>
+                <make-dep-project>../../tron2/tron2_knowledge</make-dep-project>
                 <make-dep-project>../../tron2/tron2_language</make-dep-project>
             </make-dep-projects>
             <sourceRootList>
