@@ -1,5 +1,5 @@
-#ifndef __ROLY_BODY_ARMSENSE_H
-#define __ROLY_BODY_ARMSENSE_H
+#ifndef __ROLY_BODY_ARMSENSE2_H
+#define __ROLY_BODY_ARMSENSE2_H
 
 /***************************************************************************
  *   Copyright (C) 2018 by Migtron Robotics   *
@@ -9,15 +9,24 @@
 #include <string>
 #include <log4cxx/logger.h>
 
-#include "roly/body/modules/BodyModule.h"
+#include "roly/body/BodyBehaviour.h"
+#include "tron/util/Click.h"
 
 namespace roly
 {
-// Module used to sense the arm state
+// Behaviour used to sense the arm state
 // Output: 
 // moving state, comfort state and tired time 
-class ArmSense : public BodyModule
+class ArmSense2 : public BodyBehaviour
 {
+public:
+    // states of the module
+    enum eState
+    {
+         eSTATE_OK, 
+         eSTATE_TIRED       // arm tired (still & out of comfort zone)
+    };
+
 private:    
     static log4cxx::LoggerPtr logger;
     // config
@@ -30,26 +39,24 @@ private:
     bool barmMoving;    
     bool bcomfortZone;
     float tiredTime;                // tired time (secs)
-    float periodSecs;               // module period (secs)
+    tron::Click oClick;
 
 public:
-        ArmSense();
-        //~ArmSense();
+        ArmSense2();
+        //~ArmSense2();
                                
 private:       
-        // first actions when the thread begins 
-        virtual void first();
-        // loop inside the module thread 
-        virtual void loop();            
-        // read bus data
-        virtual void senseBus();
+        // things to do when the behavior starts
+        void start() override;
+        // behavior sense phase
+        void sense() override;            
+        // behavior actuate phase
+        void actuate() override;            
+        // things to do when the behavior ends
+        void end() override {};                     
+        
         // write info (control & sensory) to bus
-        virtual void writeBus();
-        // show module initialization in logs
-        virtual void showInitialized();
-                
-        // checks if arm is moving and if it's in the comfort zone (near the relax posture)
-        void senseArm();
+        void writeBus();                
 };
 }
 #endif

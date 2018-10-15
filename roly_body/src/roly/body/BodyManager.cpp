@@ -25,7 +25,8 @@ BodyManager::BodyManager ()
 // Destructor
 BodyManager::~BodyManager ()
 {
-    listModules.clear();
+    for (int i=0; i<=topLevel; i++)
+        clearLevel(i);
 }
 
 
@@ -51,12 +52,11 @@ bool BodyManager::launch(BodyBus& oBodyBus)
                 
         LOG4CXX_INFO(logger, "top level: " << topLevel);
         // organize control architecture in levels
-        initArchitecture();
+        initArchitecture(oBodyBus);
         showArchitecture();
 
-        // init modules & start them
-        initModules(oBodyBus, freq);
-        startModules();
+        // start modules
+        startModules(freq);
         
         blaunched = true;    
     }
@@ -72,60 +72,60 @@ bool BodyManager::end()
     stopModules();
 }
 
-void BodyManager::initArchitecture()
+void BodyManager::initArchitecture(BodyBus& oBodyBus)
 {
-    int nivel = 1;    
+    // level 1    
     // arm sense behaviour
-    oArmSense.setLevel(nivel);
-    listModules.push_back(&oArmSense);
+    oArmSense2.connect(oBodyBus);
+    listModules1.push_back(new tron::Module4(oArmSense2));
 
-    nivel = 2;    
+    // level 2    
     // expressive behaviour
-    oExpressive.setLevel(nivel);
-    listModules.push_back(&oExpressive);
+    oExpressive2.connect(oBodyBus);
+    listModules2.push_back(new tron::Module4(oExpressive2));
 
-    nivel = 3;    
+    // level 3    
     // artistic behaviours
-    oArtistic1.setLevel(nivel);
-    oArtistic2.setLevel(nivel);
     oArtistic1.setID(BodyConfig::ARTISTIC1);
     oArtistic2.setID(BodyConfig::ARTISTIC2);
-    listModules.push_back(&oArtistic1);
-    listModules.push_back(&oArtistic2);
+    oArtistic1.connect(oBodyBus);
+    oArtistic2.connect(oBodyBus);
+    listModules3.push_back(new tron::Module4(oArtistic1));
+    listModules3.push_back(new tron::Module4(oArtistic2));
 
-    nivel = 4;    
-    // comfortable arm behaviour
-    oComfort.setLevel(nivel);
-    listModules.push_back(&oComfort);
+    // level 4;    
+    // comfortable arm behaviour    
+    oComfort2.connect(oBodyBus);
+    listModules4.push_back(new tron::Module4(oComfort2));
 }
 
 void BodyManager::showArchitecture()
 {
     LOG4CXX_INFO(logger, ">> control architecture ...");
-    for (BodyModule* pModule : listModules)
-    {
-        LOG4CXX_INFO(logger, "level " << std::to_string(pModule->getLevel()) << ": module " << pModule->getModuleName());        
-    }        
-}
-
-void BodyManager::initModules(BodyBus& oBodyBus, float freq)
-{    
-    LOG4CXX_INFO(logger, "INIT MODULES ...");
-
     for (int i=0; i<=topLevel; i++)
     {
-        initLevel(i, oBodyBus, freq);
+        LOG4CXX_INFO(logger, "level " << std::to_string(i) << ":");        
+        // get list of modules for given level
+        std::vector<tron::Module4*>* pLevelModules = getModules4Level(i);
+        if (pLevelModules != nullptr)
+        {
+            // show all modules in the level
+            for (tron::Module4* pModule : *pLevelModules)
+            {
+                LOG4CXX_INFO(logger, "module " << pModule->getBehaviour()->getName());        
+            }
+        }    
     }
 }
 
-void BodyManager::startModules()
+void BodyManager::startModules(float freq)
 {
     LOG4CXX_INFO(logger, "STARTING MODULES ...");
 
     int microsWait = 100000;  // 100ms
     for (int i=0; i<=topLevel; i++)
     {
-        startLevel(i);
+        startLevel(i, freq);
         usleep(microsWait);
     }
 }
@@ -143,49 +143,79 @@ void BodyManager::stopModules()
     }
 }
 
-void BodyManager::initLevel(int num, BodyBus& oBodyBus, float freq)
-{    
-    LOG4CXX_INFO(logger, ">> INIT level " << num);       
-
-    // init BodyModule's
-    for (BodyModule* pModule : listModules)
-    {
-        if (pModule->getLevel() == num)
-        {                        
-            pModule->init();
-            pModule->connect(oBodyBus);
-            pModule->setFrequency(freq);  
-        }
-    }
-}
-
-void BodyManager::startLevel(int num)
+void BodyManager::startLevel(int num, float freq)
 {
     LOG4CXX_INFO(logger, ">> START level " << num);
 
-    // init BodyModule's
-    for (BodyModule* pModule : listModules)
+    // get list of modules for given level
+    std::vector<tron::Module4*>* pLevelModules = getModules4Level(num);
+    if (pLevelModules != nullptr)
     {
-        if (pModule->getLevel() == num)
+        // start each module in the level
+        for (tron::Module4* pModule : *pLevelModules)
         {
-            if (pModule->isEnabled() && pModule->isConnected())
+            if (!pModule->isOn())
+            {
+                pModule->setFrequency(freq);  
                 pModule->on();
+            }
         }
-    }
+    }    
 }
 
 void BodyManager::stopLevel(int num)
 {
     LOG4CXX_INFO(logger, ">> STOP level " << num);
 
-    // stop BodyModule's
-    for (BodyModule* pModule : listModules)
+    // get list of modules for given level
+    std::vector<tron::Module4*>* pLevelModules = getModules4Level(num);
+    if (pLevelModules != nullptr)
     {
-        if (pModule->getLevel() == num && pModule->isOn())
-        {            
-            pModule->off();
-            pModule->wait();
+        // stop each module in the level
+        for (tron::Module4* pModule : *pLevelModules)
+        {
+            if (pModule->isOn())
+            {
+                pModule->off();
+                pModule->wait();
+            }
         }
+    }    
+}
+
+void BodyManager::clearLevel(int num)
+{
+    LOG4CXX_INFO(logger, ">> CLEAR level " << num);
+
+    // get list of modules for given level
+    std::vector<tron::Module4*>* pLevelModules = getModules4Level(num);
+    if (pLevelModules != nullptr)
+    {
+        // clear each module in the level (from heap)
+        for (tron::Module4* pModule : *pLevelModules)
+        {
+            if (pModule)
+                delete(pModule);                    
+        }
+        // finally delete modules list
+        pLevelModules->clear();        
+    }    
+}
+
+std::vector<tron::Module4*>* BodyManager::getModules4Level(int level)
+{
+    switch (level)
+    {
+        case 1: 
+            return &listModules1;
+        case 2: 
+            return &listModules2;
+        case 3: 
+            return &listModules3;
+        case 4: 
+            return &listModules4;
+        default: 
+            return nullptr;
     }
 }
 

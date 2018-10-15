@@ -11,11 +11,11 @@
 #include <log4cxx/logger.h>
 
 #include "roly/bodycore/BodyBus.h"
-#include "roly/body/modules/ArmSense.h"
-#include "roly/body/modules/Artistic.h"
-#include "roly/body/modules/Expressive.h"
-#include "roly/body/modules/Comfort.h"
-#include "roly/body/modules/BodyModule.h"
+#include "roly/body/modules/ArmSense2.h"
+#include "roly/body/modules/Artistic2.h"
+#include "roly/body/modules/Expressive2.h"
+#include "roly/body/modules/Comfort2.h"
+#include "tron/control/Module4.h"
 
 namespace roly
 {
@@ -30,15 +30,20 @@ class BodyManager
         int topLevel; // allow activation of modules until this level
         // modules ...
         // level 4
-        Comfort oComfort;
+//        Comfort oComfort;
+        Comfort2 oComfort2;
         // level 3
-        Artistic oArtistic1;
-        Artistic oArtistic2;
+        Artistic2 oArtistic1;
+        Artistic2 oArtistic2;
         // level 2
-        Expressive oExpressive;
+//        Expressive oExpressive;
+        Expressive2 oExpressive2;
         // level 1
-        ArmSense oArmSense;
-        std::vector<BodyModule*> listModules;      // list of modules (pointers)
+        ArmSense2 oArmSense2;
+        std::vector<tron::Module4*> listModules1;      // list of modules (level 1)
+        std::vector<tron::Module4*> listModules2;      // list of modules (level 2)
+        std::vector<tron::Module4*> listModules3;      // list of modules (level 3)
+        std::vector<tron::Module4*> listModules4;      // list of modules (level 4)
 
     public:
         BodyManager();
@@ -52,24 +57,24 @@ class BodyManager
               
 private:
     // initialize control architecture (organize in levels)
-    void initArchitecture();
+    void initArchitecture(BodyBus& oBodyBus);
     // show description of control architecture
     void showArchitecture();
 
-    // initialize modules
-    void initModules(BodyBus& oBodyBus, float freq);
     // starts the task's modules 
-    void startModules();        
+    void startModules(float freq);        
     // stops the tasks' modules
     void stopModules();        
     
     
-   // init the modules of a level
-    void initLevel(int level, BodyBus& oBodyBus, float freq);        
    // start the modules of a level
-    void startLevel(int level);        
+    void startLevel(int level, float freq);        
    // stop the modules of a level
-    void stopLevel(int level);            
+    void stopLevel(int level);
+    // clear modules from level
+    void clearLevel(int level);
+    
+    std::vector<tron::Module4*>* getModules4Level(int level);
 };
 
 }    

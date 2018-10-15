@@ -1,88 +1,46 @@
 /***************************************************************************
- *   Copyright (C) 2017 by Migtron Robotics   *
+ *   Copyright (C) 2018 by Migtron Robotics   *
  *   albarral@migtron.com   *
  ***************************************************************************/
 
 #include "log4cxx/ndc.h"
 
-#include "roly/body/modules/Expressive.h"
+#include "roly/body/modules/Expressive2.h"
 #include "tron2/moves/SequentialFactory.h"
 
 using namespace log4cxx;
 
 namespace roly
 {
-LoggerPtr Expressive::logger(Logger::getLogger("roly.body"));
+LoggerPtr Expressive2::logger(Logger::getLogger("roly.body"));
 
-Expressive::Expressive()
+Expressive2::Expressive2() : BodyBehaviour("Expressive2")
 {
-    modName = "Expressive";
+    addStateName("rest");
+    addStateName("action");
+    addStateName("wait");
 }
 
-//Expressive::~Expressive()
+//Expressive2::~Expressive2()
 //{
 //}
 
-void Expressive::showInitialized()
-{
-    LOG4CXX_INFO(logger, modName << " initialized");          
-}
 
-
-void Expressive::first()
+void Expressive2::start()
 {
-    log4cxx::NDC::push(modName);   
+    log4cxx::NDC::push(name);   
+    LOG4CXX_INFO(logger, " initialized");          
+
     feeling = -1;
-
     // start at rest state
     setState(eSTATE_REST);    
+    LOG4CXX_INFO(logger, ">> " << getStateName());          
 }
                     
-void Expressive::loop()
-{
-    senseBus();
-    
-    // skip if module is inhibited
-    if (binhibited)            
-        return;
-
-    if (getStable() == 0)
-        showState();
-    
-    switch (getState())
-    {
-        case eSTATE_REST: 
-            // nothing done
-            break;
-
-        case eSTATE_ACTION:  
-            // do new step
-            if (performStep())
-                // -> WAIT
-                setState(eSTATE_WAIT);
-            // if no pending steps -> REST
-            else
-                setState(eSTATE_REST);                    
-            break;
-
-        case eSTATE_WAIT:            
-
-            // if step finished, go for next step -> ACTION
-            if (isStepFinished())        
-            {
-                step++;    
-                setState(eSTATE_ACTION);
-            }
-            break;
-    }  
-    
-    writeBus();
-}
-
-void Expressive::senseBus()
+void Expressive2::sense()
 {
     // check inhibition
-    binhibited = pBodyBus->getCO_INHIBIT_EXPRESSIVE().isRequested();
+    inhibit(pBodyBus->getCO_INHIBIT_EXPRESSIVE().isRequested());
 
     // if action requested -> ACTION
     if (pBodyBus->getCO_EXPRESSIVE_ACTION().checkRequested())
@@ -110,7 +68,48 @@ void Expressive::senseBus()
         setState(eSTATE_REST);
 }
 
-int Expressive::analyseFeeling(std::string word)
+void Expressive2::actuate()
+{
+    // method skipped when behaviour inhibited
+
+    if (isStateChanged())
+        LOG4CXX_INFO(logger, ">> " << getStateName());          
+    
+    switch (getState())
+    {
+        case eSTATE_REST: 
+            // nothing done
+            break;
+
+        case eSTATE_ACTION:  
+            // do new step
+            if (performStep())
+                // -> WAIT
+                setState(eSTATE_WAIT);
+            // if no pending steps -> REST
+            else
+                setState(eSTATE_REST);                    
+            break;
+
+        case eSTATE_WAIT:            
+
+            // if step finished, go for next step -> ACTION
+            if (isStepFinished())        
+            {
+                step++;    
+                setState(eSTATE_ACTION);
+            }
+            break;
+    }  
+
+    if (isStateChanged())
+        LOG4CXX_INFO(logger, ">> " << getStateName());          
+    
+    writeBus();
+}
+
+
+int Expressive2::analyseFeeling(std::string word)
 {
     int code = -1;
 
@@ -126,7 +125,7 @@ int Expressive::analyseFeeling(std::string word)
 }
 
 // TO DO ... extend available movements
-bool Expressive::loadMovement(int action)
+bool Expressive2::loadMovement(int action)
 {    
     bool bok; 
     
@@ -148,7 +147,7 @@ bool Expressive::loadMovement(int action)
     return bok;
 }
 
-bool Expressive::performStep()
+bool Expressive2::performStep()
 {
     // if pending steps
     if (step < oSequentialMovement.getNumSteps())
@@ -165,14 +164,14 @@ bool Expressive::performStep()
         return false;
 }
 
-bool Expressive::isStepFinished()
+bool Expressive2::isStepFinished()
 {
     // check if step duration finished
     oClickStep.read();
     return (oClickStep.getMillis() > stepDuration);         
 }
 
-void Expressive::transmitMovement(tron2::BasicMovement& oBasicMovement)
+void Expressive2::transmitMovement(tron2::BasicMovement& oBasicMovement)
 {
     // if posture request, command arm position
     if (oBasicMovement.isPosture())
@@ -190,7 +189,7 @@ void Expressive::transmitMovement(tron2::BasicMovement& oBasicMovement)
     }                
 }
 
-void Expressive::writeBus()
+void Expressive2::writeBus()
 {
     // inhibig comfortable arm while expressing a movement
     switch (getState())
@@ -200,24 +199,6 @@ void Expressive::writeBus()
             pBodyBus->getCO_INHIBIT_COMFORTABLE().request(1);
             break;
     }
-}
-
-void Expressive::showState()
-{
-    switch (getState())
-    {
-        case eSTATE_REST:
-            LOG4CXX_INFO(logger, ">> rest");
-            break;
-                        
-        case eSTATE_ACTION:
-            LOG4CXX_INFO(logger, ">> action");
-            break;
-
-        case eSTATE_WAIT:
-            LOG4CXX_INFO(logger, ">> wait");
-            break;
-    }   // end switch    
 }
 
 

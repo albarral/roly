@@ -1,5 +1,5 @@
-#ifndef __ROLY_BODY_ARTISTIC_H
-#define __ROLY_BODY_ARTISTIC_H
+#ifndef __ROLY_BODY_ARTISTIC2_H
+#define __ROLY_BODY_ARTISTIC2_H
 
 /***************************************************************************
  *   Copyright (C) 2017 by Migtron Robotics   *
@@ -10,7 +10,7 @@
 #include <log4cxx/logger.h>
 
 #include "roly/bodycore/ArtisticBus.h"
-#include "roly/body/modules/BodyModule.h"
+#include "roly/body/BodyBehaviour.h"
 #include "amy/interface2/control/CyclerClient.h"
 #include "tron/math/CyclicComponent.h"
 #include "tron/util/ControlMagnitude.h"
@@ -21,13 +21,13 @@
 
 namespace roly
 {
-// Module to perform complex cyclic movements with the arm. It controls the frontal cycler module of amy node.
+// Behaviour to perform complex cyclic movements with the arm. It controls the frontal cycler module of amy node.
 // Messages:
 // It sends 3 types of messages to the cycler: trigger, stop & update.
-class Artistic : public BodyModule
+class Artistic2 : public BodyBehaviour
 {
 public:
-    // states of Artistic module
+    // states of Artistic2 module
     enum eType
     {
          eSTATE_IDLE,           // waits for requests
@@ -61,24 +61,20 @@ private:
     tron2::Knowledge oKnowledge;    // knowledge base to interpret requested commands
 
 public:
-        Artistic();
-        //~Artistic();
+        Artistic2();
+        //~Artistic2();
                                
-        void setID(int value);
+        bool setID(int value);
         int getID() {return id;};
 private:       
-        // first actions when the thread begins 
-        virtual void first();
-        // loop inside the module thread 
-        virtual void loop();            
-        // read bus data
-        virtual void senseBus();
-        // write info (control & sensory) to bus
-        virtual void writeBus();
-        // show module initialization in logs
-        virtual void showInitialized();
-        // shows the present state name
-        void showState();
+        // things to do when the behavior starts
+        void start() override;
+        // behavior sense phase
+        void sense() override;            
+        // behavior actuate phase
+        void actuate() override;            
+        // things to do when the behavior ends
+        void end() override {};                     
         
         // triggers a cyclic movement
         void triggerMove();

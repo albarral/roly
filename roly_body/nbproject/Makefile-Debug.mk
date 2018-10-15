@@ -35,12 +35,12 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
+	${OBJECTDIR}/src/roly/body/BodyBehaviour.o \
 	${OBJECTDIR}/src/roly/body/BodyManager.o \
-	${OBJECTDIR}/src/roly/body/modules/ArmSense.o \
-	${OBJECTDIR}/src/roly/body/modules/Artistic.o \
-	${OBJECTDIR}/src/roly/body/modules/BodyModule.o \
-	${OBJECTDIR}/src/roly/body/modules/Comfort.o \
-	${OBJECTDIR}/src/roly/body/modules/Expressive.o
+	${OBJECTDIR}/src/roly/body/modules/ArmSense2.o \
+	${OBJECTDIR}/src/roly/body/modules/Artistic2.o \
+	${OBJECTDIR}/src/roly/body/modules/Comfort2.o \
+	${OBJECTDIR}/src/roly/body/modules/Expressive2.o
 
 
 # C Compiler Flags
@@ -83,35 +83,35 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libroly_body.${CND_DLIB_EXT}: ${OBJEC
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libroly_body.${CND_DLIB_EXT} ${OBJECTFILES} ${LDLIBSOPTIONS} -shared -fPIC
 
+${OBJECTDIR}/src/roly/body/BodyBehaviour.o: src/roly/body/BodyBehaviour.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/roly/body
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -Isrc -I../roly_bodycore/src -I../../tron/tron_control/src -I../../tron/tron_math/src -I../../tron/tron_coms/src -I../../tron/tron_interface/src -I../../tron/tron_topics/src -I../../tron/tron_util/src -I../../tron2/tron2_language/src -I../../tron2/tron2_moves/src -I../../tron2/tron2_knowledge/src -I../../amy/amy_interface2/src -I/usr/include/ignition/transport3 -I/usr/include/ignition/msgs0 -I/usr/include/ignition/math2 -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/body/BodyBehaviour.o src/roly/body/BodyBehaviour.cpp
+
 ${OBJECTDIR}/src/roly/body/BodyManager.o: src/roly/body/BodyManager.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/roly/body
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -Isrc -I../roly_bodycore/src -I../../tron/tron_control/src -I../../tron/tron_math/src -I../../tron/tron_coms/src -I../../tron/tron_interface/src -I../../tron/tron_topics/src -I../../tron/tron_util/src -I../../tron2/tron2_language/src -I../../tron2/tron2_moves/src -I../../tron2/tron2_knowledge/src -I../../amy/amy_interface2/src -I/usr/include/ignition/transport3 -I/usr/include/ignition/msgs0 -I/usr/include/ignition/math2 -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/body/BodyManager.o src/roly/body/BodyManager.cpp
 
-${OBJECTDIR}/src/roly/body/modules/ArmSense.o: src/roly/body/modules/ArmSense.cpp 
+${OBJECTDIR}/src/roly/body/modules/ArmSense2.o: src/roly/body/modules/ArmSense2.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/roly/body/modules
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Isrc -I../roly_bodycore/src -I../../tron/tron_control/src -I../../tron/tron_math/src -I../../tron/tron_coms/src -I../../tron/tron_interface/src -I../../tron/tron_topics/src -I../../tron/tron_util/src -I../../tron2/tron2_language/src -I../../tron2/tron2_moves/src -I../../tron2/tron2_knowledge/src -I../../amy/amy_interface2/src -I/usr/include/ignition/transport3 -I/usr/include/ignition/msgs0 -I/usr/include/ignition/math2 -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/body/modules/ArmSense.o src/roly/body/modules/ArmSense.cpp
+	$(COMPILE.cc) -g -Isrc -I../roly_bodycore/src -I../../tron/tron_control/src -I../../tron/tron_math/src -I../../tron/tron_coms/src -I../../tron/tron_interface/src -I../../tron/tron_topics/src -I../../tron/tron_util/src -I../../tron2/tron2_language/src -I../../tron2/tron2_moves/src -I../../tron2/tron2_knowledge/src -I../../amy/amy_interface2/src -I/usr/include/ignition/transport3 -I/usr/include/ignition/msgs0 -I/usr/include/ignition/math2 -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/body/modules/ArmSense2.o src/roly/body/modules/ArmSense2.cpp
 
-${OBJECTDIR}/src/roly/body/modules/Artistic.o: src/roly/body/modules/Artistic.cpp 
+${OBJECTDIR}/src/roly/body/modules/Artistic2.o: src/roly/body/modules/Artistic2.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/roly/body/modules
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Isrc -I../roly_bodycore/src -I../../tron/tron_control/src -I../../tron/tron_math/src -I../../tron/tron_coms/src -I../../tron/tron_interface/src -I../../tron/tron_topics/src -I../../tron/tron_util/src -I../../tron2/tron2_language/src -I../../tron2/tron2_moves/src -I../../tron2/tron2_knowledge/src -I../../amy/amy_interface2/src -I/usr/include/ignition/transport3 -I/usr/include/ignition/msgs0 -I/usr/include/ignition/math2 -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/body/modules/Artistic.o src/roly/body/modules/Artistic.cpp
+	$(COMPILE.cc) -g -Isrc -I../roly_bodycore/src -I../../tron/tron_control/src -I../../tron/tron_math/src -I../../tron/tron_coms/src -I../../tron/tron_interface/src -I../../tron/tron_topics/src -I../../tron/tron_util/src -I../../tron2/tron2_language/src -I../../tron2/tron2_moves/src -I../../tron2/tron2_knowledge/src -I../../amy/amy_interface2/src -I/usr/include/ignition/transport3 -I/usr/include/ignition/msgs0 -I/usr/include/ignition/math2 -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/body/modules/Artistic2.o src/roly/body/modules/Artistic2.cpp
 
-${OBJECTDIR}/src/roly/body/modules/BodyModule.o: src/roly/body/modules/BodyModule.cpp 
+${OBJECTDIR}/src/roly/body/modules/Comfort2.o: src/roly/body/modules/Comfort2.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/roly/body/modules
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Isrc -I../roly_bodycore/src -I../../tron/tron_control/src -I../../tron/tron_math/src -I../../tron/tron_coms/src -I../../tron/tron_interface/src -I../../tron/tron_topics/src -I../../tron/tron_util/src -I../../tron2/tron2_language/src -I../../tron2/tron2_moves/src -I../../tron2/tron2_knowledge/src -I../../amy/amy_interface2/src -I/usr/include/ignition/transport3 -I/usr/include/ignition/msgs0 -I/usr/include/ignition/math2 -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/body/modules/BodyModule.o src/roly/body/modules/BodyModule.cpp
+	$(COMPILE.cc) -g -Isrc -I../roly_bodycore/src -I../../tron/tron_control/src -I../../tron/tron_math/src -I../../tron/tron_coms/src -I../../tron/tron_interface/src -I../../tron/tron_topics/src -I../../tron/tron_util/src -I../../tron2/tron2_language/src -I../../tron2/tron2_moves/src -I../../tron2/tron2_knowledge/src -I../../amy/amy_interface2/src -I/usr/include/ignition/transport3 -I/usr/include/ignition/msgs0 -I/usr/include/ignition/math2 -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/body/modules/Comfort2.o src/roly/body/modules/Comfort2.cpp
 
-${OBJECTDIR}/src/roly/body/modules/Comfort.o: src/roly/body/modules/Comfort.cpp 
+${OBJECTDIR}/src/roly/body/modules/Expressive2.o: src/roly/body/modules/Expressive2.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/roly/body/modules
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Isrc -I../roly_bodycore/src -I../../tron/tron_control/src -I../../tron/tron_math/src -I../../tron/tron_coms/src -I../../tron/tron_interface/src -I../../tron/tron_topics/src -I../../tron/tron_util/src -I../../tron2/tron2_language/src -I../../tron2/tron2_moves/src -I../../tron2/tron2_knowledge/src -I../../amy/amy_interface2/src -I/usr/include/ignition/transport3 -I/usr/include/ignition/msgs0 -I/usr/include/ignition/math2 -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/body/modules/Comfort.o src/roly/body/modules/Comfort.cpp
-
-${OBJECTDIR}/src/roly/body/modules/Expressive.o: src/roly/body/modules/Expressive.cpp 
-	${MKDIR} -p ${OBJECTDIR}/src/roly/body/modules
-	${RM} "$@.d"
-	$(COMPILE.cc) -g -Isrc -I../roly_bodycore/src -I../../tron/tron_control/src -I../../tron/tron_math/src -I../../tron/tron_coms/src -I../../tron/tron_interface/src -I../../tron/tron_topics/src -I../../tron/tron_util/src -I../../tron2/tron2_language/src -I../../tron2/tron2_moves/src -I../../tron2/tron2_knowledge/src -I../../amy/amy_interface2/src -I/usr/include/ignition/transport3 -I/usr/include/ignition/msgs0 -I/usr/include/ignition/math2 -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/body/modules/Expressive.o src/roly/body/modules/Expressive.cpp
+	$(COMPILE.cc) -g -Isrc -I../roly_bodycore/src -I../../tron/tron_control/src -I../../tron/tron_math/src -I../../tron/tron_coms/src -I../../tron/tron_interface/src -I../../tron/tron_topics/src -I../../tron/tron_util/src -I../../tron2/tron2_language/src -I../../tron2/tron2_moves/src -I../../tron2/tron2_knowledge/src -I../../amy/amy_interface2/src -I/usr/include/ignition/transport3 -I/usr/include/ignition/msgs0 -I/usr/include/ignition/math2 -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/roly/body/modules/Expressive2.o src/roly/body/modules/Expressive2.cpp
 
 # Subprojects
 .build-subprojects:
