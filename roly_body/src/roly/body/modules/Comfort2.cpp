@@ -6,32 +6,32 @@
 #include "log4cxx/ndc.h"
 #include <opencv2/core/core.hpp>
 
-#include "roly/body/modules/Comfort.h"
+#include "roly/body/modules/Comfort2.h"
 #include "roly/bodycore/config/ComfortConfig.h"
 
 using namespace log4cxx;
 
 namespace roly
 {
-LoggerPtr Comfort::logger(Logger::getLogger("roly.body"));
+LoggerPtr Comfort2::logger(Logger::getLogger("roly.body"));
 
-Comfort::Comfort()
+Comfort2::Comfort2() : BodyBehaviour("Comfort2")
 {
-    modName = "Comfort";
+    addStateName("sense");
+    addStateName("relax");
+    addStateName("wait");
 }
 
-//Comfort::~Comfort()
+//Comfort2::~Comfort2()
 //{
 //}
 
-void Comfort::showInitialized()
-{
-    LOG4CXX_INFO(logger, modName << " initialized");          
-}
 
-
-void Comfort::first()
+void Comfort2::start()
 {
+    log4cxx::NDC::push(name);  
+    LOG4CXX_INFO(logger, " initialized");          
+
     // config
     ComfortConfig oComfortConfig;
     int* pPosture = oComfortConfig.getRelaxPosture();
@@ -41,27 +41,28 @@ void Comfort::first()
     
     // start at sense state
     setState(eSTATE_SENSE);    
-    log4cxx::NDC::push(modName);  
+    LOG4CXX_INFO(logger, ">> " << getStateName());          
     
     // inform relax posture to ArmSense module
     cv::Vec3f posture = {(float)relaxPosture[0], (float)relaxPosture[1], (float)relaxPosture[2]};
     pBodyBus->getCO_RELAX_POSTURE().request(posture);
 }
-                    
-void Comfort::loop()
+  
+void Comfort2::sense()
 {
-    senseBus();
+    // check inhibited control
+    inhibit(pBodyBus->getCO_INHIBIT_COMFORTABLE().isRequested());
     
-    // skip if module is inhibited
-    if (binhibited)            
-        return;
+    // sense arm posture
+    barmMoving = pBodyBus->getSO_ARM_MOVING().getValue();
+    bcomfortZone = pBodyBus->getSO_ARM_COMFORT().getValue();
+    tiredTime = pBodyBus->getSO_ARM_TIRED().getValue();
+}
 
-    int stableCycles = tron::Module3::getStable();
-    
-    // if state changed show name
-    if (stableCycles == 0)
-        showState();
-    
+void Comfort2::actuate()
+{    
+    // method skipped when behaviour inhibited
+
     switch (getState())
     {
         case eSTATE_SENSE:         
@@ -74,65 +75,31 @@ void Comfort::loop()
         case eSTATE_RELAX:            
 
             // on relax request relax posture 
-            requestComfortPosture();
+            requestComfort2Posture();
             // and -> WAIT
             setState(eSTATE_WAIT);
+            waitCycles = 0;
             break;
 
         case eSTATE_WAIT:            
 
             // stay for a while and -> SENSE
-            if (stableCycles > 5)
+            waitCycles++;
+            if (waitCycles > 5)
                 setState(eSTATE_SENSE);
             break;
     }  
     
-    //writeBus();
+    if (isStateChanged())
+        LOG4CXX_INFO(logger, ">> " << getStateName());          
 }
 
-void Comfort::senseBus()
-{
-    // check inhibited control
-    binhibited = pBodyBus->getCO_INHIBIT_COMFORTABLE().isRequested();
-    
-    // sense arm posture
-    barmMoving = pBodyBus->getSO_ARM_MOVING().getValue();
-    bcomfortZone = pBodyBus->getSO_ARM_COMFORT().getValue();
-    tiredTime = pBodyBus->getSO_ARM_TIRED().getValue();
-}
-
-
-void Comfort::requestComfortPosture()
+void Comfort2::requestComfort2Posture()
 {
     // request arm relaxed posture
     oArmAxesClient.setPan(relaxPosture[0]);
     oArmAxesClient.setTilt(relaxPosture[1]);
     oArmAxesClient.setRadial(relaxPosture[2]);
 }
-
-
-void Comfort::writeBus()
-{
-    // nothing to do here    
-}
-
-void Comfort::showState()
-{
-    switch (getState())
-    {
-        case eSTATE_SENSE:
-            LOG4CXX_INFO(logger, ">> sense");
-            break;
-
-        case eSTATE_RELAX:
-            LOG4CXX_INFO(logger, ">> relax");
-            break;
-
-        case eSTATE_WAIT:
-            LOG4CXX_INFO(logger, ">> wait");
-            break;
-    }   // end switch    
-}
-
 
 }

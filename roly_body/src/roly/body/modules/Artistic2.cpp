@@ -5,7 +5,7 @@
 
 #include "log4cxx/ndc.h"
 
-#include "roly/body/modules/Artistic.h"
+#include "roly/body/modules/Artistic2.h"
 #include "roly/bodycore/config/ArtisticConfig.h"
 #include "roly/bodycore/config/BodyConfig.h"
 #include "tron2/moves/CyclicMovement.h"
@@ -23,11 +23,16 @@ using namespace log4cxx;
 
 namespace roly
 {
-LoggerPtr Artistic::logger(Logger::getLogger("roly.body"));
+LoggerPtr Artistic2::logger(Logger::getLogger("roly.body"));
 
-Artistic::Artistic()
+Artistic2::Artistic2() : BodyBehaviour("Artistic")
 {
-    modName = "Artistic";
+    addStateName("idle");
+    addStateName("launch");
+    addStateName("move");
+    addStateName("update");
+    addStateName("stop");
+
     id = -1;
     pArtisticBus = 0;
     
@@ -46,27 +51,31 @@ Artistic::Artistic()
     oKnowledge.addTheme(oFiguresTheme);    
 }
 
-//Artistic::~Artistic()
+//Artistic2::~Artistic2()
 //{
 //}
 
-void Artistic::showInitialized()
-{
-    LOG4CXX_INFO(logger, modName << " initialized");          
-}
 
-void Artistic::setID(int value)
+bool Artistic2::setID(int value)
 {
+    // check valid id
     if (value == BodyConfig::ARTISTIC1 || value == BodyConfig::ARTISTIC2)
     {
         id = value;
-        modName += std::to_string(id);
+        name += std::to_string(id);
+        return true;
+    }
+    else
+    {
+        LOG4CXX_WARN(logger, "Artistic2: invalid ID given: " << value);
+        return false;
     }
 }
 
-void Artistic::first()
+void Artistic2::start()
 {
-    log4cxx::NDC::push(modName);   	
+    log4cxx::NDC::push(name);   	
+    LOG4CXX_INFO(logger, " initialized");          
 
     // connect module to proper bus
     if (id == BodyConfig::ARTISTIC1)
@@ -81,8 +90,7 @@ void Artistic::first()
     }
     else
     {
-        LOG4CXX_WARN(logger, "Couldn't connect to proper bus. Ending module!");
-        tron::Module3::off();
+        LOG4CXX_WARN(logger, "Artistic2: invalid ID");
         return;
     }
     
@@ -103,69 +111,17 @@ void Artistic::first()
     
     // start at IDLE
     setState(eSTATE_IDLE);    
+    LOG4CXX_INFO(logger, ">> " << getStateName());          
 }
                     
-// performs a cyclic wave movement of the elbow
-void Artistic::loop()
-{
-    senseBus();
-    
-    // skip if module is inhibited
-    if (binhibited)            
-        return;
-
-    if (getStable() == 0)
-        showState();
-
-    switch (getState())
-    {
-        case eSTATE_IDLE:
-            // nothing done
-            break;
-
-        case eSTATE_LAUNCH:
-            // triggers the cyclic movement            
-            triggerMove();
-            // -> MOVE
-            setState(eSTATE_MOVE);
-            break;
-
-        case eSTATE_MOVE:
-            // if simple mode
-            if (!bcontinuous)
-            {
-                // when movement finished -> STOP
-                if (checkMovementFinished())
-                    setState(eSTATE_STOP);
-            }
-            break;
-
-        case eSTATE_UPDATE:            
-            // update the cyclic movement            
-            performChange();
-            // -> MOVE
-            setState(eSTATE_MOVE);
-            break;                        
-
-        case eSTATE_STOP:
-            // stops the cyclic movement            
-            stopMove();
-            // -> IDLE
-            setState(eSTATE_IDLE);
-            break;
-    }   // end switch        
-    
-    //writeBus();
-}
-
-void Artistic::senseBus()
+void Artistic2::sense()
 {
     // TO DO ... get from BUS
     bcontinuous = true;
     bool bnewFigure = false;     
         
      // check inhibition
-    binhibited = pArtisticBus->getCO_INHIBIT_ARTISTIC().isRequested();
+     inhibit(pArtisticBus->getCO_INHIBIT_ARTISTIC().isRequested());
 
     // check figure requests
     if (pArtisticBus->getCO_ARTISTIC_FIGURE().checkRequested())
@@ -226,14 +182,61 @@ void Artistic::senseBus()
         setState(eSTATE_STOP);
 }
 
+// performs a cyclic wave movement of the elbow
+void Artistic2::actuate()
+{
+    // method skipped when behaviour inhibited
 
-bool Artistic::checkMovementFinished()
+    if (isStateChanged())
+        LOG4CXX_INFO(logger, ">> " << getStateName());          
+
+    switch (getState())
+    {
+        case eSTATE_IDLE:
+            // nothing done
+            break;
+
+        case eSTATE_LAUNCH:
+            // triggers the cyclic movement            
+            triggerMove();
+            // -> MOVE
+            setState(eSTATE_MOVE);
+            break;
+
+        case eSTATE_MOVE:
+            // if simple mode
+            if (!bcontinuous)
+            {
+                // when movement finished -> STOP
+                if (checkMovementFinished())
+                    setState(eSTATE_STOP);
+            }
+            break;
+
+        case eSTATE_UPDATE:            
+            // update the cyclic movement            
+            performChange();
+            // -> MOVE
+            setState(eSTATE_MOVE);
+            break;                        
+
+        case eSTATE_STOP:
+            // stops the cyclic movement            
+            stopMove();
+            // -> IDLE
+            setState(eSTATE_IDLE);
+            break;
+    }   // end switch            
+}
+
+
+bool Artistic2::checkMovementFinished()
 {
     // TO DO ...
     return false;    
 }
 
-void Artistic::triggerMove()
+void Artistic2::triggerMove()
 {    
     int movement;
 
@@ -298,13 +301,13 @@ void Artistic::triggerMove()
     oArmCyclerClient.run(true);
 }
 
-void Artistic::stopMove()
+void Artistic2::stopMove()
 {    
     // stop movement
     oArmCyclerClient.run(false);
 }
 
-void Artistic::performChange()
+void Artistic2::performChange()
 {
     bool bok1 = false, bok2 = false;
     // if change requested 
@@ -358,7 +361,7 @@ void Artistic::performChange()
         transmitMovement();
 }
 
-void Artistic::transmitMovement()
+void Artistic2::transmitMovement()
 {        
     // update both cycler components
     // if dual, set cycler secondary component
@@ -401,7 +404,7 @@ void Artistic::transmitMovement()
     oCyclicMovement.clearFlags();    
 }
 
-int Artistic::analyseFigure(std::string word)
+int Artistic2::analyseFigure(std::string word)
 {
     // interpret requested figure (only accept objects)
     tron2::Concept* pConcept = checkValidConcept(word, tron2::Language::eLANGUAGE_OBJECT);
@@ -412,7 +415,7 @@ int Artistic::analyseFigure(std::string word)
         return -1;
 }
 
-int Artistic::analyseChange(std::string word)
+int Artistic2::analyseChange(std::string word)
 {
     changedFeature =  -1;
     bchangeAll = false;
@@ -436,7 +439,7 @@ int Artistic::analyseChange(std::string word)
         return -1;
 }
 
-int Artistic::analyseTurn(std::string word)
+int Artistic2::analyseTurn(std::string word)
 {
     // interpret requested turn (only accept features)
     tron2::Concept* pConcept = checkValidConcept(word, tron2::Language::eLANGUAGE_FEATURE);
@@ -456,7 +459,7 @@ int Artistic::analyseTurn(std::string word)
         return -1;
 }
 
-tron2::Concept* Artistic::checkValidConcept(std::string word, int category)
+tron2::Concept* Artistic2::checkValidConcept(std::string word, int category)
 {
     // interpret requested command
     tron2::Concept* pConcept = oKnowledge.interpret(word);
@@ -480,7 +483,7 @@ tron2::Concept* Artistic::checkValidConcept(std::string word, int category)
     }
 }
 
-bool Artistic::changeMovementSpeed(int code)
+bool Artistic2::changeMovementSpeed(int code)
 {    
     switch (code)
     {
@@ -507,7 +510,7 @@ bool Artistic::changeMovementSpeed(int code)
     return true;
 }
 
-bool Artistic::changeMovementSize(int code)
+bool Artistic2::changeMovementSize(int code)
 {    
     switch (code)
     {
@@ -534,7 +537,7 @@ bool Artistic::changeMovementSize(int code)
     return true;
 }
 
-bool Artistic::changeMovementOrientation(int code)
+bool Artistic2::changeMovementOrientation(int code)
 {    
     switch (code)
     {
@@ -557,7 +560,7 @@ bool Artistic::changeMovementOrientation(int code)
     return true;
 }
 
-bool Artistic::changeMovementFactor(int code)
+bool Artistic2::changeMovementFactor(int code)
 {    
     switch (code)
     {
@@ -585,7 +588,7 @@ bool Artistic::changeMovementFactor(int code)
 }
 
 
-void Artistic::setNormalMovement()
+void Artistic2::setNormalMovement()
 {    
     oFrequency.set2Normal();
     oSize.set2Normal();
@@ -595,34 +598,6 @@ void Artistic::setNormalMovement()
         oCyclicMovement.updateFreq(oFrequency.getValue());
         oCyclicMovement.updateAmplitude(oSize.getValue());
     }
-}
-
-void Artistic::writeBus()
-{
-    // nothing to do here    
-    // control already done by triggerMove, stopMove & updateMove methods
-}
-
-void Artistic::showState()
-{
-    switch (getState())
-    {
-        case eSTATE_IDLE:
-            LOG4CXX_INFO(logger, ">> idle");
-            break;
-        case eSTATE_LAUNCH:
-            LOG4CXX_INFO(logger, ">> launch");
-            break;
-        case eSTATE_MOVE:
-            LOG4CXX_INFO(logger, ">> move");
-            break;
-        case eSTATE_UPDATE:
-            LOG4CXX_INFO(logger, ">> update");
-            break;                        
-        case eSTATE_STOP:
-            LOG4CXX_INFO(logger, ">> stop");
-            break;
-    }   // end switch    
 }
 
 }

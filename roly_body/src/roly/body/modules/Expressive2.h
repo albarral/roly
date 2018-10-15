@@ -1,8 +1,8 @@
-#ifndef __ROLY_BODY_EXPRESSIVE_H
-#define __ROLY_BODY_EXPRESSIVE_H
+#ifndef __ROLY_BODY_EXPRESSIVE2_H
+#define __ROLY_BODY_EXPRESSIVE2_H
 
 /***************************************************************************
- *   Copyright (C) 2017 by Migtron Robotics   *
+ *   Copyright (C) 2018 by Migtron Robotics   *
  *   albarral@migtron.com   *
  ***************************************************************************/
 
@@ -10,7 +10,7 @@
 #include <vector>
 #include <log4cxx/logger.h>
 
-#include "roly/body/modules/BodyModule.h"
+#include "roly/body/BodyBehaviour.h"
 #include "amy/interface2/control/AxesClient.h"
 #include "tron/util/Click.h"
 #include "tron2/moves/BasicMovement.h"
@@ -20,7 +20,7 @@
 
 namespace roly
 {
-// Module used to express feelings through arm movements.
+// Behaviour used to express feelings through arm movements.
 // States: 
 // REST: wait for action requests
 // ACTION: perform arm movement step as defined in action sequence
@@ -28,7 +28,7 @@ namespace roly
 // DONE: all steps of action sequence done
 // Output: 
 // arm position (pan, tilt, radius) or arm speed (vpan, vtilt, vradius)
-class Expressive : public BodyModule
+class Expressive2 : public BodyBehaviour
 {
 public:
     // states of the module
@@ -52,23 +52,21 @@ private:
     tron2::FeelingsTheme oFeelingsTheme; // feelings
 
 public:
-        Expressive();
-        //~Expressive();
+        Expressive2();
+        //~Expressive2();
                                
 private:       
-        // first actions when the thread begins 
-        virtual void first();
-        // loop inside the module thread 
-        virtual void loop();            
-        // read bus data
-        virtual void senseBus();
+        // things to do when the behavior starts
+        void start() override;
+        // behavior sense phase
+        void sense() override;            
+        // behavior actuate phase
+        void actuate() override;            
+        // things to do when the behavior ends
+        void end() override {};                     
+
         // write info (control & sensory) to bus
-        virtual void writeBus();
-        // show module initialization in logs
-        virtual void showInitialized();
-        // shows the present state name
-        void showState();
-        
+        void writeBus();        
         // analyzes requested feeling
         int analyseFeeling(std::string word);        
         // load movement sequence for specified action
